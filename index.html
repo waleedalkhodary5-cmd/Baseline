@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الاختبارات والتقييمات القيادية | Welz Academy</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Cairo', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .submenu.open {
+            max-height: 1500px;
+        }
+        .folder-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .folder-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+
+    <!-- Hero Header -->
+    <header class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white pt-16 pb-12 px-4 border-b border-slate-800 shadow-2xl overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fbbf24_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10 space-y-3">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 text-amber-400 rounded-full text-xs font-bold tracking-wider border border-amber-500/20 shadow-inner">
+                <i class="fas fa-crown text-xs"></i> منصة التطوير القيادي والإداري الاحترافية
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-sm">
+                Welz Academy
+            </h1>
+            <p class="text-amber-400 text-lg md:text-xl font-bold tracking-wide">
+                Created By Waleed Alkhodary
+            </p>
+            <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto pt-2 leading-relaxed">
+                بوابة مركزية شاملة تضم كافة الاختبارات والتقييمات المهنية مصنفة بعناية لسهولة الوصول والتطوير المستمر.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 py-10 w-full flex-grow">
+        
+        <!-- Search & Statistics Control Bar -->
+        <div class="bg-slate-800/85 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-slate-700/80 mb-8 flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div class="relative w-full md:w-96">
+                <input type="text" id="searchInput" onkeyup="filterTests()" 
+                       placeholder="ابحث السريع عن أي اختبار (مثال: القيادة، التفويض، ISO)..." 
+                       class="w-full pr-11 pl-4 py-3 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all">
+                <i class="fas fa-search absolute right-4 top-4 text-slate-400"></i>
+            </div>
+            <div class="flex items-center gap-3 text-sm font-bold w-full md:w-auto justify-end">
+                <div class="flex items-center gap-2 bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-700 text-slate-300">
+                    <i class="fas fa-folder-open text-amber-400"></i>
+                    <span>8 مجموعات</span>
+                </div>
+                <div class="flex items-center gap-2 bg-amber-500/10 px-4 py-2.5 rounded-xl border border-amber-500/30 text-amber-400">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span><span id="totalTestsCount">35</span> اختبار</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Folders Accordion List -->
+        <div id="foldersContainer" class="space-y-4"></div>
+
+    </main>
+
+    <!-- Student Registration Modal -->
+    <div id="studentModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 bg-slate-950/70 border-b border-slate-800">
+                <div>
+                    <h3 class="text-lg font-black text-white">تسجيل بيانات المتقدم للاختبار</h3>
+                    <p id="selectedTestBadge" class="text-xs font-bold text-amber-400 mt-0.5"></p>
+                </div>
+                <button type="button" onclick="closeStudentModal()" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="studentForm" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">الاسم بالكامل *</label>
+                    <input type="text" name="full_name" required placeholder="اكتب اسمك الثلاثي أو الكامل"
+                           class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1.5">الوظيفة *</label>
+                        <input type="text" name="job_title" required placeholder="مثال: مدير إنتاج"
+                               class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم الشركة *</label>
+                        <input type="text" name="company_name" required placeholder="اسم الشركة أو المؤسسة"
+                               class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">مجال عمل الشركة *</label>
+                    <input type="text" name="company_sector" required placeholder="مثال: الصناعات الغذائية، البلاستيك، التجارة..."
+                           class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1.5">البريد الإلكتروني الشخصي *</label>
+                        <input type="email" name="email" required placeholder="name@example.com"
+                               class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1.5">رقم التواصل *</label>
+                        <input type="tel" name="phone" required placeholder="مثال: 010xxxxxxxx"
+                               class="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+
+                <p id="formErrorMsg" class="text-xs font-bold text-rose-400 hidden"></p>
+
+                <div class="pt-2 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeStudentModal()"
+                            class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold transition-colors">
+                        إلغاء
+                    </button>
+                    <button type="submit" id="submitStudentBtn"
+                            class="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-sm font-black transition-colors flex items-center gap-2">
+                        <span>حفظ وبدء الاختبار</span>
+                        <i class="fas fa-arrow-left text-xs"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modern Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-8 text-center text-sm border-t border-slate-800/80 mt-16">
+        <div class="max-w-5xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-200">Welz Academy &copy; 2026 | جميع الحقوق محفوظة</p>
+            <p class="text-xs text-amber-400/90 font-semibold tracking-wide">Created By Waleed Alkhodary</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // إعدادات Supabase
+        const SUPABASE_REST_URL = "https://rpjzduiziipaiyjrqnpc.supabase.co/rest/v1";
+        const SUPABASE_ANON_KEY = "ضع_مفتاح_ANON_PUBLIC_الخاص_بك_هنا";
+        const SUPABASE_TABLE = "assessment_leads";
+
+        const foldersData = [
+            {
+                titleAr: "1. اختبارات المهارات الإدارية",
+                titleEn: "01-Managerial_Skills",
+                folderPath: "01-Managerial_Skills",
+                icon: "fa-briefcase",
+                tests: [
+                    { nameAr: "ما مدى جودة مهاراتك الإدارية؟", file: "01-Managerial_Skills.html" },
+                    { nameAr: "ما مدى جودة مهارات التفويض لديك؟", file: "02-Delegation_Skills.html" },
+                    { nameAr: "مقياس سعادة أعضاء الفريق", file: "03-Team_Happiness.html" },
+                    { nameAr: "تقييم فاعلية الفريق", file: "04-Team_Effectiveness.html" },
+                    { nameAr: "ما مدى مهاراتك في إدارة المشاريع؟", file: "05-Project_Management.html" },
+                    { nameAr: "ما مدى جودة مهاراتك في إدارة التغيير؟", file: "06-Change_Management.html" }
+                ]
+            },
+            {
+                titleAr: "2. اختبارات المهارات القيادية",
+                titleEn: "02-Leadership_Skills",
+                folderPath: "02-Leadership_Skills",
+                icon: "fa-chess-queen",
+                tests: [
+                    { nameAr: "تقييم المهارات القيادية الشامل", file: "01-leadership_assessment_quiz.html" },
+                    { nameAr: "تقييم مهارات التأثير والإقناع", file: "02-influencing_skills_assessment_quiz.html" },
+                    { nameAr: "تقييم مهارات التعامل مع الآخرين", file: "03-people_skills_assessment_quiz.html" },
+                    { nameAr: "تقييم مهارات تحفيز الفريق", file: "04-team_motivation_assessment_quiz.html" },
+                    { nameAr: "اكتشف أسلوب قيادتك (Leadership Style)", file: "05-leadership style.html" }
+                ]
+            },
+            {
+                titleAr: "3. اختبارات الكوتشنج والتوجيه",
+                titleEn: "03-Coaching",
+                folderPath: "03-Coaching",
+                icon: "fa-hands-helping",
+                tests: [
+                    { nameAr: "ما مدى كفاءتك في تطوير فريقك؟", file: "01-How_Well_Do_You_Develop Your_People_.html" },
+                    { nameAr: "مهارات تقديم التغذية الراجعة (Feedback)", file: "02-Feedback.html" },
+                    { nameAr: "اختبار تحديد الأهداف الفعال", file: "03-goal_setting_quiz.html" }
+                ]
+            },
+            {
+                titleAr: "4. اختبارات مهارات التواصل",
+                titleEn: "04-Communication_Skills",
+                folderPath: "04-Communication_Skills",
+                icon: "fa-comments",
+                tests: [
+                    { nameAr: "تقييم مهارات التواصل الفعال", file: "01-Communication_skills_quiz.html" },
+                    { nameAr: "اختبار القائد الودود (Friendly Leader)", file: "02-friendly_leader_quiz.html" },
+                    { nameAr: "ما مدى سهولة التواصل معك والاقتراب منك؟", file: "03-How_Approachable_Are_You_.html" },
+                    { nameAr: "ما مدى جودة مهارات الاستماع لديك؟", file: "04-How_Good_Are Your_Listening Skills_.html" },
+                    { nameAr: "ما مدى جودة مهارات العرض والتقديم لديك؟", file: "05-How_Good_Are_Your_Presentation_Skills.html" },
+                    { nameAr: "ما مدى ثقتك بنفسك؟", file: "06-How_Self_Confident_Are_You.html" },
+                    { nameAr: "ما مدى ذكائك العاطفي؟", file: "07-How_Emotionally_Intelligent_Are_You_.html" }
+                ]
+            },
+            {
+                titleAr: "5. اختبارات الإنتاجية الشخصية",
+                titleEn: "05-Productivity",
+                folderPath: "05-Productivity",
+                icon: "fa-rocket",
+                tests: [
+                    { nameAr: "ما مدى إنتاجيتك الشخصية؟", file: "01-How_Productive_Are_You.html" },
+                    { nameAr: "ما مدى جودة إدارتك للوقت؟", file: "02-How_Good_Is_Your_Time_Management.html" },
+                    { nameAr: "هل أنت شخص مماطل (Procrastinator)؟", file: "03-Are_You_a_Procrastinator.html" },
+                    { nameAr: "ما مدى تحفيزك الذاتي؟", file: "04-How_Self_Motivated.html" },
+                    { nameAr: "مقياس مركز التحكم (Locus of Control)", file: "05-Locus_of_Control.html" }
+                ]
+            },
+            {
+                titleAr: "6. اختبارات إدارة الضغوط",
+                titleEn: "06-Stress_Management",
+                folderPath: "06-Stress_Management",
+                icon: "fa-heartbeat",
+                tests: [
+                    { nameAr: "اختبار الاحتراق الوظيفي (هل أنت في خطر؟)", file: "01-Burnout_Self_Test_Are_You_at_Risk_.html" },
+                    { nameAr: "ما مدى جودة إدارتك للغضب؟", file: "02-How_Good_Is_Your_Anger_Management_.html" }
+                ]
+            },
+            {
+                titleAr: "7. اختبارات مهارات التفكير واتخاذ القرار",
+                titleEn: "07-Thinking_Skills",
+                folderPath: "07-Thinking_Skills",
+                icon: "fa-brain",
+                tests: [
+                    { nameAr: "هل أنت مفكر إيجابي أم سلبي؟", file: "01-Are_You_a_Positive_or_Negative_Thinker_.html" },
+                    { nameAr: "ما مدى إبداعك في العمل؟", file: "02-How_Creative_Are_You_.html" },
+                    { nameAr: "ما مدى جودة اتخاذ القرار لديك؟", file: "03-How_Good_Is_Your_Decision_Making_.html" },
+                    { nameAr: "ما مدى جودة مهاراتك في حل المشكلات؟", file: "04-How_Good_Is_Your_Problem_Solving_.html" },
+                    { nameAr: "ما مدى مرونتك النفسية والمهنية؟", file: "05-How_Resilient_Are_You_.html" }
+                ]
+            },
+            {
+                titleAr: "8. التقييمات الفنية والتشغيلية",
+                titleEn: "08-Technical_Assessments",
+                folderPath: "08-Technical_Assessments",
+                icon: "fa-cogs",
+                tests: [
+                    { nameAr: "تقييم التخطيط والجدولة (Planning & Scheduling)", file: "01-Planning&Scheduling.html" },
+                    { nameAr: "تقييم نظام إدارة الجودة (ISO 9001)", file: "02-ISO9001.html" },
+                    { nameAr: "تقييم منهجية اللين ستة سيجما (Lean Six Sigma)", file: "03-Lean_Six_Sigma.html" }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('foldersContainer');
+        const studentModal = document.getElementById('studentModal');
+        const studentForm = document.getElementById('studentForm');
+        const selectedTestBadge = document.getElementById('selectedTestBadge');
+        const formErrorMsg = document.getElementById('formErrorMsg');
+        const submitStudentBtn = document.getElementById('submitStudentBtn');
+
+        let pendingTest = null;
+
+        function renderFolders() {
+            container.innerHTML = '';
+            let totalCount = 0;
+
+            foldersData.forEach((folder, index) => {
+                totalCount += folder.tests.length;
+
+                const testsListHTML = folder.tests.map(test => {
+                    const safeUrl = encodeURI(`${folder.folderPath}/${test.file}`);
+                    const cleanFileName = test.file.replace('.html', '');
+                    const encodedTestName = encodeURIComponent(test.nameAr);
+                    const encodedFolderTitle = encodeURIComponent(folder.titleAr);
+
+                    return `
+                        <li class="test-item" data-search="${test.nameAr.toLowerCase()} ${cleanFileName.toLowerCase()} ${folder.titleAr.toLowerCase()} ${folder.titleEn.toLowerCase()}">
+                            <button type="button"
+                                    onclick="handleTestClick(decodeURIComponent('${encodedTestName}'), decodeURIComponent('${encodedFolderTitle}'), '${safeUrl}')"
+                                    class="w-full text-right flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-amber-500 hover:bg-slate-800/90 transition-all group gap-2 shadow-sm cursor-pointer">
+                                <div class="flex items-start sm:items-center gap-3.5">
+                                    <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors border border-blue-500/20">
+                                        <i class="fas fa-file-code text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-slate-200 group-hover:text-amber-400 text-sm md:text-base transition-colors">
+                                            ${test.nameAr}
+                                        </div>
+                                        <div class="text-xs text-slate-500 font-mono mt-0.5" dir="ltr">
+                                            ${cleanFileName}
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="self-end sm:self-center text-xs font-bold bg-slate-800 text-slate-300 px-4 py-2 rounded-lg group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors flex items-center gap-1.5 flex-shrink-0 shadow-sm border border-slate-700 group-hover:border-amber-500">
+                                    <span>بدء الاختبار</span> <i class="fas fa-arrow-left text-[10px]"></i>
+                                </span>
+                            </button>
+                        </li>
+                    `;
+                }).join('');
+
+                const card = document.createElement('div');
+                card.className = 'folder-card bg-slate-800 rounded-2xl shadow-md border border-slate-700 overflow-hidden';
+                card.id = `folder-card-${index}`;
+
+                card.innerHTML = `
+                    <button type="button" onclick="toggleFolder(${index}, this)" 
+                            class="w-full flex justify-between items-center p-5 md:p-6 text-right hover:bg-slate-750 transition-colors focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 flex items-center justify-center text-2xl shadow-md flex-shrink-0 font-black">
+                                <i class="fas ${folder.icon}"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-lg md:text-xl text-white tracking-wide">
+                                    ${folder.titleAr}
+                                </h3>
+                                <div class="flex items-center gap-2.5 mt-1">
+                                    <span class="text-xs font-mono text-slate-400 bg-slate-900 px-2.5 py-0.5 rounded border border-slate-700">${folder.titleEn}</span>
+                                    <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-0.5 rounded-full border border-amber-500/20">
+                                        ${folder.tests.length} اختبارات متاحة
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-400 arrow-wrapper transition-transform duration-300 shadow-inner">
+                            <i class="fas fa-chevron-down text-sm"></i>
+                        </div>
+                    </button>
+                    <div id="submenu-${index}" class="submenu bg-slate-950/60 px-5 md:px-6 border-t border-slate-700/80">
+                        <ul class="py-4 space-y-3">
+                            ${testsListHTML}
+                        </ul>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById('totalTestsCount').textContent = totalCount;
+        }
+
+        function handleTestClick(testNameAr, folderTitleAr, testUrl) {
+            pendingTest = {
+                testName: `${folderTitleAr} - ${testNameAr}`,
+                url: testUrl
+            };
+            selectedTestBadge.textContent = `الاختبار المختار: ${testNameAr}`;
+            formErrorMsg.classList.add('hidden');
+            formErrorMsg.textContent = '';
+
+            // ملء البيانات مسبقاً إذا كان المتقدم قد أدخلها في نفس الجلسة
+            const saved = sessionStorage.getItem('welz_student_info');
+            if (saved) {
+                try {
+                    const info = JSON.parse(saved);
+                    if (info.full_name) studentForm.full_name.value = info.full_name;
+                    if (info.job_title) studentForm.job_title.value = info.job_title;
+                    if (info.company_name) studentForm.company_name.value = info.company_name;
+                    if (info.company_sector) studentForm.company_sector.value = info.company_sector;
+                    if (info.email) studentForm.email.value = info.email;
+                    if (info.phone) studentForm.phone.value = info.phone;
+                } catch (_) {}
+            }
+
+            studentModal.classList.remove('hidden');
+            studentModal.classList.add('flex');
+        }
+
+        function closeStudentModal() {
+            studentModal.classList.add('hidden');
+            studentModal.classList.remove('flex');
+            pendingTest = null;
+        }
+
+        studentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!pendingTest) return;
+
+            formErrorMsg.classList.add('hidden');
+            formErrorMsg.textContent = '';
+
+            const payload = {
+                selected_test: pendingTest.testName,
+                full_name: studentForm.full_name.value.trim(),
+                job_title: studentForm.job_title.value.trim(),
+                company_name: studentForm.company_name.value.trim(),
+                company_sector: studentForm.company_sector.value.trim(),
+                email: studentForm.email.value.trim(),
+                phone: studentForm.phone.value.trim()
+            };
+
+            if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes("ضع_مفتاح")) {
+                formErrorMsg.textContent = "لم يتم ضبط مفتاح Supabase (anon public) داخل الكود بعد.";
+                formErrorMsg.classList.remove('hidden');
+                return;
+            }
+
+            submitStudentBtn.disabled = true;
+            submitStudentBtn.innerHTML = '<span>جاري حفظ البيانات...</span><i class="fas fa-spinner fa-spin text-xs"></i>';
+
+            try {
+                const res = await fetch(`${SUPABASE_REST_URL}/${SUPABASE_TABLE}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "apikey": SUPABASE_ANON_KEY,
+                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+                        "Prefer": "return=minimal"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+
+                sessionStorage.setItem('welz_student_info', JSON.stringify({
+                    full_name: payload.full_name,
+                    job_title: payload.job_title,
+                    company_name: payload.company_name,
+                    company_sector: payload.company_sector,
+                    email: payload.email,
+                    phone: payload.phone
+                }));
+
+                const targetUrl = pendingTest.url;
+                closeStudentModal();
+                window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            } catch (err) {
+                formErrorMsg.textContent = "تعذر حفظ البيانات في قاعدة البيانات حالياً. تأكد من صحة المفتاح والجدول في Supabase وحاول مرة أخرى.";
+                formErrorMsg.classList.remove('hidden');
+            } finally {
+                submitStudentBtn.disabled = false;
+                submitStudentBtn.innerHTML = '<span>حفظ وبدء الاختبار</span><i class="fas fa-arrow-left text-xs"></i>';
+            }
+        });
+
+        function toggleFolder(index, btn) {
+            const submenu = document.getElementById(`submenu-${index}`);
+            const arrow = btn.querySelector('.arrow-wrapper');
+            
+            submenu.classList.toggle('open');
+            arrow.classList.toggle('rotate-180');
+        }
+
+        function filterTests() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            foldersData.forEach((_, index) => {
+                const card = document.getElementById(`folder-card-${index}`);
+                const submenu = document.getElementById(`submenu-${index}`);
+                const arrow = card.querySelector('.arrow-wrapper');
+                const items = card.querySelectorAll('.test-item');
+                let hasMatch = false;
+
+                items.forEach(item => {
+                    const searchText = item.getAttribute('data-search');
+                    if (searchText.includes(query)) {
+                        item.style.display = 'block';
+                        hasMatch = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                if (query === '') {
+                    card.style.display = 'block';
+                    submenu.classList.remove('open');
+                    arrow.classList.remove('rotate-180');
+                } else {
+                    if (hasMatch) {
+                        card.style.display = 'block';
+                        submenu.classList.add('open');
+                        arrow.classList.add('rotate-180');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        renderFolders();
+    </script>
+</body>
+</html>
