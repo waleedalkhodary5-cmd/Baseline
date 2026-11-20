@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار مدى جودة مهارات الاستماع لديك | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* Header Branding */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards & Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.25rem;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* Quiz Styling */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .option-label input[type="radio"] {
+            display: none;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label.selected {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Conclusion & Results Wrapper (Hidden Initially) */
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .tip-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- المقدمة -->
+    <section class="card orange-top">
+        <h2>ما مدى جودة مهارات الاستماع لديك؟</h2>
+        <h3>فهم رسالة شخص ما بأكملها</h3>
+        <p>بالنسبة للكثيرين منا، الاستماع هو مهارة التواصل التي نستخدمها أكثر من غيرها. ومع ذلك، فإن الكثير من الناس يستمعون بشكل سيء ونادراً ما يفكرون في تحسين هذه المهارة المهمة.</p>
+        <p>"يسمع" المستمعون الفقراء ما يقال، لكنهم نادراً ما "يستمعون" إلى الرسالة بأكملها. إنهم يتشتتون بأفكارهم الخاصة أو بما يجري حولهم، ويقومون بصياغة إجاباتهم قبل أن ينتهي الشخص الذي يتحدثون إليه من الحديث. ولهذا السبب، فإنهم يفتقدون المعلومات المهمة.</p>
+        <p>ومن ناحية أخرى، يتمتع المستمعون الجيدون بعلاقات أفضل لأنهم يفهمون تماماً ما يقوله الآخرون. كما أن أعضاء فريقهم أكثر إنتاجية، لأنهم يشعرون أنه يمكنهم مناقشة المشكلات بسهولة والتحدث من خلال الحلول.</p>
+        <p><strong>إذاً، ما مدى جودة مهارات الاستماع لديك؟ اختبرها أدناه، ثم اكتشف كيف يمكنك تحسينها.</strong></p>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 14</span>
+    </div>
+
+    <!-- الاختبار -->
+    <section class="card">
+        <h2>اختبار التقييم الذاتي (14 عبارة)</h2>
+        <p>يرجى الإجابة عن كل عبارة كما أنت في الواقع:</p>
+        
+        <form id="quiz-form">
+            <div id="questions-container"></div>
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب نتيجتي واعرض النتائج والتوجيهات</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة والنتائج والدليل (مخفية تماماً لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        
+        <!-- قسم النتيجة وتفسيرها -->
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتيجة</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 70</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <!-- الدليل الإرشادي والتفصيلي -->
+        <section class="card">
+            <h2>دليل تطوير وتطوير مهارات الاستماع</h2>
+
+            <h3>1. الاستعداد للاستماع (الأسئلة: 1، 3، 14)</h3>
+            <p>الإعداد الجيد ضروري للاستماع الفعال، وبدونه سيكون من الصعب الاستماع إلى الناس بنجاح. قبل إجراء محادثة مهمة، قم بإزالة أي شيء قد يشتت انتباهك حتى تتمكن من التركيز وإعطاء الشخص الآخر اهتمامك الكامل. قم بإيقاف تشغيل هاتفك الخلوي، وأوقف تنبيهات الرسائل الفورية والبريد الإلكتروني، وأغلق باب غرفة الاجتماعات لتجنب أي مقاطعة.</p>
+            <p>إذا كنت تعلم أنك لن تتمكن من منح الشخص الآخر اهتمامك الكامل (كأن تكون مشغولاً بمهمة عاجلة)، فحدد وقتاً أفضل للتحدث، مع التأكد من إعلامه بأن المحادثة مهمة بالنسبة لك. استخدم لغة جسد منفتحة ونبرة ودية، واحرص على جعل الشخص يشعر بالارتياح والسرية إذا كان الموضوع حساسة.</p>
+
+            <h3>2. الاستماع الفعال (الأسئلة: 5، 7، 8، 9، 10، 11، 12)</h3>
+            <p>عندما تستمع بنشاط، فأنت لا تبذل جهداً واعياً لسماع كلمات الشخص الآخر فحسب، بل تحاول فهم رسالته بالكامل. تعلم كيفية قراءة لغة الجسد والنبرة للتعرف على الرسائل غير اللفظية المخفية.</p>
+            <p>لا تقاطع الآخرين، أو تسمح لتشتيت الأفكار أو الآراء الشخصية بعرقلة تركيزك. أومئ برأسك أو قل "حسناً" من حين لآخر للإقرار بأنك تستمع. لا تقم بصياغة رد قبل إتمام الرسالة وتجنب أي حكم أو انتقاد حتى يحين دورك. تذكر أن أدمغتنا تفكر بشكل أسرع بكثير مما يتحدث الآخرون، لذا يتطلب الأمر تركيزاً وجهداً واعياً لتظل منصتاً.</p>
+
+            <h3>3. الاستماع التعاطفي (الأسئلة: 2، 4، 6، 13)</h3>
+            <p>عندما تظهر التعاطف، فأنت تتعرف على مشاعر الآخرين وتفعل ما بوسعك لفهم وجهات نظرهم للارتقاء بالاستماع النشط إلى المستوى التالي. ضع نفسك "مكان الشخص الآخر"، ولخص ما يقوله بكلماتك الخاصة لإثبات الفهم.</p>
+            <p>اطرح أسئلة مفتوحة لمساعدته على التعبير عن نفسه بالكامل وتجنب الأسئلة الاستدراجية. والأهم من ذلك: <strong>لا تخشى لحظات الصمت</strong>، واعتمدها كفترات توقف تمنح المتحدث وقتاً لإنهاء وجهة نظره والتفكير فيما قاله.</p>
+        </section>
+
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    const questions = [
+        { id: 1, text: "لكي أكون أكثر إنتاجية، أرد على رسائل البريد الإلكتروني والرسائل الفورية أثناء التحدث إلى الأشخاص عبر الهاتف.", scores: [1, 2, 3, 2, 5] },
+        { id: 2, text: "أكرر النقاط أثناء المحادثة لتوضيح فهمي لما يقوله الشخص الآخر.", scores: [5, 4, 3, 2, 1] },
+        { id: 3, text: "عندما يتحدث الناس معي عن مواضيع حساسة أبذل جهداً لطرحها عليهم.", scores: [5, 4, 3, 2, 1] },
+        { id: 4, text: "أشعر بعدم الارتياح مع الصمت أثناء المحادثات.", scores: [1, 2, 3, 2, 5] },
+        { id: 5, text: "عندما أستمع أقارن وجهة نظر الشخص الآخر مع وجهة نظري.", scores: [1, 2, 3, 2, 5] },
+        { id: 6, text: "ولحث الناس على توضيح وجهة نظرهم، أطرح أسئلة مفتوحة (تلك التي لا يمكن الإجابة عليها بـ 'نعم' أو 'لا').", scores: [5, 4, 3, 2, 1] },
+        { id: 7, text: "عندما يتحدث معي شخص ما أومئ برأسك وأقول أشياء مثل 'حسناً' و'آه' من حين لآخر.", scores: [5, 4, 3, 2, 1] },
+        { id: 8, text: "ألعب دور 'محامي الشيطان' للحصول على إجابات من الشخص الآخر.", scores: [1, 2, 3, 2, 5] },
+        { id: 9, text: "أجد نفسي أطرح أسئلة إرشادية لتشجيع الشخص الآخر على الموافقة على وجهة نظري.", scores: [1, 2, 3, 2, 5] },
+        { id: 10, text: "أقاطع الناس.", scores: [1, 2, 3, 2, 5] },
+        { id: 11, text: "عندما يتحدث الناس معي أبقى ساكناً تماماً حتى لا أقوم بتشتيت انتباههم.", scores: [1, 2, 3, 2, 5] },
+        { id: 12, text: "أحاول قراءة لغة جسد الشخص الآخر أثناء الاستماع.", scores: [5, 4, 3, 2, 1] },
+        { id: 13, text: "إذا كان الشخص الآخر يجد صعوبة في شرح شيء ما، فأنا أقوم بتقديم اقتراحاتي مباشرة.", scores: [1, 2, 3, 2, 5] },
+        { id: 14, text: "إذا كنت مشغولاً أسمح للآخرين بالتحدث معي طالما أنهم سريعون.", scores: [1, 2, 3, 2, 5] }
+    ];
+
+    const optionLabels = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+    const container = document.getElementById("questions-container");
+
+    questions.forEach((q) => {
+        const qDiv = document.createElement("div");
+        qDiv.className = "question-item";
+        qDiv.id = `q-box-${q.id}`;
+
+        let optionsHTML = `<div class="options-grid">`;
+        optionLabels.forEach((label, optIndex) => {
+            const scoreVal = q.scores[optIndex];
+            optionsHTML += `
+                <label class="option-label" onclick="selectOption(${q.id}, this)">
+                    <input type="radio" name="q${q.id}" value="${scoreVal}">
+                    <span>${label}</span>
+                </label>
+            `;
+        });
+        optionsHTML += `</div>`;
+
+        qDiv.innerHTML = `
+            <div class="question-text">${q.id}- ${q.text}</div>
+            ${optionsHTML}
+        `;
+        container.appendChild(qDiv);
+    });
+
+    function selectOption(qId, labelElem) {
+        const box = document.getElementById(`q-box-${qId}`);
+        box.classList.remove("unanswered");
+        const labels = box.querySelectorAll(".option-label");
+        labels.forEach(l => l.classList.remove("selected"));
+        labelElem.classList.add("selected");
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const answeredCount = document.querySelectorAll('input[type="radio"]:checked').length;
+        const percentage = (answeredCount / questions.length) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${questions.length}`;
+    }
+
+    function calculateScore() {
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        questions.forEach(q => {
+            const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+            const box = document.getElementById(`q-box-${q.id}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                totalScore += parseInt(selected.value);
+            }
+        });
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 14 المحددة باللون الأحمر لحساب النتيجة وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 70`;
+
+        if (totalScore >= 14 && totalScore <= 29) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة (14 - 29): تحتاج إلى تحسين مهارات الاستماع لديك";
+            textElem.innerText = "أنت بحاجة إلى تحسين مهارات الاستماع لديك. من المحتمل أن يشعر الأشخاص من حولك أنك لا تعيرهم اهتماماً عندما يتحدثون إليك، وقد يشعرون أنك لا تفهمهم. يمكنك تعزيز مهارات الاستماع لديك من خلال بعض الخطوات البسيطة الموضحة في الدليل أدناه.";
+        } else if (totalScore >= 30 && totalScore <= 49) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة (30 - 49): مهارات الاستماع لديك جيدة ولكن هناك مجال للتحسين";
+            textElem.innerText = "مهارات الاستماع لديك جيدة ولكن هناك بالتأكيد مجال للتحسين. استخدم الأدوات التي نقترحها أدناه لتطوير مهارات الاستماع لديك. انتبه بشكل خاص إلى النصائح المتعلقة بالاستماع التعاطفي - فهذا أمر رائع للارتقاء بمهارات الاستماع لديك إلى المستوى التالي.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة (50 - 70): لديك مهارات استماع ممتازة!";
+            textElem.innerText = "لديك مهارات استماع جيدة. يشعر الناس أنهم قادرون على التواصل معك إذا احتاجوا إلى شخص يستمع إليهم وهم على ثقة من أنك ستمنحهم اهتمامك الكامل. وهم يعرفون أيضاً أنك ستمنحهم مساحة للتحدث بحرية دون مقاطعة أو التحدث كثيراً عن نفسك. يمكنك أيضاً مساعدة الآخرين على تطوير مهارات الاستماع لديهم من خلال التدريب أو الإرشاد.";
+        }
+
+        // إظهار الخاتمة والتمرير إليها بسلاسة
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار مهارات التأثير | Welz Academy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e3a8a',
+                            900: '#0f172a',
+                        },
+                        amberCustom: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+        .option-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .option-card:hover {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+        .custom-radio:checked + label {
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+        .smooth-transition {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-slate-900 via-brand-800 to-slate-900 text-white py-10 px-4 shadow-xl border-b-4 border-amberCustom-500">
+        <div class="max-w-4xl mx-auto text-center space-y-3">
+            <div class="inline-block px-4 py-1 bg-amberCustom-500/20 text-amberCustom-400 rounded-full text-sm font-semibold tracking-wide border border-amberCustom-500/30 mb-1">
+                منصة التطوير القيادي والتنفيذي
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">
+                Welz Academy
+            </h1>
+            <p class="text-sky-400 text-lg md:text-xl font-semibold flex items-center justify-center gap-2">
+                <i class="fas fa-certificate text-base"></i>
+                Created By Waleed Alkhodary
+            </p>
+            <div class="pt-4 border-t border-slate-700/60 max-w-lg mx-auto mt-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-100">
+                    ما مدى قوة مهاراتك في التأثير؟
+                </h2>
+                <p class="text-slate-300 text-sm mt-1">How Strong Are Your Influencing Skills?</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
+
+        <!-- Intro Section Card -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+            <h3 class="text-xl font-bold text-brand-800 mb-4 flex items-center gap-3">
+                <i class="fas fa-lightbulb text-amberCustom-500"></i>
+                حدد نطاق تكتيكات التأثير الخاصة بك وقم بتوسيعها
+            </h3>
+            <div class="space-y-4 text-slate-600 leading-relaxed text-justify">
+                <p>
+                    هل تتمتع بمهارات تأثير واثقة ومؤثرة في بيئة عملك، أم أنك تشعر بالقيود بسبب طبيعة دورك الوظيفي أو نمط شخصيتك؟
+                </p>
+                <p>
+                    تخيل أنك مسؤول عن فريق تسويق متخصص، وحصلت على بيانات ودراسات مؤكدة تشير إلى ضرورة التحول إلى الوسائط الرقمية لدخول أسواق جديدة. ورغم صحة المنطق، إلا أنك لم تنجح في إقناع أفراد الفريق بالتغيير، حيث أبدى البعض مقاومة بينما قبله آخرون بفتور وتراجع الشغف إلى أدنى مستوياته. في هذه اللحظة، تتأكد أن مجرد استخدام السلطة الوظيفية ليس هو الحل الجذري.
+                </p>
+                <p>
+                    يعتمد هذا الاختبار على نموذج <strong>استراتيجيات التأثير الأربع لـ د. تيم بيكر (Dr. Tim Baker)</strong>، والذي يقسم أساليب التأثير إلى نمطين أساسيين: أسلوب <strong>الدفع (Push)</strong> المباشر والحازم، وأسلوب <strong>الجذب (Pull)</strong> غير المباشر والأكثر مرونة، وكلاهما يتم تطبيقه إما باستخدام <strong>المنطق</strong> أو <strong>المشاعر</strong>.
+                </p>
+                <div class="bg-blue-50 border-r-4 border-brand-600 p-4 rounded-l-lg text-brand-900 text-sm">
+                    <strong>تعليمات الاختبار:</strong>
+                    لكل عبارة من العبارات الـ 16 التالية، اختر الإجابة التي تعبر عن واقعك الفعلي (وليس ما تعتقد أنه ينبغي أن تكون عليه). أجب بكل شفافية، ثم انقر على زر "احسب النتيجة" في أسفل الصفحة.
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" class="space-y-6">
+            <div id="questionsContainer" class="space-y-6">
+                <!-- Dynamic Questions Container -->
+            </div>
+
+            <!-- Submit Button Area -->
+            <div class="pt-6 text-center">
+                <button type="button" onclick="calculateScore()" class="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-brand-700 to-brand-800 hover:from-brand-800 hover:to-slate-900 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-3 mx-auto">
+                    <i class="fas fa-calculator text-amberCustom-400"></i>
+                    احسب النتيجة والتحليل الشامل
+                </button>
+                <p id="errorMsg" class="text-red-500 text-sm mt-3 hidden font-semibold">
+                    <i class="fas fa-exclamation-circle ml-1"></i> يرجى الإجابة على جميع الأسئلة الـ 16 للحصول على نتيجة دقيقة.
+                </p>
+            </div>
+        </form>
+
+        <!-- Results & Detailed Analysis Section -->
+        <section id="resultSection" class="hidden mt-10 space-y-8 smooth-transition">
+            <!-- Score Overview Card -->
+            <div class="bg-gradient-to-br from-brand-900 to-slate-900 text-white rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden border-b-4 border-amberCustom-500">
+                <div class="absolute top-0 left-0 -mt-10 -ml-10 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="text-center space-y-4">
+                    <span class="inline-block px-3 py-1 bg-amberCustom-500/20 text-amberCustom-400 rounded-full text-xs font-bold uppercase tracking-wider">
+                        النتيجة النهائية للاختبار
+                    </span>
+                    <div class="flex justify-center items-baseline gap-2">
+                        <span id="scoreValue" class="text-6xl font-extrabold text-amberCustom-400">0</span>
+                        <span class="text-2xl text-slate-400">/ 80</span>
+                    </div>
+                    <h3 id="scoreCategory" class="text-2xl font-bold text-white"></h3>
+                    <p id="scoreDescription" class="text-slate-300 max-w-2xl mx-auto leading-relaxed text-sm md:text-base"></p>
+                </div>
+            </div>
+
+            <!-- Detailed Analysis Section -->
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 border-b pb-4 flex items-center gap-3">
+                    <i class="fas fa-chart-pie text-brand-600"></i>
+                    التحليل التفصيلي لاستراتيجيات التأثير الأربع (Dr. Tim Baker)
+                </h3>
+                <p class="text-slate-600 text-sm mb-6">
+                    يقيم الاختبار قدرتك في أربع شخصيات واستراتيجيات تأثير رئيسية. استعرض تفاصيل كل استراتيجية لتكتشف كيف ترفع قدرتك على الإقناع:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Strategy 1: Investigator -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-search text-amberCustom-500"></i>
+                                1. المحقق - Investigator (الأسئلة 2، 3، 6، 10، 11، 15)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            يعتمد "المحققون" على الحقائق والأرقام لدعم أسلوب منطقي ومنهجي. للإتقان، يجب أن تشعر بالارتياح في معالجة البيانات واستخدامها لبناء حجج قوية.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>جمع البيانات (Information Gathering):</strong> التمييز بين بيانات الخلفية والبيانات المرتبطة بالمهمة.</li>
+                                <li><strong>سلم التجريد (Ladder of Abstraction):</strong> الربط بين الحقائق الملموسة والأفكار الرؤيوية.</li>
+                                <li><strong>تقنية التقطيع (Chunking):</strong> تنظيم المعلومات لتسهيل تذكرها وتجنب الإغراق المعلوماتي (Info Overload).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Strategy 2: Calculator -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-calculator text-amberCustom-500"></i>
+                                2. الحاسب - Calculator (الأسئلة 7، 13، 14)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            يستخدم "الحاسبون" المنطق في التأثير وهم مناظرون بارعون. يعتمد هذا الأسلوب على التحليل العميق وتوفير حجج هيكلية ممتازة، وإظهار ميزة المقترح مقابل المخاطر.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>تحليل التكلفة والفائدة (Cost-Benefit Analysis):</strong> قياس الإيجابيات والسلبيات بدقة.</li>
+                                <li><strong>فن البلاغة (Rhetoric):</strong> تقديم الحجج بطريقة مقنعة ورصينة.</li>
+                                <li><strong>إبرام المقارنات الذكية:</strong> مقارنة فوائد مقترحك مع عواقب عدم اتخاذ قرار.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Strategy 3: Motivator -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-fire text-amberCustom-500"></i>
+                                3. المحفز - Motivator (الأسئلة 5، 12، 16)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            يستخدم "المحفزون" العاطفة و"الصورة الكبيرة" لنقل رؤى مستقبليّة ملهمة. يمكنك إضافة الهيكل لشغفك وجذب انتباه الجمهور بمهارة عالية.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>تسلسل مونرو التحفيزي (Monroe's Motivated Sequence):</strong> 5 خطوات لخطف الانتباه وحث الجمهور على الإجراء.</li>
+                                <li><strong>تطوير الكاريزما (Developing Charisma):</strong> إتقان لغة الجسد، التعاطف، والقدرة على الإلهام.</li>
+                                <li><strong>التفكير في الرؤية الكبيرة:</strong> ربط الأهداف الحالية بالطموحات المستقبلية.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Strategy 4: Collaborator -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-handshake text-amberCustom-500"></i>
+                                4. المشارك - Collaborator (الأسئلة 1، 4، 8، 9)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            يقنع "المشاركون" الآخرين عن طريق إشراكهم في اتخاذ القرار. التأثير بالتعاون يقوم على بناء الروابط الثنائية وتطوير الثقة في الفريق.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>نموذج كوهين-برادفورد (Cohen-Bradford Model):</strong> الاعتماد على مبدأ المعاملة بالمثل وتطوير الثقة.</li>
+                                <li><strong>تأطير التيسير (Facilitation):</strong> مشاركة السلطة والاستماع الفعال (Active Listening).</li>
+                                <li><strong>صنع القرار الجماعي (Modified Borda Count):</strong> الوصول لإنصاف وتوافق جماعي.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Summary callout -->
+                <div class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-5 text-blue-900 text-sm leading-relaxed flex gap-4 items-start">
+                    <i class="fas fa-info-circle text-blue-600 text-2xl flex-shrink-0 mt-0.5"></i>
+                    <div>
+                        <h5 class="font-bold mb-1">الخلاصة القيادية:</h5>
+                        <p>
+                            تتغير بيئة العمل الحديثة باستمرار، ولم يعد المنصب الإداري يمنحك التلقائية في التأثير على فريقك. تنوع تكتيكات التأثير يضمن لك التكيف والنجاح في إقناع مختلف الشخصيات والقيادات وفي كافة الظروف.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-sm">
+        <div class="max-w-4xl mx-auto px-4 space-y-2">
+            <p class="font-semibold text-slate-300">جميع الحقوق محفوظة &copy; Welz Academy | إعداد وتطوير: أ. وليد الخضري</p>
+            <p class="text-xs text-slate-500">Created By Waleed Alkhodary - بناءً على نموذج د. تيم بيكر لاستراتيجيات التأثير الأربع</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Questions Data Array (16 Questions)
+        // Question Scoring logic per prompt instructions:
+        // Reverse (isReverse: true): Q1, Q3, Q4, Q5, Q6, Q10, Q11, Q13 -> (دائماً = 1, غالباً = 2, أحياناً = 3, نادراً = 4, أبداً = 5)
+        // Standard (isReverse: false): Q2, Q7, Q8, Q9, Q12, Q14, Q15, Q16 -> (دائماً = 5, غالباً = 4, أحياناً = 3, نادراً = 2, أبداً = 1)
+        const questions = [
+            { id: 1, text: "أميل إلى استخدام نفس التكتيك المجرب والمختبر لإقناع زملائي في الفريق.", isReverse: true },
+            { id: 2, text: "لدي فهم قوي للحقائق والأرقام وأستخدمها لدعم معلوماتي.", isReverse: false },
+            { id: 3, text: "أفقد ثقتي بنفسي إذا بدأ الشخص الآخر بالمناقشة عندما أحتاج إلى توصيل وجهة نظري.", isReverse: true },
+            { id: 4, text: "إن جمع الناس معاً للعمل على اتخاذ قرار مهم لن يؤدي إلا إلى إضعاف تأثيري وجعلي أبدو ضعيفاً.", isReverse: true },
+            { id: 5, text: "أطرح حججي على رؤوس الناس بدلاً من قلوبهم.", isReverse: true },
+            { id: 6, text: "يمكن أن يكون استخدام المعلومات المتعلقة بالآخرين والتي أحصل عليها من \"ملفاتهم الشخصية وتقييماتهم\" مفيداً في ضمان الدعم لعرضي.", isReverse: true },
+            { id: 7, text: "أسلط الضوء على العواقب السلبية للبدائل لفكرتي فضلاً عن تعزيز الإيجابيات في نهجي.", isReverse: false },
+            { id: 8, text: "زملائي والمديرون يثقون في قدراتي.", isReverse: false },
+            { id: 9, text: "أنا قادر على العمل مع أي شخص لإيصاله إلى وجهة نظري.", isReverse: false },
+            { id: 10, text: "أجد صعوبة في استخدام أسلوب منطقي ومنظم للتأثير، وأفضل التفكير دون توقف.", isReverse: true },
+            { id: 11, text: "أجد أنه من الأسهل بكثير التأثير على أعضاء فريقي والموردين بدلاً من التأثير على مديري وعملائي.", isReverse: true },
+            { id: 12, text: "أحب أن أنظر إلى الصورة الكبيرة عندما أحاول التأثير بدلاً من التركيز حصرياً على التفاصيل.", isReverse: false },
+            { id: 13, text: "أنا لست جيداً في رؤية السلبيات فيما أقترحه.", isReverse: true },
+            { id: 14, text: "أساعد زملائي في عبء العمل لأنك لا تعرف أبداً متى قد تحتاج إلى مساعدتهم.", isReverse: false },
+            { id: 15, text: "أنا قادر على العثور على المعلومات عندما أحتاجها.", isReverse: false },
+            { id: 16, text: "أستطيع عمل علاقات بسهولة وأشعر أن الناس تستمتع بصحبتي ويحبون الاستماع إلى ما أقول.", isReverse: false }
+        ];
+
+        // Standard Options (دائماً = 5 -> أبداً = 1)
+        const optionsStandard = [
+            { label: "دائماً", val: 5 },
+            { label: "غالباً", val: 4 },
+            { label: "أحياناً", val: 3 },
+            { label: "نادراً", val: 2 },
+            { label: "أبداً", val: 1 }
+        ];
+
+        // Reverse Options (دائماً = 1 -> أبداً = 5)
+        const optionsReverse = [
+            { label: "دائماً", val: 1 },
+            { label: "غالباً", val: 2 },
+            { label: "أحياناً", val: 3 },
+            { label: "نادراً", val: 4 },
+            { label: "أبداً", val: 5 }
+        ];
+
+        // Render Questions on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('questionsContainer');
+            
+            questions.forEach((q) => {
+                const options = q.isReverse ? optionsReverse : optionsStandard;
+                
+                const qCard = document.createElement('div');
+                qCard.className = 'bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 hover:shadow-md transition-shadow';
+                qCard.id = `qCard_${q.id}`;
+
+                let optionsHTML = '';
+                options.forEach(opt => {
+                    optionsHTML += `
+                        <label class="option-card flex items-center justify-between p-3 rounded-xl border border-slate-200 cursor-pointer smooth-transition bg-slate-50/50">
+                            <div class="flex items-center gap-3 w-full">
+                                <input type="radio" name="q_${q.id}" value="${opt.val}" class="w-4 h-4 text-brand-600 border-slate-300 focus:ring-brand-600 custom-radio">
+                                <span class="text-sm font-medium text-slate-700">${opt.label}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qCard.innerHTML = `
+                    <div class="flex items-start gap-3 mb-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-brand-800 font-bold text-sm flex items-center justify-center">
+                            ${q.id}
+                        </span>
+                        <div>
+                            <h4 class="text-slate-800 font-semibold text-base md:text-lg pt-0.5 leading-snug">
+                                ${q.text}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 md:gap-3">
+                        ${optionsHTML}
+                    </div>
+                `;
+
+                container.appendChild(qCard);
+            });
+        });
+
+        // Calculate Score & Display Results
+        function calculateScore() {
+            let totalScore = 0;
+            let allAnswered = true;
+
+            // Clear previous highlighting errors
+            questions.forEach(q => {
+                const card = document.getElementById(`qCard_${q.id}`);
+                card.classList.remove('border-red-400', 'bg-red-50/20');
+            });
+
+            // Calculate total score and check completeness
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+                if (selected) {
+                    totalScore += parseInt(selected.value, 10);
+                } else {
+                    allAnswered = false;
+                    const card = document.getElementById(`qCard_${q.id}`);
+                    card.classList.add('border-red-400', 'bg-red-50/20');
+                }
+            });
+
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!allAnswered) {
+                errorMsg.classList.remove('hidden');
+                const firstUnanswered = document.querySelector('.border-red-400');
+                if (firstUnanswered) {
+                    firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            errorMsg.classList.add('hidden');
+
+            // Render Results Data
+            const scoreValEl = document.getElementById('scoreValue');
+            const scoreCatEl = document.getElementById('scoreCategory');
+            const scoreDescEl = document.getElementById('scoreDescription');
+
+            scoreValEl.textContent = totalScore;
+
+            if (totalScore >= 16 && totalScore <= 34) {
+                scoreCatEl.textContent = "لديك قدرة محدودة على التأثير في المواقف المختلفة (16 - 34)";
+                scoreCatEl.className = "text-2xl font-bold text-amberCustom-400";
+                scoreDescEl.textContent = "قد تشكل هذه النتيجة تحدياً بمرور الوقت مع تطور بيئات العمل الحديثة. تذكر أن كونك مديراً لا يعني تلقائياً رغبة فريقك في اتباعك؛ احرص على عدم الاعتماد فقط على السلطة أو الحقائق، بل اقنع العقول والقلوب معاً عبر استراتيجيات متنوعة.";
+            } else if (totalScore >= 35 && totalScore <= 59) {
+                scoreCatEl.textContent = "أنت قادر على التكيف في التأثير مع وجود مجال واسع للتطوير (35 - 59)";
+                scoreCatEl.className = "text-2xl font-bold text-sky-400";
+                scoreDescEl.textContent = "لديك مرونة في إقناع الآخرين، لكنك قد تحتاج إلى دعم كيفية بناء الحجج بالأرقام أو سرعة التفكير أثناء المناظرة. راجع نتائجك في كل محور أدناه لترميم نقاط الضعف.";
+            } else if (totalScore >= 60 && totalScore <= 80) {
+                scoreCatEl.textContent = "ممتاز! أنت مؤثر قوي يمتلك تكتيكات تأثير متكاملة ومتنوعة (60 - 80)";
+                scoreCatEl.className = "text-2xl font-bold text-emerald-400";
+                scoreDescEl.textContent = "أحسنت! أنت قادر على استخدام أكثر من طريقة لإقناع الزملاء والقيادات. تجمع بين المنطق والعاطفة، وتعمل بتشارك وتواصل ممتاز، وتوضح الفوائد والمخاطر ببراعة. واصل استخدام الأدوات الموضحة بالأسفل لتظل قائداً متميزاً.";
+            }
+
+            // Unhide Result Section & Scroll
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>

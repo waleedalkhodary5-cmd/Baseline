@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى سعادة عضو فريقك؟ - Wel Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b89628;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        /* Branding Header & Footer */
+        .brand-header, .brand-footer {
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .brand-header {
+            margin-bottom: 20px;
+        }
+
+        .brand-footer {
+            margin-top: 40px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            color: white;
+            padding: 25px;
+        }
+
+        .brand-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
+        }
+
+        .brand-footer .brand-title {
+            color: var(--accent-gold);
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .brand-footer .brand-subtitle {
+            color: #e2e8f0;
+        }
+
+        /* Main Quiz Title */
+        .quiz-main-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        /* Intro & Instructions Boxes matching the design */
+        .intro-box {
+            background-color: #fefcbf38;
+            border-right: 6px solid #ecc94b;
+            background-image: linear-gradient(to left, #fffdf5, #fffbf0);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .intro-box h3 {
+            color: #b7791f;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box {
+            background-color: #ebf8ff;
+            border-right: 6px solid #3182ce;
+            background-image: linear-gradient(to left, #f7fafc, #ebf8ff);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .instructions-box h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Quiz Question Cards */
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-label {
+            flex: 1;
+            min-width: 100px;
+            background: #f7fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #edf2f7;
+        }
+
+        .option-label input {
+            margin-left: 8px;
+        }
+
+        /* Calculate Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        /* Results Section */
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 10px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .result-comment {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #276749;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border-right: 4px solid #48bb78;
+        }
+
+        /* Analysis Sections */
+        .analysis-section {
+            margin-top: 30px;
+            line-height: 1.9;
+        }
+
+        .analysis-section h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+
+        .key-points {
+            background: #fffaf0;
+            border-right: 4px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Branding -->
+    <div class="brand-header">
+        <h1 class="brand-title">Wel Academy</h1>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+
+    <!-- Quiz Main Title -->
+    <h2 class="quiz-main-title">ما مدى سعادة عضو فريقك؟</h2>
+
+    <!-- Introduction Box -->
+    <div class="intro-box">
+        <h3>مقدمة الاختبار</h3>
+        <p><strong>اختبار لتعزيز الرفاهية، الإنتاجية، والاستبقاء على الكفاءات:</strong></p>
+        <p>من الضروري أن يكون جميع أفراد فريقك سعداء وممتنين في وظائفهم؛ حيث يميل الموظفون السعداء ليكونوا أكثر إبداعاً، إنتاجية، وطموحاً، كما يعملون معاً بشكل أفضل، ويرغبون دائماً في البقاء داخل المنظمة! لكن إلى أي مدى تفهم حقاً ما يدور داخل فريقك؟ وهل أنت متأكد من عدم وجود سلبية تتراكم في الخفاء؟</p>
+        <p>الموظفون غير السعداء قد يكرهون التواجد في العمل، وستجد أن إدارتهم أكثر صعوبة. كما قد تصبح مشكلات عدم الالتزام بالمواعيد، وارتفاع معدل دوران العمل، والغياب المتكرر عوائق مكلفة لمؤسستك.</p>
+        <p>سيساعدك هذا الاختبار على تشخيص المشكلات فرداً بفرد، لتتمكن من معالجتها بفورية وفاعلية، ورصد التوجهات العامة عبر الفريق ككل.</p>
+    </div>
+
+    <!-- Instructions Box -->
+    <div class="instructions-box">
+        <h3>تعليمات الإجابة</h3>
+        <p><strong>فريق من أجزاء متعددة:</strong> قم بإجراء هذا الاختبار لكل عضو في فريقك بشكل منفصل، مع التفكير في موظف واحد محدد في كل مرة. لكل عبارة، اختر الخيار الذي يصف موظفك الفعلي بدقة (وليس كما تعتقد أنه ينبغي أن يكون)، ولا تقلق إذا كانت بعض الأسئلة تُحسب في "الاتجاه العكسي". عند الانتهاء، انقر فوق زر "احسب نتيجتي وتقييم السعادة" في أسفل الاختبار متبوعاً بالتحليل والإرشادات.</p>
+    </div>
+
+    <!-- Quiz Form -->
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="calculateScore()">احسب نتيجتي وتقييم السعادة</button>
+    </form>
+
+    <!-- Result & Output Section -->
+    <div id="result-section">
+        <div class="score-display">درجتك الكلية: <span id="scoreValue">0</span> من 90</div>
+        <div class="result-comment" id="resultComment"></div>
+
+        <div class="analysis-section">
+            <h2>تحليل مهارات السعادة في العمل ونموذج PERMA</h2>
+            <p>قمنا بتركيب أسئلتنا بناءً على **نموذج PERMA** للعالم مارتن سيليجمان (Martin Seligman)، والذي يحدد خمسة عناصر أساسية للشعور بالسعادة المستدامة والرفاهية الوظيفية:</p>
+
+            <h3>1. المشاعر الإيجابية Positive Emotions (الأسئلة 4، 10، 13، 18)</h3>
+            <p>المشاعر الإيجابية مثل الطاقة، السرور، الأمل، والرضا أساسية لرفاهيتنا. إذا كان موظفك يجد صعوبة في الابتسام، أو يواجه صعوبة في التحكم في غضبه، أو يبدو خمولاً، فمن المرجح أنه غير سعيد.</p>
+            <p>المشاعر الإيجابية في العمل تقوي الروابط بين أفراد الفريق، ترفع الروح المعنوية، تعزز الإنتاجية، وتشجع الابتكار. يمكنك البدء باستخدام نظرية هيرزبرج (Herzberg) لمعالجة أسباب عدم الرضا، مع الحرص على التقدير الصادق والثناء، وتوفير بيئة عمل صحية ومريحة ماديًا ومعنوياً.</p>
+
+            <h3>2. الاندماج Engagement (الأسئلة 1، 6، 12، 16)</h3>
+            <p>يواجه الشخص غير السعيد صعوبة في الدخول في حالة التركيز العميق (Flow)، بينما الموظف المندمج كلياً يتجاوز مسؤوليات وصفه الوظيفي بإنتاجية وإبداع عالٍ.</p>
+            <p>يبدأ الاندماج بالتواصل القوي والشفافية في الإيجازات الدورية (Team Briefings). تقليل المشتتات، وتوفير التدريب اللازم لتطوير المهارات، وإعطاء الموظف قدرًا من الاستقلالية الذاتية (Autonomy) لإعادة تشكيل وظيفته، تجعله يزدهر ويتعلق بعملها بشكل أكبر.</p>
+
+            <h3>3. العلاقات الإيجابية Positive Relationships (الأسئلة 2، 8، 11، 17)</h3>
+            <p>يقضي الموظف معظم ساعات يومه مع زملائه، ولذا فهو بحاجة للانسجام معهم، وإلا أصبحت أيامه ثقيلة ومجلبة للضغط العصبي.</p>
+            <p>رغم أنك لا تستطيع إجبار الناس على الصداقة، يمكنك خلق بيئة قائمة على التعاون واللطف، وبناء الثقة لإبداء الآراء دون خوف. تشجيع التفاعل الاجتماعي والتواصل خارج نطاق المهام الرسمية، وحل الصراعات بفاعلية وتقليل الصراعات السياسية داخل المكتب يُبعد عن الموظف الاستقالة والهروب.</p>
+
+            <h3>4. المعنى والغاية Meaning (الأسئلة 5، 7، 14)</h3>
+            <p>يرغب الكثير منا في معرفة أننا نعمل من أجل هدف أكبر. ساعد موظفك على فهم كيف يخدم دوره الصورة الكبيرة والأهداف الاستراتيجية للمنظمة.</p>
+            <p>شارك معهم التغذية الراجعة من العملاء والإدارة العليا، وربط أهدافهم الفردية برؤية ورسالة المنظمة (Vision and Mission). إشراك الموظفين في برامج المسؤولية المجتمعية يُعزز الروح المعنوية ويربطهم بغاية أسمى.</p>
+
+            <h3>5. الإنجاز Accomplishment/Achievement (الأسئلة 3، 9، 15)</h3>
+            <p>نشعر جميعاً بسعادة أكبر عندما نعرف أننا نتحمل المسؤولية ونحقق نجاحات. حرصك على تقدير والاحتفال بـ "الانتصارات الصغيرة" (Small Wins) يبني دافعية مستمرة لدى الموظف.</p>
+
+            <div class="key-points">
+                <h4>نقاط رئيسية تذكرها دائماً:</h4>
+                <p>استخدم هذا الاختبار بشكل دوري لمساعدتك على معرفة مدى سعادة أعضاء فريقك في مكان العمل. يمنحك نموذج PERMA خمسة محاور للقياس والتحسين: المشاعر الإيجابية، الاندماج، العلاقات الإيجابية، المعنى، والإنجاز.</p>
+                <p>تذكر دائماً أن الدعم المستمر، والثناء الصادق، والاستماع الفعال، يضمن لك فريقاً سعيداً، منتجاً، ومستقراً على المدى الطويل.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Branding -->
+    <div class="brand-footer">
+        <h2 class="brand-title">Wel Academy</h2>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { text: "1- هو أو هي لا يساهم بأي شيء في اجتماعات الفريق.", scores: [1, 2, 3, 4, 5] },
+        { text: "2- يقتربون مني دون أن يُطلب منهم مشاركة آرائهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "3- إنهم لا يضعون أيديهم للتدريب لتطوير مهارة جديدة.", scores: [1, 2, 3, 4, 5] },
+        { text: "4- لا يبتسمون.", scores: [1, 2, 3, 4, 5] },
+        { text: "5- يتوافق عملهم مع قيم المنظمة ورسالتها.", scores: [5, 4, 3, 2, 1] },
+        { text: "6- إنهم يتجاوزون المسؤوليات في الوصف الوظيفي الخاص بهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "7- أحتفل بعملهم الجيد.", scores: [5, 4, 3, 2, 1] },
+        { text: "8- يحضرون المناسبات الاجتماعية للفريق.", scores: [5, 4, 3, 2, 1] },
+        { text: "9- لا يظهرون أي اهتمام بالتقدم الوظيفي.", scores: [1, 2, 3, 4, 5] },
+        { text: "10- يعبرون عن الغضب أو الإحباط.", scores: [1, 2, 3, 4, 5] },
+        { text: "11- يتعاملون بشكل جيد مع زملائهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "12- عملهم إبداعي.", scores: [5, 4, 3, 2, 1] },
+        { text: "13- يتأخرون عن العمل.", scores: [1, 2, 3, 4, 5] },
+        { text: "14- يمكنهم الوصول إلى كبار الزملاء ويستمعون إليهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "15- إنهم حريصون على الحصول على الجوائز المقدمة من الشركة عند تقييم الأداء.", scores: [5, 4, 3, 2, 1] },
+        { text: "16- إنتاجيتهم أقل من المتوقع.", scores: [1, 2, 3, 4, 5] },
+        { text: "17- يجلسون وحدهم.", scores: [1, 2, 3, 4, 5] },
+        { text: "18- لا يظهرون سوى القليل من الحافز.", scores: [1, 2, 3, 4, 5] }
+    ];
+
+    const optionsText = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        
+        let optionsHTML = '';
+        q.scores.forEach((score, oIndex) => {
+            optionsHTML += `
+                <label class="option-label">
+                    <input type="radio" name="q${index}" value="${score}" required>
+                    ${optionsText[oIndex]}
+                </label>
+            `;
+        });
+
+        qCard.innerHTML = `
+            <div class="question-title">${q.text}</div>
+            <div class="options-group">${optionsHTML}</div>
+        `;
+        container.appendChild(qCard);
+    });
+
+    function calculateScore() {
+        const form = document.getElementById('quizForm');
+        if (!form.checkValidity()) {
+            alert("يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة.");
+            return;
+        }
+
+        let totalScore = 0;
+        questions.forEach((_, index) => {
+            const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selectedOption) {
+                totalScore += parseInt(selectedOption.value);
+            }
+        });
+
+        document.getElementById('scoreValue').innerText = totalScore;
+        
+        let commentText = "";
+        if (totalScore >= 18 && totalScore <= 42) {
+            commentText = "من المرجح أن يكون هذا العضو في الفريق غير سعيد في العمل، ولديه القليل مما يرضيه، والكثير مما يسبب له الإحباط. مخرجات عمله قليلة وجودتها ضعيفة - عندما يحضر بالفعل! قد لا يطول الوقت قبل أن يغادر. تتوفر أدوات عديدة أدناه لمساعدتك على تغيير هذا الوضع تماماً.";
+        } else if (totalScore >= 43 && totalScore <= 66) {
+            commentText = "عضو فريقك ليس في أسعد حالاته، ولكن يمكنك لمس بعض الإيجابية. ألقِ نظرة عن قرب على إجاباتك لتحديد المجالات التي حصل فيها على أدنى الدرجات ومركزاً عليها لتشاهد تحسناً سريعاً في رفاهيته وإنتاجيته.";
+        } else if (totalScore >= 67 && totalScore <= 90) {
+            commentText = "رائع! يبدو أن عضو فريقك سعيد في العمل. إنه متعاون رائع في الفريق، ولكنه متفاعل بما يكفي بمفرده أيضاً. كمية وجودة عمله عالية، ولديه شعور قوي بالمعنى المترتب على دوره. استمر في العمل معه للحفاظ على تحفيزه وضمان عدم فقدانه.";
+        }
+
+        document.getElementById('resultComment').innerText = commentText;
+        
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

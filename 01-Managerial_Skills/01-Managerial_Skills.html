@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى جودة مهاراتك الإدارية؟ - Wel Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b89628;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        /* Branding Header & Footer */
+        .brand-header, .brand-footer {
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .brand-header {
+            margin-bottom: 20px;
+        }
+
+        .brand-footer {
+            margin-top: 40px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            color: white;
+            padding: 25px;
+        }
+
+        .brand-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
+        }
+
+        .brand-footer .brand-title {
+            color: var(--accent-gold);
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .brand-footer .brand-subtitle {
+            color: #e2e8f0;
+        }
+
+        /* Main Quiz Title */
+        .quiz-main-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        /* Intro & Instructions Boxes matching the image */
+        .intro-box {
+            background-color: #fefcbf38; /* Soft yellowish tint */
+            border-right: 6px solid #ecc94b; /* Yellow bar on the right */
+            background-image: linear-gradient(to left, #fffdf5, #fffbf0);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .intro-box h3 {
+            color: #b7791f;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box {
+            background-color: #ebf8ff; /* Soft blue tint */
+            border-right: 6px solid #3182ce; /* Blue bar on the right */
+            background-image: linear-gradient(to left, #f7fafc, #ebf8ff);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .instructions-box h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Quiz Table / Question Cards */
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-label {
+            flex: 1;
+            min-width: 100px;
+            background: #f7fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #edf2f7;
+        }
+
+        .option-label input {
+            margin-left: 8px;
+        }
+
+        /* Calculate Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        /* Results Section */
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 10px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .result-comment {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #276749;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border-right: 4px solid #48bb78;
+        }
+
+        /* Conclusion Details */
+        .analysis-section {
+            margin-top: 30px;
+            line-height: 1.9;
+        }
+
+        .analysis-section h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+
+        .key-points {
+            background: #fffaf0;
+            border-right: 4px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Branding -->
+    <div class="brand-header">
+        <h1 class="brand-title">Wel Academy</h1>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+
+    <!-- Quiz Main Title -->
+    <h2 class="quiz-main-title">ما مدى جودة مهاراتك الإدارية؟</h2>
+
+    <!-- Introduction Box matching image -->
+    <div class="intro-box">
+        <h3>مقدمة الاختبار</h3>
+        <p>في عالم الأعمال، نجد أنفسنا غالباً نركز بشكل أقل على الإدارة الجيدة، بينما ننجذب أكثر نحو العمل الجذاب والمثير للقيادة.</p>
+        <p>ومع ذلك، فإن المديرين هم المسؤولون الحقيقيون عن ضمان تنفيذ الأمور بالشكل الصحيح. وبينما يقدم لنا القادة الرؤية والإلهام والتحدي، فإن كل هذه الأمور لا قيمة لها بدون التنفيذ الفعال والمتقن الذي تحققه الإدارة الجيدة.</p>
+        <p>لكي تكون مديرًا عظيماً، يجب أن تمتلك مجموعة واسعة من المهارات – بدءاً من التخطيط والتفويض، وصولاً إلى التواصل والتحفيز. ونظراً لاتساع نطاق هذه المهارات، قد يميل المرء لتطوير المهارات التي يشعر بالراحة معها فقط. لكن، لنجاحك على المدى الطويل، من الذكاء تحليل مهاراتك في جميع مجالات الإدارة – ثم تحدي نفسك للتحسن في كل هذه المجالات.</p>
+        <p>يساعدك هذا الاختبار على تحديد نقاط القوة والضعف لديك بسرعة، لتتمكن من تعزيز نقاط القوة وإدارة نقاط الضعف وتطويرها.</p>
+        <p style="margin-top: 15px; font-size: 0.95rem;"><strong>ملاحظة:</strong> لمعرفة المزيد عن القيادة وتقييم مهاراتك القيادية، يمكنك إكمال اختبار القيادة الخاص بنا.</p>
+    </div>
+
+    <!-- Instructions Box matching image -->
+    <div class="instructions-box">
+        <h3>تعليمات الإجابة</h3>
+        <p>لكل عبارة، اختر الخيار الذي يصف سلوكك الفعلي بدقة (وليس كما تعتقد أنه ينبغي أن يكون)، ولا تقلق إذا كانت بعض الأسئلة تُحسب في "الاتجاه العكسي". عند الانتهاء، انقر فوق زر "احسب نيجتي وتقييم المهارات" في أسفل الاختبار.</p>
+    </div>
+
+    <!-- Quiz Form -->
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="calculateScore()">احسب نيجتي وتقييم المهارات</button>
+    </form>
+
+    <!-- Result & Output Section -->
+    <div id="result-section">
+        <div class="score-display">درجتك الكلية: <span id="scoreValue">0</span> من 100</div>
+        <div class="result-comment" id="resultComment"></div>
+
+        <div class="analysis-section">
+            <h2>نموذج الإدارة الفعالة والتحليل التفصيلي</h2>
+            <p>تتطلب الإدارة الفعالة مجموعة واسعة من المهارات، حيث تُكمل كل مهارة منها المهارات الأخرى. يجب أن يكون هدفك هو تطوير وصيانة جميع هذه المهارات، حتى تتمكن من مساعدة فريقك على تحقيق أهدافه بكفاءة وفاعلية.</p>
+            <p>يعتمد اختبارنا على ثمانية مجالات مهارية أساسية يجب على المديرين التركيز عليها:</p>
+
+            <h3>1. فهم ديناميكيات الفريق وتشجيع العلاقات الطيبة (الأسئلة 5، 15، 17)</h3>
+            <p>تستلزم الإدارة الجيدة فهم كيفية عمل الفرق. من المهم التذكر أن الفرق تمر عادةً بمراتب محددة للتطوير: (التشكيل، وضع القواعد، الصراع، ثم الأداء). من المهم تشجيع ودعم الأفراد خلال هذه المراحل لمساعدة الفريق في الوصول إلى أقصى درجات الفاعلية بأسرع وقت.</p>
+            <p>عند تشكيل الفرق، يجب إيجاد توازن يتيح تنوع المهارات والشخصيات ووجهات النظر. قد تظن أن إدارة مجموعة متشابهة سهلة، ولكن الفرق الفعالة بحق هي التي تحتضن الاختلاف وتستغله في الابتكار والإبداع. مهمتك هنا هي قيادة هذه الاختلافات بنجاح.</p>
+
+            <h3>2. اختيار الأفراد المناسبين وتطويرهم (الأسئلة 11، 17)</h3>
+            <p>يعد البحث عن أعضاء جدد ومتميزين وتطوير المهارات المطلوبة لنجاح الفريق جزءاً أساسياً آخر في بناء الفرق. تقع عليك مسؤولية الاستثمار في تدريب وتحديد الاحتياجات التنموية لفريقك.</p>
+
+            <h3>3. التفويض الفعال (الأسئلة 2، 18)</h3>
+            <p>امتلاك الأفراد المناسبين ليس كافياً؛ بل يجب على المدير معرفة كيفية إنجاز العمل بكفاءة. "التفويض" هو المفتاح. بعض المديرين يحاولون القيام بغالبية العمل بأنفسهم اعتقاداً منهم أنهم الوحيدون القادرون على إنجازه بالشكل الصحيح. المدير الفعال يدرك أن إسناد المهام للأشخاص المناسبين مع تحديد التوقعات بوضوح يمكّن الفريق من تحقيق إنجازات أكبر بكثير.</p>
+
+            <h3>4. تحفيز الأفراد (الأسئلة 13، 19)</h3>
+            <p>من المهارات الضرورية أيضاً تحفيز الآخرين. مفتاح التحفيز هو فهم أنه شخصي جداً؛ فما يحفز شخصاً قد لا يحفز الآخر. التعرف على أعضاء فريقك بمستوى شخصي وتقديم التغذية الراجعة (Feedback) بانتظام يمنحك القدرة على تحفيز كل فرد بالأسلوب الذي يناسبه.</p>
+
+            <h3>5. إدارة الانضباط والتعامل مع الصراعات (الأسئلة 3، 6، 12)</h3>
+            <p>أحياناً تظهر مشاكل في أداء بعض الأفراد. بصفتك مديراً، يتوجب عليك التعامل معها فوراً. عدم تطبيق الانضباط يؤثر سلباً على باقي أعضاء الفريق وعلى خدمة العملاء. كما أن الصراع إذا لم يتم إدارته يتحول لحالة هدّامة، بينما التعامل الواعي مع جذور الصراع يجعله فرصة للتطوير.</p>
+
+            <h3>6. التواصل (الأسئلة 8، 9، 16، 20)</h3>
+            <p>التواصل الفعال هو الخيط المشترك بين جميع المهارات الإدارية. يتوجب عليك إبقاء فريقك على اطلاع دائم بما يحدث في المؤسسة، وعقد الإيجازات الدورية، وإتقان مهارة التيسير (Facilitation) للوساطة وإرشاد الفريق نحو حل المشكلات والتفاهم.</p>
+
+            <h3>7. التخطيط، وحل المشكلات، اتخاذ القرارات (الأسئلة 4، 10)</h3>
+            <p>يرتاح الكثير من المديرين لهذه المهارات التحليلية نظراً لترقيتهم أساساً بسبب خبراتهم التقنية. لكن الخطر يكمن في الإفراط في التركيز على التخطيط والتحليل وإهمال المهارات الشخصية وإدارة الأفراد. احرص على الموازنة وتطوير الجانبين معاُ.</p>
+
+            <h3>8. تجنب الأخطاء الإدارية الشائعة (الأسئلة 1، 7، 14)</h3>
+            <p>يساعدك التواصل الجيد على تجنب الأخطاء الإدارية الشائعة مثل الاعتماد على المهارات التقنية فقط، أو إلقاء المشاكل على مديرك لكي يحلها بدلاً منك، أو عدم إبقاء مديرك على علم بالمستجدات. التعلّم من الأخطاء واعتبارها دروساً مستفادة يعزز نضجك الإداري.</p>
+
+            <div class="key-points">
+                <h4>نقاط رئيسية تذكرها دائماً:</h4>
+                <p>تحتاج إلى تطوير وتحسين مهاراتك الإدارية بشكل مستمر مع تطور مسارك المهني ومواجهتك لتحديات جديدة. سواء كنت تدير قسماً أو فريق مشروع، من المهم معرفة كيفية إنجاز العمل بالشكل الصحيح عبر الآخرين. الصبر، والموازنة، والتطوير المستمر لمهارات التفويض والتحفيز والتواصل هي طريقك لتصبح مديراً فعالاً واستثنائياً.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Branding -->
+    <div class="brand-footer">
+        <h2 class="brand-title">Wel Academy</h2>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { text: "1- عندما أواجه مشكلة أحاول حلها بنفسي قبل أن أسأل مديري عما يجب فعله.", scores: [5, 4, 3, 2, 1] },
+        { text: "2- عندما أقوم بتفويض العمل فإنني أعطيه لمن لديه أكبر وقت متاح.", scores: [1, 2, 3, 4, 5] },
+        { text: "3- أتابع أعضاء الفريق عندما أرى أن سلوكهم له تأثير سلبي على خدمة العملاء.", scores: [5, 4, 3, 2, 1] },
+        { text: "4- إنني أتخذ قراراتي بعد تحليل دقيق بدلاً من الاعتماد على حدسي.", scores: [5, 4, 3, 2, 1] },
+        { text: "5- اسمح لأعضاء فريقي أن يكتشفوا بأنفسهم أفضل السبل للعمل معاً ومتابعة التقدم.", scores: [1, 2, 3, 4, 5] },
+        { text: "6- أنتظر قبل تأديب أحد أعضاء الفريق، حتى تتاح للأشخاص فرصة تصحيح سلوكياتهم بأنفسهم.", scores: [1, 2, 3, 4, 5] },
+        { text: "7- المهارات التقنية هي أهم المهارات التي أحتاجها لكي أكون مديراً فعالاً.", scores: [1, 2, 3, 4, 5] },
+        { text: "8- أقضي وقتاً في التحدث مع فريقي حول ما يجري بشكل جيد وما يحتاج إلى تحسين.", scores: [5, 4, 3, 2, 1] },
+        { text: "9- في الاجتماعات أتولى دور الوسيط/الميسر عند الضرورة وأساعد فريقي على الوصول إلى فهم أفضل للمشكلة أو الوصول إلي اجماع.", scores: [5, 4, 3, 2, 1] },
+        { text: "10- أفهم تماماً كيفية سير العمليات التجارية في إدارتي وأعمل على إزالة الاختناقات.", scores: [5, 4, 3, 2, 1] },
+        { text: "11- عند تشكيل فريق فإنني أفكر في المهارات التي أحتاجها ثم أبحث عن الأشخاص الذين يناسبون معاييري بشكل أفضل.", scores: [5, 4, 3, 2, 1] },
+        { text: "12- أفعل كل ما بوسعي لتجنب الصراع في فريقي.", scores: [1, 2, 3, 4, 5] },
+        { text: "13- أحاول تحفيز الأشخاص داخل فريقي من خلال تصميم أسلوبي في التحفيز ليتناسب مع احتياجات كل فرد.", scores: [5, 4, 3, 2, 1] },
+        { text: "14- عندما يخطئ الفريق خطأ كبير أخبر مديرى بما حدث وبعد ذلك افكر فيها كدرس كبير يمكننى تعلمه.", scores: [5, 4, 3, 2, 1] },
+        { text: "15- عندما يحدث الصراع فى فريق جديد اتقبلها كمرحله انتقالية فى عملية تطوير الفريق.", scores: [5, 4, 3, 2, 1] },
+        { text: "16- أتحدث مع أعضاء الفريق عن أهدافهم الفردية، وأربطها بأهداف المنظمة بأكملها.", scores: [5, 4, 3, 2, 1] },
+        { text: "17- إذا كنت أقوم بتشكيل فريق فإنني أختار الأشخاص الذين لديهم شخصيات وأعمار مماثلة ووقت قضاه في الشركة وخصائص أخرى.", scores: [1, 2, 3, 4, 5] },
+        { text: "18- اعتقد ان المقوله التى تقول \"إذا كنت تريد إنجاز عمل ما بشكل جيد فافعل ذلك بنفسك\" مقولة صحيحة.", scores: [1, 2, 3, 4, 5] },
+        { text: "19- تحدث مع أعضاء الفريق كأفراد للتأكد من أنهم سعداء ومنتجون.", scores: [5, 4, 3, 2, 1] },
+        { text: "20- أقوم بإيجاز أعضاء فريقي حتى يعرفوا ما يجري حولهم في المنظمة.", scores: [5, 4, 3, 2, 1] }
+    ];
+
+    const optionsText = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        
+        let optionsHTML = '';
+        q.scores.forEach((score, oIndex) => {
+            optionsHTML += `
+                <label class="option-label">
+                    <input type="radio" name="q${index}" value="${score}" required>
+                    ${optionsText[oIndex]}
+                </label>
+            `;
+        });
+
+        qCard.innerHTML = `
+            <div class="question-title">${q.text}</div>
+            <div class="options-group">${optionsHTML}</div>
+        `;
+        container.appendChild(qCard);
+    });
+
+    function calculateScore() {
+        const form = document.getElementById('quizForm');
+        if (!form.checkValidity()) {
+            alert("يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة.");
+            return;
+        }
+
+        let totalScore = 0;
+        questions.forEach((_, index) => {
+            const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selectedOption) {
+                totalScore += parseInt(selectedOption.value);
+            }
+        });
+
+        document.getElementById('scoreValue').innerText = totalScore;
+        
+        let commentText = "";
+        if (totalScore >= 20 && totalScore <= 46) {
+            commentText = "أنت بحاجة إلى تحسين مهاراتك الإدارية بشكل عاجل. إذا كنت تريد أن تكون فعالاً في دورك القيادي، فيجب عليك تعلم كيفية تنظيم ومراقبة عمل فريقك. الآن هو الوقت المناسب لبدء تطوير هذه المهارات لزيادة نجاح فريقك!";
+        } else if (totalScore >= 47 && totalScore <= 73) {
+            commentText = "أنت في طريقك لتصبح مديراً جيداً. أنت تفعل بعض الأشياء بشكل جيد للغاية، وغالباً ما تكون هذه هي الأمور التي تشعر بالارتياح تجاهها. حان الوقت الآن للعمل على المهارات التي كنت تتجنبها. ركز على المجالات التي انخفضت فيها درجتك، واكتشف ما يمكنك فعله لإجراء التحسينات التي تحتاجها.";
+        } else if (totalScore >= 74 && totalScore <= 100) {
+            commentText = "أنت تقوم بعمل رائع في إدارة فريقك! الآن يجب أن تركز على تحسين مهاراتك بشكل أكبر. ما هي المجالات التي حصلت فيها على درجة منخفضة قليلاً؟ هذا هو المكان الذي يمكنك فيه وضع أهداف للتحسين. ركز أيضاً على كيفية الاستفادة من هذه المهارات لتحقيق أهدافك المهنية.";
+        }
+
+        document.getElementById('resultComment').innerText = commentText;
+        
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هل أنت مسوّف / مماطل؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        /* Header Branding */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards & Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        /* Questions Styling */
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Conclusion & Results Wrapper (Hidden Initially) */
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- مقال المقدمة المترجم -->
+    <section class="card orange-top">
+        <h2>هل أنت مسوّف / مماطل؟</h2>
+        <p>كما هو الحال مع العديد من السلوكيات المدمرة للذات، فإن الخطوة الأولى في التوقف عن التسويف هي الاعتراف بأنك تقوم به.</p>
+        <p>ولكن هذا ليس بالضرورة أمراً مباشراً وبسيطاً كما يبدو!</p>
+        <p>العديد من المسوّفين يقنعون أنفسهم بأن لديهم أسباباً وجيهة لتأخير إنجاز ما يجب عليهم فعله. وبمجرد أن تدخل في عقلية "الضحية" (وهو ما يفعلونه غالباً)، قد لا تدرك أن ما تفعله هو تسويف، وأنه وحدك المسؤول عن التغلب عليه.</p>
+        <p>لذا، خض اختبار التقييم الذاتي أدناه لمعرفة ما إذا كنت مسوّفاً أم لا!</p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة، انقر فوق الزر في العمود الذي يصفك بأفضل شكل لقييم نفسك على مقياس تتدرج فيه الخيارات من (ليس مطابقاً لي على الإطلاق) إلى (مطابق لي جداً). ملاحظة أن الخيار الأوسط (محايد). عندما تنتهي، انقر فوق زر <strong>"احسب إجمالي نقاطي"</strong> في أسفل الاختبار.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 15</span>
+    </div>
+
+    <!-- الاختبار (15 عبارة) -->
+    <section class="card">
+        <h2>اختبار مقياس التسويف والمماطلة (15 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- السؤال 1 (معكوس) -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- أجد نفسي غالباً أؤدي مهاماً كان من المفترض أن أؤديها قبل أيام.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 2 -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- عند التخطيط لاجتماع، أقوم بالترتيبات اللازمة قبل موعده بوقت كافٍ.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 3 -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- أرد عموماً على رسائل البريد الإلكتروني والمكالمات الهاتفية بسرعة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 4 (معكوس) -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- أجد أن الأعمال لا يتم إنجازها غالباً لعدة أيام، حتى عندما لا تتطلب سوى الجلوس والقيام بها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 5 -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- بمجرد حصولي على المعلومات التي أحتاجها، أتنخذ القرارات عادة في أسرع وقت ممكن.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 6 (معكوس) -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- عندما يكون لدي شيء صعب يجب القيام به، أقول لنفسي إنه من الأفضل الانتظار حتى أكون أكثر إلهاماً.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 7 (معكوس) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- عادة ما أضطر إلى التسرع والاندفاع لإكمال المهام في الوقت المحدد.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 8 -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- عادة ما أنجز كل الأشياء التي أخطط للقيام بها في اليوم الواحد.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 9 -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- عادة ما أبدأ المهمة التي أكلّف بها بعد وقت قصير من تلقيها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 10 (معكوس) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- عندما تقترب المواعيد النهائية، غالباً ما أهدر الوقت في فعل أمور أخرى.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 11 -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- غالباً ما أنتهي من إنجاز المهمة قبل وقت مبكر من اللازم.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 12 -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- عند الاستعداد لاجتماع، نادراً ما أجد نفسي مضطراً للقيام بأمور في اللحظة الأخيرة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 13 (معكوس) -->
+            <div class="question-item" id="q-box-13">
+                <div class="question-text">13- غالباً ما أؤجل البدء في المهام التي يجب علي القيام بها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q13" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 14 -->
+            <div class="question-item" id="q-box-14">
+                <div class="question-text">14- عندما أواجه مهمة ضخمة، أحدد الخطوة الأولى حتى أتمكن من البدء والانطلاق.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q14" value="5"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="4"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="2"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="1"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 15 (معكوس) -->
+            <div class="question-item" id="q-box-15">
+                <div class="question-text">15- كثيراً ما أقول عبارة "سأقوم بها غداً".</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q15" value="1"><span>ليس مطابقاً لي على الإطلاق</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="2"><span>ليس مطابقاً لي</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="3"><span>محايد</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="4"><span>مطابق لي</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="5"><span>مطابق لي جداً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة وتفسير النتائج (مخفية لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتائج (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 75</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <!-- نصائح التغلب على التسويف -->
+        <section class="card">
+            <h2>التغلب على عادة التسويف المدمرة للذات</h2>
+            <p>التسويف أمر مغرٍ بقدر ما هو ضار. إذا اكتشفت ميلاً للمماطلة في داخلك، فعليك معرفة الأسباب: هل تخشى الفشل؟ (أم أنك تخشى النجاح في الواقع؟).</p>
+            <p>بمجرد أن تعرف سبب مماطلتك، يمكنك التخطيط للتخلص من هذه العادة المجهدة:</p>
+            <ul>
+                <li><strong>كافئ نفسك:</strong> كافئ نفسك عند إنجاز المهام، وذكّر نفسك بانتظام بالنتائج الوخيمة لعدم إنجاز تلك المهام المكروهة!</li>
+                <li><strong>الخطوة الأولى:</strong> قسّم المهام الضخمة إلى خطوات صغيرة واشرع في تنفيذ الخطوة الأولى فوراً.</li>
+                <li><strong>الوعي الذاتي:</strong> الاعتراف بالمشكلة هو نصف الحل للسيطرة على وقتك ورفع مستوى إنتاجيتك.</li>
+            </ul>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    // الأسئلة المعكوسة في مقياس التسويف لبروفيسور كلاري لاي (Clarry Lay): 1، 4، 6، 7، 10، 13، 15
+    const invertedQuestions = [1, 4, 6, 7, 10, 13, 15];
+
+    function updateProgress() {
+        const totalQuestions = 15;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 15;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                let val = parseInt(selected.value, 10);
+                // عكس الدرجة للأسئلة المعكوسة (1->5, 2->4, 3->3, 4->2, 5->1)
+                if (invertedQuestions.includes(i)) {
+                    val = 6 - val;
+                }
+                totalScore += val;
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 15 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 75`;
+
+        if (totalScore >= 15 && totalScore <= 30) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (15 - 30 نقطة): مسوّف";
+            textElem.innerText = "أنت مسوّف ومماطل، وليس هذا مدعاة للفخر! فهذا يعني أنك تفوت المواعيد النهائية وتضيع الكثير من الوقت. ونتيجة لذلك، فإن مديرك لا يحصل منك على ما تستطيع تقديمه حقاً، وغالباً ما يكون محبطاً جداً من ذلك. عليك اتخاذ خطوات فورية لمعرفة أسباب ذلك وكيفية إيقافه.";
+        } else if (totalScore >= 31 && totalScore <= 45) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (31 - 45 نقطة): مسوّف خفيف (معتدل)";
+            textElem.innerText = "أنت مسوّف خفيف (معتدل). تحتاج إلى فهم أفضل لسبب تسويفك - فهناك عدة أسباب محتملة لذلك، وقد ينطبق عليك أكثر من سبب. وعليك تعلم الخطوات التي يمكنك اتخاذها للتوقف عن ذلك.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (46 - 75 نقطة): لست مسوّفاً منهجياً";
+            textElem.innerText = "أخبار سارة! أنت لست مسوّفاً منهجياً! ومع ذلك، إذا وجدت نفسك أحياناً تمارس التسويف في أمر ما، فاستخدم استراتيجياتنا للتعامل مع هذا العارض البسيط.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

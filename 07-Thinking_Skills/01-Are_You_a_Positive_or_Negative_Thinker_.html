@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هل أنت مفكر إيجابي أم سلبي؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin: 10px 25px 18px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+        }
+
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- المقدمة -->
+    <section class="card orange-top">
+        <h2>هل أنت مفكر إيجابي أم سلبي؟ (تعرف على طريقة تفكيرك)</h2>
+        <blockquote style="margin: 15px 0; padding: 10px 20px; border-right: 4px solid var(--primary-orange); background: #fdf8f0; font-style: italic;">
+            "الرجل ليس سوى نتاج أفكاره. ما يفكر فيه يصبح." — <strong>المهاتما غاندي</strong><br>
+            "التفكير الإيجابي سيسمح لك بفعل كل شيء بشكل أفضل من التفكير السلبي." — <strong>زيج زيجلار</strong>
+        </blockquote>
+        <p>يمكن للأفكار الإيجابية والسلبية أن تصبح نبوءات ذاتية التحقق: ما نتوقعه يمكن أن يتحقق في كثير من الأحيان. الأشخاص الإيجابيون والمتفائلون هم أكثر سعادة وصحة، ويتمتعون بنجاح أكبر من أولئك الذين يفكرون بشكل سلبي. والفرق الرئيسي بينهما هو كيفية تفكيرهم وتفسيرهم للأحداث في حياتهم.</p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة، اختر ما يصفك بدقة عبر الخيارات الخمسة (دائماً، غالباً، أحياناً، نادراً، أبداً). أجب كما أنت في الواقع. عندما تنتهي، انقر فوق زر <strong>"احسب إجمالي نقاطي"</strong> في أسفل الاختبار.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 14</span>
+    </div>
+
+    <!-- الاختبار (14 عبارة) -->
+    <section class="card">
+        <h2>اختبار تقييم التفكير الإيجابي والسلبي (14 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- 1 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- عندما يطلب مديري أو أحد العملاء التحدث معي أفترض غريزياً أنه يريد مناقشة مشكلة ما أو أن يقدم لي تعليقات سلبية.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 2 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- عندما أواجه صعوبة حقيقية في العمل/المنزل أشعر أيضاً بالسلبية تجاه أجزاء أخرى من حياتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 3 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- عندما أواجه انتكاسة فإنني أميل إلى الاعتقاد بأن العائق سيستمر على المدى الطويل.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 4 (إيجابي: دائماً=5، أبداً=1) -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- عندما يكون أداء الفريق الذي أعمل فيه ضعيفاً أعتقد أن السبب قصير المدى وله حل مباشر.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 5 (إيجابي: دائماً=5، أبداً=1) -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- عندما لا يتم اختياري لمهمة أريدها حقاً فإنني أميل إلى الاعتقاد بأنني لا أملك المهارات المحددة التي يبحثون عنها الآن بدلاً من الاعتقاد بأنني غير ماهر بشكل عام.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 6 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- عندما يحدث شيء لا يعجبني أو لا أقدره أستطيع أن أميل إلى استنتاج أن السبب منتشر بطبيعته وسيستمر في مضايقتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 7 (إيجابي: دائماً=5، أبداً=1) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- عندما أقوم بأداء جيد جداً في مهمة ما أعتقد أن السبب هو أنني موهوب وذكي بشكل عام بدلاً من الاعتقاد بأنني جيد في مهمة محددة فقط.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 8 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- عندما أحصل على مكافأة أو تقدير يمكن أن أميل إلى الاعتقاد بأن الحظ أو القدر لعب دوراً أكبر من عملي الفعلي أو مهارتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 9 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- عندما أتوصل إلى فكرة جيدة حقاً أتفاجأ بإبداعي. أعتقد أن هذا هو يوم سعدي وأحذر نفسي من الاعتياد على هذا الشعور.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 10 (إيجابي: دائماً=5، أبداً=1) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- عندما يحدث شيء سيء في العمل أرى المساهمات التي قدمها الجميع في الخطأ بدلاً من الاعتقاد بأنني غير كفؤ وأنني الملام.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 11 (إيجابي: دائماً=5، أبداً=1) -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- بعد الفوز بجائزة / تقدير / عقد، أعتقد أن السبب في ذلك هو أنني أفضل من المنافسين.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 12 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- كقائد عندما يكمل فريقي مشروعاً ما فإنني أميل إلى إرجاع النجاح إلى العمل الجاد وتفاني أعضاء الفريق بدلاً من قيادتي الماهرة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 13 (سلبي: دائماً=1، أبداً=5) -->
+            <div class="question-item" id="q-box-13">
+                <div class="question-text">13- عندما أتخذ قراراً يثبت نجاحه فذلك لأن لدي خبرة في هذا الموضوع وقمت بتحليل هذه المشكلة تحديداً جيداً بدلاً من كوني صانع قرار قوياً بشكل عام.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q13" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 14 (إيجابي: دائماً=5، أبداً=1) -->
+            <div class="question-item" id="q-box-14">
+                <div class="question-text">14- عندما أستطيع تحقيق هدف شخصي صعب أهنئ نفسي وأفكر في كل المهارات التي استخدمتها من أجل النجاح.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q14" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- النتائج والتفسير وأبعاد سيليجمان (مخفية لحين إتمام الاختبار) -->
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتيجة (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 70</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <section class="card">
+            <h2>أبعاد التفسير الثلاثة (دكتور مارتن سيليجمان)</h2>
+            <p>يقول عالم النفس مارتن سيليجمان إننا نفسر الأحداث باستخدام ثلاثة أبعاد أساسية، حيث يكون المتفائلون على أحد طرفي المقياس والمتشائمون على الجانب الآخر:</p>
+            
+            <h3>1. الدوام (Permanence)</h3>
+            <p>الاعتقاد بأن ما نختبره هو إما دائم أو مؤقت. الدرجة المنخفضة تشير إلى أن الأوقات السيئة ستستمر للأبد، بينما العالية تظهر ثقة في إعادة الأمور لمسارها بسرعة.</p>
+
+            <h3>2. الانتشار - التعميم (Pervasiveness)</h3>
+            <p>الاعتقاد بأن الظروف المؤقتة تؤثر على كل شيء أو على مكان محدد. المتشائم يعمم المشكلة في كل مجالات حياته بينما المتفائل يحصرها في نطاقها.</p>
+
+            <h3>3. إضفاء الطابع الشخصي (Personalization)</h3>
+            <p>الاعتقاد بأن شيئاً فيك أثر على النتيجة (لوم الذات) أو أن عوامل خارجية تسببت في ذلك.</p>
+
+            <div class="highlight-box">
+                <strong>أعد تشكيل تفكيرك:</strong> عندما تصبح أكثر وعياً بطريقة تفكيرك، يمكنك اتخاذ الإجراءات اللازمة لاستخدام المواقف الإيجابية لصالحك، وإعادة تشكيل المواقف السلبية عبر رؤية الفرص بدلاً من العقبات.
+            </div>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    // الأسئلة السلبية (التي تعكس تشاؤماً إذا كانت الإجابة "دائماً"): 1, 2, 3, 6, 8, 9, 12, 13
+    // الأسئلة الإيجابية (التي تعكس تفاؤلاً إذا كانت الإجابة "دائماً"): 4, 5, 7, 10, 11, 14
+    const negativeQuestions = [1, 2, 3, 6, 8, 9, 12, 13];
+
+    function updateProgress() {
+        const totalQuestions = 14;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 14;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                let val = parseInt(selected.value, 10);
+                // إذا كان السؤال سلبياً، نعكس الدرجة (دائماً=1 تصبح 5، والعكس)
+                if (negativeQuestions.includes(i)) {
+                    val = 6 - val;
+                }
+                totalScore += val;
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 14 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 70`;
+
+        if (totalScore >= 14 && totalScore <= 31) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (14 - 31 نقطة): نظرة تشاؤمية وسلبية";
+            textElem.innerText = "يبدو وكأن هناك سحابة ممطرة معلقة في السماء طوال اليوم! لقد اعتدت على رؤية الأشياء على أنها خطأك وتعلمت التخلي عن سيطرتك في العديد من المواقف. إجراء هذا الاختبار هو الخطوة الأولى نحو تغيير تشاؤمك.";
+        } else if (totalScore >= 32 && totalScore <= 50) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (32 - 50 نقطة): تفاؤل معتدل مع تحديات";
+            textElem.innerText = "تحاول أن تكون متفائلاً وإيجابياً إلا أن بعض المواقف تتغلب عليك. يجب عليك تحديد المحفزات الخاصة بك للتفكير السلبي واستخدام تمارين التفكير العقلاني لتصبح أكثر تفاؤلاً بشكل طبيعي.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (51 - 70 نقطة): نظرة إيجابية ومتفائلة";
+            textElem.innerText = "عمل عظيم! لديك نظرة إيجابية ومتفائلة بشكل عام للحياة. أنت لا تأخذ الأمور على محمل شخصي وستكون قادراً على رؤية أن النكسات لن تدمر بقية حياتك.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

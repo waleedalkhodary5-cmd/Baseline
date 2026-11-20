@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى جودة إدارتك للغضب؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin: 10px 25px 18px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+        }
+
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- المقدمة -->
+    <section class="card orange-top">
+        <h2>ما مدى جودة إدارتك للغضب؟ (تحكم في غضبك قبل أن يتحكم بك)</h2>
+        <p>جميعنا نشعر بالغضب؛ إنه عاطفة إنسانية طبيعية. ومع ذلك، يتعامل البعض منا مع غضبه بشكل أفضل من الآخرين. فبينما قد يشعر شخص بقليل من الضيق عندما يقطع عليه أحدهم الطريق أثناء القيادة، يغضب شخص آخر لدرجة الصراخ والشتم والبدء في القيادة بعدوانية.</p>
+        <p>كيف يمكن لنفس الموقف أن يسبب ردود فعل مختلفة تماماً؟ وكيف يمكنك التأكد من أن رد فعلك هو الرد الهادئ بدلاً من الرد المنفلت؟</p>
+        <p>إذن، ما مدى جودة إدارتك لغضبك؟ استخدم هذا الاختبار التفاعلي لمعرفة مدى إجادتك لذلك.</p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة، انقر فوق الزر في العمود الذي يصفك بأفضل شكل. يُرجى الإجابة عن الأسئلة كما أنت في الواقع (وليس كما تعتقد أنك يجب أن تكون)، ولا تقلق إذا بدت بعض الأسئلة وكأنها تُحتسب في "الاتجاه المعاكس". عندما تنتهي، انقر فوق زر <strong>"احسب إجمالي نقاطي"</strong> في أسفل الاختبار.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 18</span>
+    </div>
+
+    <!-- الاختبار (18 عبارة) -->
+    <section class="card">
+        <h2>اختبار تقييم إدارة الغضب (18 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- 1 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- يبدو أنني أغضب بشكل غير متوقع دون أن أفهم السبب الحقيقي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 2 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- عندما يغضبني شخص ما أحاول عدم إظهار مشاعري وأتظاهر بالتسامح مع ذلك.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 3 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- عندما أواجه مشكلة، أحدد الحل "الصحيح" بنفسي وأقوم بتنفيذه في أسرع وقت ممكن.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 4 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- عندما أكون غاضباً أضرب شيئاً ما (أو أريد أن أضرب شيئاً ما).</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 5 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- عندما يحدث شيء محبط أعلم أنه ليس نهاية العالم.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 6 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- عندما يحبطني شيء ما حقاً، عادة ما أستطيع رؤية الفكاهة في الموقف وأضحك على نفسي و/أو الآخرين المعنيين.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 7 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- عندما يغضبني الناس أحاول أن أفهم لماذا فعلوا أو قالوا ما فعلوه.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 8 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- أشعر بأنني قادر على السيطرة على غضبي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 9 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- أستطيع أن أسامح الناس بعد أن أساءوا إلي أو أغضبوني.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 10 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- عندما أشعر بالغضب أعطي نفسي "مهلة" (أبتعد لأهدأ).</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 11 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- لدي نشاط أو هواية أو روتين أستخدمه للتخلص من مشاعر الغضب.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 12 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- عندما أكون غاضباً، أميل إلى التركيز على مشاعري وكيف تعرضت للظلم.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 13 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-13">
+                <div class="question-text">13- بعد أن أغضب أفكر في ما كان بإمكاني أو ما ينبغي علي فعله للتحكم في غضبي بشكل أفضل.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q13" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 14 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-14">
+                <div class="question-text">14- عندما أكون غاضباً أجد البدائل وأعطي نفسي ما يكفي من الوقت لاتخاذ خيار جيد لحل مشاكلي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q14" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 15 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-15">
+                <div class="question-text">15- عندما أكون غاضباً، أميل إلى الصراخ والسب وقول أشياء أندم عليها لاحقاً.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q15" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 16 (معكوس: دائماً=1) -->
+            <div class="question-item" id="q-box-16">
+                <div class="question-text">16- عندما يطلب مني شخص ما أن أفعل شيئاً لا أريد حقاً أن أفعله أوافق - ثم أشعر بالغضب من نفسي لاحقاً.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q16" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 17 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-17">
+                <div class="question-text">17- إذا علمت أن موقفاً معيناً سيثير غضبي أتجنبه.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q17" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- 18 (مباشر: دائماً=5) -->
+            <div class="question-item" id="q-box-18">
+                <div class="question-text">18- إذا قام شخص آخر بإتلاف شيء خاص بي بسبب الإهمال فأنا أواجه الشخص وأستغل الموقف للحديث عن المسؤولية.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q18" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة وتفسير النتائج والاستراتيجيات (مخفية لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتيجة (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 90</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <section class="card">
+            <h2>إدارة غضبك بشكل بنّاء (استراتيجيات ريدفورد ويليامز)</h2>
+            <p>الهدف من إدارة الغضب ليس القضاء عليه تماماً: فهذا مستحيل لأنه عاطفة إنسانية طبيعية. بل الهدف هو السيطرة على غضبك وتوجيهه حتى لا يسيطر عليك أو يدمر علاقة أو موقفاً مهماً. تعتمد خطوات التحكم في الغضب على ثلاثة عناصر رئيسية:</p>
+
+            <h3>1. فهم مسببات غضبك (الأسئلة: 1، 8، 13)</h3>
+            <p>تحديد مصادر الغضب هو الخطوة الأولى والأكثر فعالية. استخدم "سجل الغضب" لتدوين الأوقات والأشخاص والمواقف التي تثير غضبك، وابحث عن الأنماط المتكررة لفهم الأسباب الجذرية وراء انفعالاتك.</p>
+
+            <h3>2. تقليل ردود أفعالك الغاضبة</h3>
+            <ul>
+                <li><strong>استخدام مهارات حل المشكلات (الأسئلة: 3، 5، 14):</strong> التزم ببذل قصارى جهدك بدلاً من توقع الكمال دائماً، وتقبل أنه عندما لا تسير الأمور كما هو مخطط لها، فإن العالم لن ينتهي.</li>
+                <li><strong>استخدام مهارات التواصل (الأسئلة: 7، 12، 15، 18):</strong> ابنِ التعاطف لفهم وجهة نظر الآخرين، مارس الاستماع النشط، وكن حازماً (Assertive) في التعبير عن احتياجاتك بدلاً من أن تكون عدوانياً.</li>
+                <li><strong>التنفيس عن غضبك وتفريغه (الأسئلة: 2، 9، 11، 16):</strong> كبت الغضب لا يجعله يختفي. فرّغ مشاعرك بانتظام عبر التنفس العميق (10 مرات)، ممارسة الرياضة، الهوايات الممتعة، والتسامح للمضي قدماً.</li>
+            </ul>
+
+            <h3>3. السيطرة على غضبك لحظة حدوثه (الأسئلة: 4، 6، 10، 17)</h3>
+            <ul>
+                <li><strong>تغيير البيئة المحيطة:</strong> خذ استراحة وابتعد جسدياً عن مصدر الصراع (اذهب لغرفة أخرى، تمشَّ قليلاً، أو عدّ للعشرة)، وتجنب المواقف التي تعلم مسبقاً أنها ستثير غضبك.</li>
+                <li><strong>استخدام روح الدعابة:</strong> ابحث عن الجانب المضحك في الموقف وتعلم أن تضحك على نفسك، فالمزاح والابتسامة يكسران حدة التوتر فوراً.</li>
+                <li><strong>تهدئة نفسك جسدياً:</strong> مارس التنفس البطيء والعميق، استرخاء العضلات التدريجي، وتكرار عبارات التهدئة الذاتية مثل: "سأتجاوز هذا الأمر، استرخِ!".</li>
+            </ul>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    function updateProgress() {
+        const totalQuestions = 18;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 18;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                totalScore += parseInt(selected.value, 10);
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 18 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 90`;
+
+        if (totalScore >= 18 && totalScore <= 41) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (18 - 41 نقطة)";
+            textElem.innerText = "يبدو أنك تدع غضبك يسيطر عليك، مما يسبب لك على الأرجح شتى أنواع المشاكل، وهذا بدوره قد يجعلك أكثر غضباً. لحسن الحظ، يمكنك تعلم كيفية كسر هذه الحلقة المفرغة من خلال الاستراتيجيات الموضحة أدناه.";
+        } else if (totalScore >= 42 && totalScore <= 66) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (42 - 66 نقطة)";
+            textElem.innerText = "أنت قادر على إدارة غضبك في بعض المواقف دون غيرها. لديك بعض الاستراتيجيات التي تنجح معك، ومع ذلك، ستستفيد كثيراً من فهم أعمق لمسببات غضبك والإجراءات التي يمكنك اتخاذها لإدارة عواطفك بشكل أفضل.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (67 - 90 نقطة)";
+            textElem.innerText = "أحسنت! لديك فهم جيد جداً لما يثير غضبك، وتعرف ما يجب فعله عندما تبدأ في الشعور بعلامات التوتر. لقد طورت مجموعة واسعة من استراتيجيات إدارة الغضب، ويمكنك أن تفخر بذلك.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

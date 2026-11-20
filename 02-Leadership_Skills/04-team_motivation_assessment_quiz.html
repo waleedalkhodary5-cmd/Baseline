@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار قدرتك على تحفيز الفريق | Welz Academy</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#1e3a8a',
+                            900: '#0f172a',
+                        },
+                        amberCustom: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+        .option-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .option-card:hover {
+            border-color: #0284c7;
+            background-color: #f0f9ff;
+        }
+        .custom-radio:checked + label {
+            color: #0369a1;
+            font-weight: 700;
+        }
+        .smooth-transition {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-slate-900 via-brand-800 to-slate-900 text-white py-10 px-4 shadow-xl border-b-4 border-amberCustom-500">
+        <div class="max-w-4xl mx-auto text-center space-y-3">
+            <div class="inline-block px-4 py-1 bg-amberCustom-500/20 text-amberCustom-400 rounded-full text-sm font-semibold tracking-wide border border-amberCustom-500/30 mb-1">
+                منصة التطوير القيادي والإداري
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">
+                Welz Academy
+            </h1>
+            <p class="text-sky-400 text-lg md:text-xl font-semibold flex items-center justify-center gap-2">
+                <i class="fas fa-certificate text-base"></i>
+                Created By Waleed Alkhodary
+            </p>
+            <div class="pt-4 border-t border-slate-700/60 max-w-lg mx-auto mt-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-100">
+                    اختبر مدى قدرتك على تحفيز الفريق
+                </h2>
+                <p class="text-slate-300 text-sm mt-1">How Good Are Your Motivation Skills?</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
+
+        <!-- Intro Section Card -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+            <h3 class="text-xl font-bold text-brand-800 mb-4 flex items-center gap-3">
+                <i class="fas fa-bolt text-amberCustom-500"></i>
+                اكتشف العوامل الرئيسية لبناء فريق عمل مفعم بالتحفيز
+            </h3>
+            <div class="space-y-4 text-slate-600 leading-relaxed text-justify">
+                <p>
+                    يسعى المدراء والقياديون في كل مكان إلى امتلاك فرق عمل تتمتع بفاعلية عالية، وتركيز استثنائي، وإخلاص تام لأهداف المؤسسة. تخيل حجم الأداء والنتائج المذهلة التي يمكنك تحقيقها بوجود فريق كهذا!
+                </p>
+                <p>
+                    الحقيقة هي أن الفرق لا تعمل بهذا المستوى العالي إلا إذا كان قادتها يحفزونها بفاعلية. ولهذا السبب، فإن قدرتك على تحفيز فريقك أمر جوهري لخلق بيئة عمل إنتاجية ومحفزة. ومن خلال الجمع بين الممارسات التحفيزية الجيدة، وتصميم العمل الهادف، ووضع أهداف الأداء، واستخدام نظام مكافآت فعال، يمكنك بناء ثقافة التميز التي تحتاجها.
+                </p>
+                <div class="bg-sky-50 border-r-4 border-brand-600 p-4 rounded-l-lg text-brand-900 text-sm">
+                    <strong>تعليمات الاختبار:</strong>
+                    لكل عبارة، اختر الخيار الذي يصف سلوكك الواقعي الحالي (وليس ما تظن أنه ينبغي أن تكون عليه). لا تقلق إذا بدت بعض الأسئلة وكأنها تحسب في الاتجاه المباشر أو العكسي، فقط أجب بكل شفافية ثم انقر على "احسب النتيجة" في الأسفل.
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" class="space-y-6">
+            <div id="questionsContainer" class="space-y-6">
+                <!-- Dynamic Questions Container -->
+            </div>
+
+            <!-- Submit Button Area -->
+            <div class="pt-6 text-center">
+                <button type="button" onclick="calculateScore()" class="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-brand-700 to-brand-800 hover:from-brand-800 hover:to-slate-900 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-3 mx-auto">
+                    <i class="fas fa-calculator text-amberCustom-400"></i>
+                    احسب النتيجة والتحليل الشامل
+                </button>
+                <p id="errorMsg" class="text-red-500 text-sm mt-3 hidden font-semibold">
+                    <i class="fas fa-exclamation-circle ml-1"></i> يرجى الإجابة على جميع الأسئلة الـ 15 للحصول على نتيجة دقيقة.
+                </p>
+            </div>
+        </form>
+
+        <!-- Results & Detailed Analysis Section -->
+        <section id="resultSection" class="hidden mt-10 space-y-8 smooth-transition">
+            <!-- Score Overview Card -->
+            <div class="bg-gradient-to-br from-brand-900 to-slate-900 text-white rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden border-b-4 border-amberCustom-500">
+                <div class="absolute top-0 left-0 -mt-10 -ml-10 w-40 h-40 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="text-center space-y-4">
+                    <span class="inline-block px-3 py-1 bg-amberCustom-500/20 text-amberCustom-400 rounded-full text-xs font-bold uppercase tracking-wider">
+                        النتيجة النهائية للاختبار
+                    </span>
+                    <div class="flex justify-center items-baseline gap-2">
+                        <span id="scoreValue" class="text-6xl font-extrabold text-amberCustom-400">0</span>
+                        <span class="text-2xl text-slate-400">/ 75</span>
+                    </div>
+                    <h3 id="scoreCategory" class="text-2xl font-bold text-white"></h3>
+                    <p id="scoreDescription" class="text-slate-300 max-w-2xl mx-auto leading-relaxed text-sm md:text-base"></p>
+                </div>
+            </div>
+
+            <!-- Detailed Analysis Accordions/Cards -->
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 border-b pb-4 flex items-center gap-3">
+                    <i class="fas fa-chart-pie text-brand-600"></i>
+                    التحليل التفصيلي لمجالات وأدوات التحفيز
+                </h3>
+                <p class="text-slate-600 text-sm mb-6">
+                    بناءً على إجاباتك، يمثل ما يلي ملخصاً للمحاور الأربعة الرئيسية لتحفيز الفريق، والأدوات التي يمكنك استثمارها لتطوير مهاراتك:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Dimension 1: Productive & Challenging Work -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-briefcase text-amberCustom-500"></i>
+                                1. توفير عمل إنتاجي ومحفّز (الأسئلة 1، 4، 15)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            الخطوة الأولى هي تقديم عمل مثير للاهتمام ومنظم يلبي احتياجات أفراد الفريق. مهما كانت رغبة الموظف ذاتية، إذا كان تصميم العمل سيئاً وغير مشجع، فسيصعب تحفيزه.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>إثراء الوظائف (Job Enrichment):</strong> إضافة التنوع والاستقلالية والتحدي للمهام.</li>
+                                <li><strong>تحفيز بيجماليون (Pygmalion Motivation):</strong> تأثير توقعاتك العالية على أداء الفريق.</li>
+                                <li><strong>معالجة ضعيفي الأداء:</strong> ضمان تحقيق التوافق المثالي بين قدرات الموظف ومتطلبات الوظيفة.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 2: Effective Goals -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-bullseye text-amberCustom-500"></i>
+                                2. وضع أهداف فعالة ومحددة (الأسئلة 2، 3، 12، 14)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            ضمان امتلاك الموظفين لأهداف واضحة وقابلة للتحقيق. جعل الأهداف محددة ومتسقة ومحفزة يوجه الجهود بفاعلية نحو تحقيق الرؤية المؤسسية.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>الأهداف الذكية (SMART Goals):</strong> المحددة، القابلة للقياس، والقابلة للتحقيق.</li>
+                                <li><strong>الإدارة بالأهداف (MBO):</strong> ربط الأهداف الشخصية بالأهداف العامة للشركة.</li>
+                                <li><strong>نظرية التوقع (Expectancy Theory):</strong> ربط الجهد الكبير بالأداء المرتفع والنتائج الإيجابية.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 3: Individual Differences -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-users-cog text-amberCustom-500"></i>
+                                3. فهم الفروق الفردية (الأسئلة 5، 9، 10، 11)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            تقنيات التحفيز يجب أن تستثمر في نقاط قوة كل فرد. السؤال 11 هو سؤال خدعة: إذا حاولت تحفيز الجميع بنفس الطريقة بالضبط، ستفقد فرصاً كثيرة لتحفيز الأفراد بشكل فاعل.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>تدرج ماسلو وهيرزبرغ:</strong> التفريق بين عوامل الوقاية (الأجور والظروف) وعوامل التحفيز الحقيقي (النمو والتقدير).</li>
+                                <li><strong>نظرية العدالة لـ آدامز:</strong> ضمان الشعور بالإنصاف والمساواة.</li>
+                                <li><strong>نظريتا X و Y:</strong> توجيه أسلوبك القيادي حسب نمط فريقك.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 4: Rewards & Recognition -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 hover:border-brand-600 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-brand-800 flex items-center gap-2">
+                                <i class="fas fa-trophy text-amberCustom-500"></i>
+                                4. تقديم المكافآت والتقدير الفعال (الأسئلة 6، 7، 8، 13)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            التركيز الأساسي لنظام المكافآت والمساءلة هو "العدالة والوضوح". تقديم الثناء الفوري واليومي يترك أثراً أعمق بكثير من التقييم السنوي الروتيني.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold text-brand-700 block">أدوات ومفاهيم للتطوير:</span>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>الإدارة بالتجول (MBWA):</strong> التواجد في الميدان لملاحظة الإنجازات والثناء الفوري عليها.</li>
+                                <li><strong>توفير الموارد والتدريب:</strong> ضمان امتلاك الفريق للأدوات اللازمة لإنجاز المهام.</li>
+                                <li><strong>الاستبيان الميداني قبل المساءلة:</strong> معرفة واقع بيئة العمل قبل اتخاذ أي إجراء.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Summary callout -->
+                <div class="mt-8 bg-sky-50 border border-sky-200 rounded-xl p-5 text-sky-900 text-sm leading-relaxed flex gap-4 items-start">
+                    <i class="fas fa-award text-sky-600 text-2xl flex-shrink-0 mt-0.5"></i>
+                    <div>
+                        <h5 class="font-bold mb-1">الخلاصة والتطوير المستمر:</h5>
+                        <p>
+                            القدرة على تحفيز الأفراد تجعل منك قائداً استثنائياً وتزيد من رضا الفريق واستبقائه. التحفيز عملية مستمرة تتطلب الالتزام والمرونة والتقدير اليومي لجهود الموظفين.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-sm">
+        <div class="max-w-4xl mx-auto px-4 space-y-2">
+            <p class="font-semibold text-slate-300">Welz Academy &copy; جميع الحقوق محفوظة</p>
+            <p class="text-xs text-slate-500">تم تطوير هذا الاختبار استناداً إلى نموذج قياس مهارات التحفيز لمؤسسة MindTools العالمي</p>
+            <p class="text-sky-400 text-xs font-medium">Created By Waleed Alkhodary</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Questions Data Array (15 Questions)
+        // Question 11 is a TRICK question with Reverse Scoring (isReverse: true)
+        const questions = [
+            { id: 1, text: "عندما أواجه مشكلة في الأداء أحرص على تحديد ما إذا كان سببها نقص الموارد أو نقص الحافز أو نقص المهارات.", isReverse: false },
+            { id: 2, text: "أقوم بوضع معايير أداء وتوقعات واضحة.", isReverse: false },
+            { id: 3, text: "ترتبط المكافآت والانضباط الذي أستخدمه بشكل واضح بالأداء والأهداف السلوكية المحددة.", isReverse: false },
+            { id: 4, text: "أقوم بتنظيم العمل بحيث يكون مثيراً للاهتمام ومليئاً بالتحديات ويسمح بالاستقلالية المناسبة.", isReverse: false },
+            { id: 5, text: "عندما أعطي مكافأة أتأكد من أنها مكافأة يقدرها المستلم.", isReverse: false },
+            { id: 6, text: "أنا ثابت في الطريقة التي أعاقب بها الأشخاص على الأداء دون المستوى.", isReverse: false },
+            { id: 7, text: "عندما أرى عملاً جيداً أشيد به على الفور.", isReverse: false },
+            { id: 8, text: "أتأكد من أن الأشخاص لديهم الأدوات والموارد والتدريب لتحقيق النتائج التي أتوقعها.", isReverse: false },
+            { id: 9, text: "أحاول أن أفهم ما الذي يحفز كل فرد في فريقي.", isReverse: false },
+            { id: 10, text: "أبذل جهداً كبيراً للتأكد من أنني أقدم أجوراً تنافسية وأشكال التعويض الأخرى.", isReverse: false },
+            { id: 11, text: "لكي أكون منصفاً أستخدم نفس المكافآت للجميع عند تقدير الأداء الجيد.", isReverse: true }, // Trick Question
+            { id: 12, text: "أساعد الأشخاص على تحديد أهداف أداء محددة التي تمثل تحدياً والتي ترتبط بالأهداف التنظيمية.", isReverse: false },
+            { id: 13, text: "أتأكد أنني أعرف ما يحدث بالفعل في بيئة العمل قبل اتخاذ أي إجراء تأديبى.", isReverse: false },
+            { id: 14, text: "أشجع الأفراد على وضع أهدافهم وأجعل عملية قياس الإنجازات بها كثير من التحديات.", isReverse: false },
+            { id: 15, text: "أحاول دمج وتدوير مهام العمل مما يجعل أعضاء الفريق يتعلمون المزيد ويطورون من مهاراتهم.", isReverse: false }
+        ];
+
+        // Standard Options (دائماً = 5 -> أبداً = 1)
+        const optionsStandard = [
+            { label: "دائماً", val: 5 },
+            { label: "غالباً", val: 4 },
+            { label: "أحياناً", val: 3 },
+            { label: "نادراً", val: 2 },
+            { label: "أبداً", val: 1 }
+        ];
+
+        // Reverse Options for Question 11 (دائماً = 1 -> أبداً = 5)
+        const optionsReverse = [
+            { label: "دائماً", val: 1 },
+            { label: "غالباً", val: 2 },
+            { label: "أحياناً", val: 3 },
+            { label: "نادراً", val: 4 },
+            { label: "أبداً", val: 5 }
+        ];
+
+        // Render Questions on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('questionsContainer');
+            
+            questions.forEach((q) => {
+                const options = q.isReverse ? optionsReverse : optionsStandard;
+                
+                const qCard = document.createElement('div');
+                qCard.className = 'bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 hover:shadow-md transition-shadow';
+                qCard.id = `qCard_${q.id}`;
+
+                let optionsHTML = '';
+                options.forEach(opt => {
+                    optionsHTML += `
+                        <label class="option-card flex items-center justify-between p-3 rounded-xl border border-slate-200 cursor-pointer smooth-transition bg-slate-50/50">
+                            <div class="flex items-center gap-3 w-full">
+                                <input type="radio" name="q_${q.id}" value="${opt.val}" class="w-4 h-4 text-brand-600 border-slate-300 focus:ring-brand-600 custom-radio">
+                                <span class="text-sm font-medium text-slate-700">${opt.label}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qCard.innerHTML = `
+                    <div class="flex items-start gap-3 mb-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-sky-100 text-brand-700 font-bold text-sm flex items-center justify-center">
+                            ${q.id}
+                        </span>
+                        <div>
+                            <h4 class="text-slate-800 font-semibold text-base md:text-lg pt-0.5 leading-snug">
+                                ${q.text}
+                            </h4>
+                            ${q.isReverse ? '<span class="inline-block mt-1 text-[11px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200"><i class="fas fa-info-circle ml-1"></i>سؤال يقيس التخصيص والفروق الفردية</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 md:gap-3">
+                        ${optionsHTML}
+                    </div>
+                `;
+
+                container.appendChild(qCard);
+            });
+        });
+
+        // Calculate Score & Display Results
+        function calculateScore() {
+            let totalScore = 0;
+            let allAnswered = true;
+
+            // Clear previous highlight errors
+            questions.forEach(q => {
+                const card = document.getElementById(`qCard_${q.id}`);
+                card.classList.remove('border-red-400', 'bg-red-50/20');
+            });
+
+            // Check if all questions are answered and sum score
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+                if (selected) {
+                    totalScore += parseInt(selected.value, 10);
+                } else {
+                    allAnswered = false;
+                    const card = document.getElementById(`qCard_${q.id}`);
+                    card.classList.add('border-red-400', 'bg-red-50/20');
+                }
+            });
+
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!allAnswered) {
+                errorMsg.classList.remove('hidden');
+                const firstUnanswered = document.querySelector('.border-red-400');
+                if (firstUnanswered) {
+                    firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            errorMsg.classList.add('hidden');
+
+            // Render Results
+            const scoreValEl = document.getElementById('scoreValue');
+            const scoreCatEl = document.getElementById('scoreCategory');
+            const scoreDescEl = document.getElementById('scoreDescription');
+
+            scoreValEl.textContent = totalScore;
+
+            if (totalScore >= 15 && totalScore <= 34) {
+                scoreCatEl.textContent = "تحتاج إلى عمل كبير لتطوير مهارات تحفيز الفريق (15 - 34)";
+                scoreCatEl.className = "text-2xl font-bold text-amberCustom-400";
+                scoreDescEl.textContent = "الخبر السار هو أن لديك فرصة ممتازة لإجراء تحسينات جوهرية في كيفية تحفيز الآخرين، مما سيعود بالنفع المباشر على نجاحك ونجاح فريقك في المدى الطويل. ابدأ بالتركيز على الأدوات والمحاور الموضحة أدناه.";
+            } else if (totalScore >= 35 && totalScore <= 52) {
+                scoreCatEl.textContent = "مستوى جيد مع وجود مجال واسع للتحسين (35 - 52)";
+                scoreCatEl.className = "text-2xl font-bold text-sky-400";
+                scoreDescEl.textContent = "أنت تمارس جوانب جيدة في تحفيز الفريق، ولكن توجد نقاط وفرص لتطوير أدائك. ركز على المجالات التي فقدت فيها الدرجات وستلاحظ ارتفاعاً ملموساً في أداء فريقك.";
+            } else if (totalScore >= 53 && totalScore <= 75) {
+                scoreCatEl.textContent = "ممتاز! أنت تحفز فريقك بفاعلية عالية جداً (53 - 75)";
+                scoreCatEl.className = "text-2xl font-bold text-emerald-400";
+                scoreDescEl.textContent = "أنت تمتلك مهارات قيادية ممتازة في خلق بيئة عمل محفزة ومقنعة. اطلع على الأدوات في الأسفل للتعرف على أفكار دقيقة قد ترفع مستوى تميزك إلى درجات أعلى.";
+            }
+
+            // Unhide Result Section and Scroll
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>

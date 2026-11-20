@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار: ما مدى جودة مهارات الاتصال لديك؟ | Welz Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0d9488;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .brand-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f8fafc;
+            margin-bottom: 4px;
+        }
+
+        .brand-author {
+            font-size: 1.15rem;
+            color: #93c5fd;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .quiz-title {
+            font-size: 1.85rem;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            font-weight: 800;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+        }
+
+        .quiz-subtitle {
+            font-size: 1.2rem;
+            color: #5eead4;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        /* Instructions Card */
+        .instructions-card {
+            background: var(--card-bg);
+            border-right: 5px solid var(--primary-light);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .instructions-card h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            padding-top: 4px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-light);
+            background: #eff6ff;
+        }
+
+        .option-label.selected {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        /* Calculate Button */
+        .btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+        }
+
+        /* Result Box */
+        .result-box {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+            border: 2px solid var(--primary-light);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .result-category {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #334155;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        /* Analysis Section */
+        .analysis-section {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+
+        .analysis-section h2 {
+            color: var(--primary);
+            font-size: 1.65rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--primary-light);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Process Diagram */
+        .process-diagram {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 25px 20px;
+            margin: 25px 0 35px 0;
+            text-align: center;
+        }
+
+        .process-title {
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+        }
+
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-node {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .process-arrow {
+            color: var(--primary-light);
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .feedback-loop {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 2px dashed #94a3b8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            color: var(--secondary);
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
+
+        .factor-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .factor-card h3 {
+            color: var(--secondary);
+            font-size: 1.35rem;
+            margin-bottom: 10px;
+        }
+
+        .factor-questions {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .factor-card p {
+            margin-bottom: 12px;
+            color: #334155;
+        }
+
+        .factor-card ul, .factor-card ol {
+            padding-right: 22px;
+            margin-bottom: 15px;
+            color: #334155;
+        }
+
+        .factor-card li {
+            margin-bottom: 6px;
+        }
+
+        .highlight-box {
+            background: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 15px 18px;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .alert-missing {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <div class="brand-title">Welz Academy</div>
+        <div class="brand-author">Created By Waleed Alkhodary</div>
+        <h1 class="quiz-title">ما مدى جودة مهارات الاتصال لديك؟</h1>
+        <div class="quiz-subtitle">التحدث والاستماع والكتابة والقراءة بشكل فعال</div>
+        <div class="intro-text">
+            يعد التواصل أحد أهم المهارات التي تحتاجها للنجاح في مكان العمل. إذا كنت تريد أن تصبح خبيراً في التواصل، فيجب أن تكون فعالاً في جميع نقاط عملية الاتصال - من "المرسل" إلى "المتلقي" - ويجب أن تكون مرتاحاً لقنوات الاتصال المختلفة: وجهاً لوجه، عبر الإنترنت، مكتوبة، وهكذا. وذلك لأن الأشخاص الذين لديهم مستويات منخفضة من مهارات التواصل غالباً ما يكافحون ويناضلون من أجل تطوير حياتهم المهنية.
+            <br><br>
+            إذن كيف يمكنك معرفة مدى جودة مهارات الاتصال لديك؟ خذ هذا الاختبار القصير لمعرفة ذلك.
+        </div>
+    </header>
+
+    <!-- Instructions -->
+    <div class="instructions-card">
+        <h3>تعليمات الاختبار</h3>
+        <p>أجب عن العبارات الـ 15 التالية بصدق بناءً على ممارساتك الفعلية في بيئة العمل، وعند الانتهاء انقر على زر <strong>"حساب المجموع الكلي"</strong> للحصول على نتيجتك وتفسيرها التفصيلي.</p>
+    </div>
+
+    <!-- Questions Form -->
+    <form id="quizForm">
+
+        <!-- Q1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">1</span>
+                <div class="question-text">أحاول توقع الأسباب المحتملة للارتباك والتنبؤ بها وأتعامل معها مقدماً.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q1" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q1" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q1" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q1" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q1" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">2</span>
+                <div class="question-text">عندما أكتب مذكرة أو بريداً إلكترونياً أو أي مستند آخر، فإنني أقدم كل المعلومات الأساسية والتفاصيل التي أستطيع التأكد من فهم رسالتي.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q2" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q2" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q2" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q2" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q2" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">3</span>
+                <div class="question-text">إذا لم أفهم شيئاً ما فإنني أميل إلى الاحتفاظ بهذا لنفسي وأكتشفه لاحقاً.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q3" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q3" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q3" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q3" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q3" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">4</span>
+                <div class="question-text">أتفاجأ عندما أجد أن الناس لم يفهموا ما قلته.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q4" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q4" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q4" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q4" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q4" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">5</span>
+                <div class="question-text">أميل إلى قول ما أفكر فيه، دون القلق بشأن كيفية إدراك الشخص الآخر له، وأفترض أننا سنكون قادرين على حل هذه المشكلة لاحقاً.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q5" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q5" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q5" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q5" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q5" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">6</span>
+                <div class="question-text">عندما يتحدث الناس معي أحاول أن أرى وجهات نظرهم.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q6" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q6" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q6" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q6" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q6" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">7</span>
+                <div class="question-text">أستخدم البريد الإلكتروني للتواصل مع الأشخاص بشأن المشكلات المعقدة. إنها سريعة وفعالة.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q7" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q7" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q7" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q7" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q7" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">8</span>
+                <div class="question-text">عندما أنتهي من كتابة تقرير أو مذكرة أو بريد إلكتروني أقوم بمسحه ضوئياً بسرعة بحثاً عن الأخطاء المطبعية وما إلى ذلك، ثم أرسله على الفور.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q8" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q8" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q8" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q8" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q8" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">9</span>
+                <div class="question-text">عندما أتحدث مع الناس، فإنني أهتم بلغة جسدهم.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q9" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q9" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q9" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q9" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q9" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">10</span>
+                <div class="question-text">أستخدم الرسوم البيانية والرسوم التوضيحية للمساعدة في التعبير عن أفكاري.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q10" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q10" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q10" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q10" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q10" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">11</span>
+                <div class="question-text">قبل أن أتواصل أفكر فيما يحتاج الشخص إلى معرفته وأفضل السبل لنقله.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q11" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q11" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q11" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q11" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q11" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">12</span>
+                <div class="question-text">عندما يتحدث معي شخص ما أفكر في ما سأقوله بعد ذلك للتأكد من أنني أشرح وجهة نظري بشكل صحيح.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q12" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q12" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q12" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q12" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q12" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">13</span>
+                <div class="question-text">قبل أن أرسل رسالة أفكر في أفضل طريقة للتواصل: وجهاً لوجه أم عبر الهاتف أم رسالة مكتوبة.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q13" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q13" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q13" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q13" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q13" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">14</span>
+                <div class="question-text">أحاول مساعدة الناس لفهم المبادئ الأساسية حول النقاط التي أناقشها، وهذا يقلل بشكل كبير الاعتقادات الخاطئة ويزيد من الفهم.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q14" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q14" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q14" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q14" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q14" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">15</span>
+                <div class="question-text">أضع في الاعتبار الحواجز الثقافية عند التخطيط لاتصالاتي.</div>
+            </div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q15" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q15" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q15" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q15" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q15" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div id="missingAlert" class="alert-missing">
+            يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة! (الأسئلة المتبقية: <span id="missingCount">0</span>)
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="calc-btn" onclick="calculateScore()">حساب المجموع الكلي</button>
+        </div>
+    </form>
+
+    <!-- Result Display -->
+    <div id="resultBox" class="result-box">
+        <div class="result-header">
+            <h3>النتيجة النهائية</h3>
+            <div id="resultScore" class="result-score">0 / 75</div>
+            <div id="resultCategory" class="result-category">--</div>
+        </div>
+        <div id="resultDescription" class="result-description"></div>
+    </div>
+
+    <!-- Detailed Interpretation -->
+    <div id="analysisSection" class="analysis-section">
+        <h2>التفسير المفصل لعملية الاتصال</h2>
+        <p style="margin-bottom: 15px;">عندما تتواصل مع شخص آخر يتبع كل منكما خطوات عملية الاتصال (انظر الشكل 1 أدناه):</p>
+
+        <!-- Process Diagram -->
+        <div class="process-diagram">
+            <div class="process-title">الشكل 1: نموذج عملية الاتصال الفعّال</div>
+            <div class="process-flow">
+                <div class="process-node">المصدر</div>
+                <div class="process-arrow">⬅</div>
+                <div class="process-node">الرسالة</div>
+                <div class="process-arrow">⬅</div>
+                <div class="process-node">التشفير</div>
+                <div class="process-arrow">⬅</div>
+                <div class="process-node">قناة الاتصال</div>
+                <div class="process-arrow">⬅</div>
+                <div class="process-node">فك الشفرة</div>
+                <div class="process-arrow">⬅</div>
+                <div class="process-node">المستقبل</div>
+            </div>
+            <div class="feedback-loop">
+                <span>🔄 التغذية الراجعة (ترتد من المستقبل إلى المصدر)</span>
+            </div>
+        </div>
+
+        <p style="margin-bottom: 20px;">
+            خلال هذه العملية يقوم الشخص الذي هو مصدر الاتصال بتشفيره في رسالة وينقله عبر قناة، ثم يقوم المتلقي بفك تشفير الرسالة، وبطريقة أو بأخرى يغذي فهمه أو عدم فهمه للمصدر. ومن خلال فهم خطوات العملية يمكنك أن تصبح أكثر وعياً بدورك فيها والتعرف على ما عليك القيام به للتواصل بشكل فعال وتوقع المشكلات قبل حدوثها وتحسين قدرتك العامة على التواصل بفعالية.
+        </p>
+
+        <!-- Stage 1 -->
+        <div class="factor-card">
+            <h3>1. المصدر – التخطيط لرسالتك</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 2، 11</span>
+            <p>قبل أن تبدأ في التواصل خذ لحظة لمعرفة ما تريد قوله ولماذا. لا تضيع وقتك في نقل معلومات غير ضرورية ولا تضيع وقت المستمع أو القارئ أيضاً. في كثير من الأحيان يستمر الأشخاص في التحدث أو الكتابة لأنهم يعتقدون أنه من خلال قول المزيد، سيتمكنون بالتأكيد من تغطية جميع النقاط؛ ومع ذلك في كثير من الأحيان كل ما يفعلونه هو إرباك الأشخاص الذين يتحدثون إليهم.</p>
+            <p><strong>كي تخطط لاتصالاتك يجب عليك:</strong></p>
+            <ol>
+                <li>افهم هدفك: لماذا تتواصل؟</li>
+                <li>افهم جمهورك: مع من تتواصل؟ وما الذي يحتاج إلى معرفته؟</li>
+                <li>خطط لما تريد قوله وكيف سترسل الرسالة.</li>
+                <li>اطلب تعليقات حول مدى جودة تلقي رسالتك.</li>
+            </ol>
+            <div class="highlight-box">
+                يستخدم المتصلون الجيدون مبدأ <strong>KISS - "Keep It Simple and Straightforward"</strong> (اجعل الأمر بسيطاً ومباشراً). إنهم يعلمون أن القليل هو في كثير من الأحيان أكثر، وأن التواصل الجيد يجب أن يكون فعالاً.
+            </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="factor-card">
+            <h3>2. التشفير – إنشاء رسالة واضحة ومصممة بشكل جيد</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 1، 5، 8، 10، 15</span>
+            <p>عندما تعرف ما تريد قوله قرر بالضبط كيف ستقوله. أنت مسؤول عن إرسال رسالة واضحة وموجزة. ولتحقيق ذلك عليك أن تفكر ليس فقط فيما ستقوله، ولكن أيضاً كيف تعتقد أن المتلقي سوف يفهمه. غالباً ما نركز على الرسالة التي نريد إرسالها والطريقة التي سنرسلها بها، ولكن إذا تم تسليم رسالتنا دون النظر إلى وجهة نظر المتلقي فمن المحتمل أن يتم فقدان جزء من تلك الرسالة.</p>
+            <p><strong>للتواصل بشكل أكثر فعالية:</strong></p>
+            <ol>
+                <li>افهم ما تحتاجه حقاً وتريد قوله.</li>
+                <li>توقع رد فعل الشخص الآخر على رسالتك.</li>
+                <li>اختر الكلمات ولغة الجسد التي تسمح للشخص الآخر بسماع ما تقوله حقاً.</li>
+            </ol>
+            <p>عند استخدام التواصل الكتابي تأكد من أن الذي كتبته سيتم استقباله وفهمه بنفس الطريقة التي تريد إيصالها؛ فالكلمات دائماً بلا مشاعر ولا تعبير، فهي لا تبتسم ولا تتجهم في وجهك أثناء قراءتها (إلا إذا كنت كاتباً موهوباً جداً).</p>
+            <p><strong>عند الكتابة خذ وقتاً للقيام بما يلي:</strong></p>
+            <ol>
+                <li>قم بمراجعة أسلوبك.</li>
+                <li>تجنب المصطلحات المعقدة أو العامية.</li>
+                <li>تحقق من القواعد النحوية وعلامات الترقيم.</li>
+                <li>تحقق أيضاً من النغمة والموقف والفروق الدقيقة وغيرها من التفاصيل. إذا كنت تعتقد أنه قد يتم إساءة فهم الرسالة، فمن المحتمل أن يحدث ذلك. خذ الوقت الكافي لتوضيح ذلك!</li>
+                <li>تعرف على سياسات الكتابة أو أدلة الأسلوب الخاصة بشركتك.</li>
+            </ol>
+            <p>هناك اعتبار مهم آخر وهو استخدام الصور والمخططات والرسوم البيانية حيثما أمكن ذلك؛ وكما يقول المثل: <strong>"الصورة تتحدث عن ألف كلمة"</strong>.</p>
+            <p>أيضاً أياً كان من ستتحدث إليه أو تكتب له رسالة، خذ في اعتبارك الحواجز الثقافية واللغوية لأنها قد تتسبب في سوء الفهم أو سوء التواصل. استشر بعض الأشخاص الذين لديهم احتكاك بهذا النوع من الأشخاص والثقافات واجتهد في البحث لتكون على علم بالمشاكل التي يمكن أن تواجهها أثناء التواصل.</p>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="factor-card">
+            <h3>3. اختيار القناة الصحيحة</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 7، 11، 13</span>
+            <p>إلى جانب تشفير رسالتك يتعين عليك اختيار أفضل قناة اتصال لاستخدامها في إرسالها؛ فأنت تريد أن تكون فعالاً مع تحقيق أقصى استفادة من فرص التواصل المتاحة لك.</p>
+            <p>يعد استخدام البريد الإلكتروني لإرسال توجيهات بسيطة أمراً عملياً. ومع ذلك، إذا كنت تريد تفويض مهمة معقدة فمن المحتمل أن تؤدي رسالة البريد الإلكتروني إلى المزيد من الأسئلة؛ لذلك قد يكون من الأفضل ترتيب وقت للتحدث شخصياً. وإذا كانت اتصالاتك تحتوي على أي محتوى عاطفي سلبي فابتعد جيداً عن البريد الإلكتروني! تأكد من التواصل وجهاً لوجه أو عبر الهاتف، حتى تتمكن من الحكم على تأثير كلماتك وضبط رسالتك بشكل مناسب.</p>
+            <p><strong>عند اختيار القناة المناسبة لرسالتك، ضع في اعتبارك ما يلي:</strong></p>
+            <ol>
+                <li>الحساسية والمحتوى العاطفي للموضوع.</li>
+                <li>مدى سهولة توصيل التفاصيل.</li>
+                <li>تفضيلات المتلقي.</li>
+                <li>ضيق الوقت.</li>
+                <li>الحاجة إلى طرح أسئلة والإجابة عليها.</li>
+            </ol>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="factor-card">
+            <h3>4. فك التشفير – تلقي وتفسير الرسالة</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 3، 6، 12، 14</span>
+            <p>قد يكون من السهل التركيز على التحدث لأننا نريد أن نوضح نقاطنا وعادة ما يكون لدينا الكثير لنقوله. ومع ذلك، لكي تكون متواصلاً رائعاً عليك أيضاً التراجع، والسماح للشخص الآخر بالتحدث والاستماع.</p>
+            <p>هذا لا يعني أنك يجب أن تكون سلبياً؛ الاستماع عمل شاق ولهذا يسمى الاستماع الفعال بـ <strong>"الاستماع النشط"</strong>. للاستماع بفعالية أعط انتباهك الكامل للمتحدث:</p>
+            <ol>
+                <li>انظر إلى الشخص.</li>
+                <li>انتبه إلى لغة جسده.</li>
+                <li>تجنب الانحرافات والمشتتات.</li>
+                <li>أومئ برأسك وابتسم للاعتراف بالنقاط.</li>
+                <li>في بعض الأحيان أعد التفكير وصياغة ما قاله الشخص.</li>
+                <li>اسمح للشخص بالتحدث دون التفكير فيما ستقوله بعد ذلك.</li>
+                <li>لا تقاطع.</li>
+            </ol>
+            <p>الاستماع التعاطفي يساعدك أيضاً على فك تشفير الرسائل بدقة. لفهم الرسالة بشكل كامل عليك أن تفهم المشاعر الأساسية التي يعبر عنها المتحدث، وهذا هو المكان الذي يكون فيه فهم لغة الجسد مفيداً جداً.</p>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="factor-card">
+            <h3>5. التغذية الراجعة "التعليق"</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 4، 9</span>
+            <p>أنت بحاجة إلى تعليقات وتغذية راجعة لأنه بدونها لا يمكنك التأكد من أن الأشخاص قد فهموا رسالتك. أحياناً تكون ردود الفعل لفظية، وأحياناً لا تكون كذلك. لقد نظرنا في أهمية طرح الأسئلة والاستماع بعناية، ومع ذلك يمكن أن تساعدك التعليقات من خلال لغة الجسد أيضاً في تقييم تأثير رسالتك.</p>
+            <p><strong>من خلال مراقبة تعبيرات الوجه والإيماءات ووضعية الشخص الذي تتواصل معه يمكنك اكتشاف ما يلي:</strong></p>
+            <ol>
+                <li>مستويات الثقة.</li>
+                <li>الدفاعية.</li>
+                <li>الاتفاق.</li>
+                <li>الفهم (أو عدم الفهم).</li>
+                <li>مستوى الاهتمام.</li>
+                <li>مستوى التفاعل مع الرسالة.</li>
+                <li>الصدق أو الكذب أو عدم الأمانة.</li>
+            </ol>
+            <p>كمتحدث، فإن فهم لغة جسد المستمع يمكن أن يمنحك فرصة لتعديل رسالتك وجعلها أكثر قابلية للفهم أو جذابة أو مثيرة للاهتمام. وكمستمع، يمكن للغة الجسد أن توضح لك المزيد عما يقوله الشخص الآخر، ويمكنك بعد ذلك طرح الأسئلة للتأكد من أنك قد فهمت بعضكما البعض بالفعل.</p>
+            <p>يمكن أن تكون التعليقات رسمية أيضاً؛ إذا كنت تقوم بتوصيل شيء مهم حقاً، فقد يكون من المفيد في كثير من الأحيان طرح أسئلة على الشخص الذي تتحدث إليه للتأكد من أنه يفهمه تماماً. وإذا كنت تتلقى هذا النوع من التواصل، كرره بكلماتك الخاصة للتحقق من فهمك.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div><strong>Welz Academy</strong></div>
+        <div style="margin-top: 5px;">Created By Waleed Alkhodary</div>
+    </footer>
+</div>
+
+<script>
+    // Styling option labels on select
+    document.querySelectorAll('.option-label input').forEach(input => {
+        input.addEventListener('change', function() {
+            const grid = this.closest('.options-grid');
+            grid.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+            if(this.checked) {
+                this.parentElement.classList.add('selected');
+            }
+        });
+    });
+
+    function calculateScore() {
+        let total = 0;
+        let answeredCount = 0;
+        let totalQuestions = 15;
+        let missing = [];
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected) {
+                total += parseInt(selected.value, 10);
+                answeredCount++;
+            } else {
+                missing.push(i);
+            }
+        }
+
+        const alertBox = document.getElementById('missingAlert');
+        if (answeredCount < totalQuestions) {
+            alertBox.style.display = 'block';
+            document.getElementById('missingCount').innerText = `${totalQuestions - answeredCount} (الأسئلة: ${missing.join(', ')})`;
+            return;
+        } else {
+            alertBox.style.display = 'none';
+        }
+
+        const resultBox = document.getElementById('resultBox');
+        const scoreElem = document.getElementById('resultScore');
+        const catElem = document.getElementById('resultCategory');
+        const descElem = document.getElementById('resultDescription');
+        const analysisSection = document.getElementById('analysisSection');
+
+        scoreElem.innerText = `${total} / 75`;
+
+        if (total >= 15 && total <= 35) {
+            catElem.innerText = "بحاجة إلى تطوير مهارات الاتصال";
+            descElem.innerText = "أنت بحاجة إلى مواصلة العمل على مهارات الاتصال لديك. أنت لا تعبر عن نفسك بوضوح وقد لا تتلقى الرسائل بشكل صحيح أيضاً. والخبر السار هو أنه من خلال الاهتمام الشديد بالطريقة التي تتواصل بها، يمكنك تحسين فعاليتك في العمل والاستمتاع بعلاقات عمل أفضل مع زملائك! ستوجهك بقية هذه المقالة أدناه إلى بعض الأدوات الرائعة لتحسين مهارات الاتصال لديك.";
+        } else if (total >= 36 && total <= 55) {
+            catElem.innerText = "قدرة جيدة على التواصل مع فرص للتحسين";
+            descElem.innerText = "أنت قادر على التواصل، لكنك في بعض الأحيان تواجه مشاكل في التواصل. خذ الوقت الكافي للتفكير في أسلوبك في التواصل وركز على تلقي الرسائل بفعالية، بقدر ما تركز على إرسالها. وهذا سوف يساعد على تحسين قدرتك على التواصل. اقرأ التفاصيل أدناه للبدء.";
+        } else if (total >= 56 && total <= 75) {
+            catElem.innerText = "ممتاز! متواصل محترف وفعّال";
+            descElem.innerText = "ممتاز! أنت تفهم دورك كمتواصل سواء عند إرسال الرسائل ومتى تستقبلها، تتوقع المشاكل وتختار القناة الصحيحة للتواصل. يحترمك الناس لقدرتك على التواصل بوضوح ويقدرون مهاراتك في الاستماع. اقرأ أدناه للمزيد.";
+        }
+
+        resultBox.style.display = 'block';
+        analysisSection.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

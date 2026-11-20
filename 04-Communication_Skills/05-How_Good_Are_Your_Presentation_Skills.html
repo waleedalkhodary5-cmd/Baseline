@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى جودة مهارات العرض والتقديم لديك؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        /* Header Branding */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards & Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin: 10px 25px 18px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        /* Questions Styling */
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Conclusion & Results Wrapper (Hidden Initially) */
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        .note-box {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- المقدمة -->
+    <section class="card orange-top">
+        <h2>ما مدى جودة مهارات العرض والتقديم لديك؟</h2>
+        <h3>فهم مدى تأثيرك على الجمهور</h3>
+        <p>كيف تشعر عندما يتعين عليك تقديم عرض تقديمي؟ هل تكون مستعداً جيداً ومسترخياً، وواثقاً من أن أداءك سيترك الأثر المطلوب لدى جمهورك؟ أم أن مجرد التفكير في الوقوف على منصة الإلقاء والإمساك بالميكروفون يكفي لإصابتك برهبة المسرح؟</p>
+        <p>سواء استمتعت بذلك أم لا، فإن تقديم العروض – بشكل أو بآخر – يُعد جزءاً أساسياً من عالم الأعمال. فسواء كنت تقف أمام جمهور رسمي بانتظام، أو تحتاج ببساطة إلى إيصال صوتك في اجتماع عمل، فأنت تستخدم مهارات العرض والتقديم.</p>
+        <p>يعتقد الكثيرون أن المتحدثين البارعين يولدون هكذا بالفطرة ولا يُصنعون، وهذا غير صحيح إطلاقاً. صحيح أن بعض الأشخاص يكونون أكثر ارتياحاً عند التحدث أمام الآخرين، ولكن يمكن للجميع تعلم المهارات والتقنيات اللازمة لرفع مستوى ثقتهم وأدائهم أثناء العرض.</p>
+        <p>بدءاً من عروض المبيعات وحتى المحاضرات التدريبية، تُعد مهارات العرض والتحدث أمام الجمهور مفتاحاً للعديد من الأدوار المؤثرة في عالم الأعمال اليوم. والخبر السار هو أنه يمكنك تطوير هذه المهارة بالممارسة والتدريب.</p>
+        <p><strong>إذن، هل تمتلك المهارات اللازمة للقيام بعمل رائع؟ وما مدى فعاليتك عند الأداء؟ خُض هذا الاختبار القصير لتقييم مهاراتك.</strong></p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة أدناه، اختر الخيار في العمود الذي يصفك بأفضل شكل. يُرجى الإجابة عن الأسئلة كما أنت في الواقع (وليس كما تعتقد أنك يجب أن تكون)، ولا تقلق إذا بدت بعض الأسئلة وكأنها تُحتسب في "الاتجاه المعاكس". عند الانتهاء، اضغط على زر <strong>"احسب إجمالي نقاطي"</strong> في الأسفل.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 12</span>
+    </div>
+
+    <!-- الاختبار (مبني بالكامل بـ HTML مباشر) -->
+    <section class="card">
+        <h2>اختبار تقييم مهارات العرض والتقديم (12 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- السؤال 1 -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- تتطابق العناصر المرئية في العرض التقديمي بشكل جيد مع المعلومات التي أقوم بتوصيلها، وتساعد في نقل الخطاب.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 2 -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- للتحضير لعرضي التقديمي أفكر ملياً في الرسالة التي أريد إرسالها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 3 -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- قبل أن أقدم العرض أصبح على دراية بالغرفة والمساحة التي سأتحدث فيها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 4 -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- أخطط وأمارس العرض التقديمي حتى أتمكن من التحدث بشكل مريح وطلاقة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 5 -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- أفترض أن جمهوري يعرف القليل جداً ثم أقدم لهم كل المعلومات التي يحتاجون إليها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 6 -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- أستخدم أسلوباً غير مباشر ودقيق، وأرسل رسائل لطيفة إلى جمهوري.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 7 -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- القلق يسبب لي التوتر، ويجلب طاقة سلبية لعرضي التقديمي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 8 -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- أتأكد من قيام المنظمين أو الموظفين الآخرين بإعداد معداتي حتى أتمكن من الوصول في الوقت المناسب والبدء على الفور.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 9 -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- أشجع جمهوري على طرح الأسئلة في نهاية العرض.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 10 -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- أهتم بسلوكي غير اللفظي، مثل تعابير الوجه والتواصل البصري، للتأكد من بقائي منخرطاً مع الجمهور.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 11 -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- أستخدم الأمثلة لدعم نقاطي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 12 -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- تستغرق عروضي التقديمية أحياناً وقتاً أطول من المخطط له.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة وتفسير النتيجة والدليل الكامل (مخفية لحين إنهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        
+        <!-- تفسير النتيجة -->
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتيجة</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 60</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <!-- المقال الإرشادي -->
+        <section class="card">
+            <h2>كيف تصبح مقدّم عروض أفضل؟</h2>
+            <p>العروض التقديمية الفعّالة هي مزيج من عناصر متنوعة؛ يجب أن تعرف ما يريده جمهورك، وتُعدّ محتوى جيداً ومشوقاً وجذاباً، وأن تكون واثقاً أثناء تقديم المادة، وتعرف كيف تدير بيئة العرض بنجاح، وتضمن أن تترك رسالتك أقصى تأثير ممكن.</p>
+            <p>إن الموازنة بين هذه العناصر الأربعة ليست بالمهمة السهلة، وعندما تقترن بالقلق الطبيعي الذي يسبق العروض التقديمية، فلا عجب أن يواجه الكثيرون صعوبة في هذه المهارة. ومع ذلك، لست مضطراً للبقاء خائفاً ومتوتراً؛ فباستخدام الأدوات المناسبة والتخطيط والتحضير الجيد، يمكنك التقديم بطاقة وثقة عالية.</p>
+            <p>دعنا نستعرض بالتفصيل العناصر الأربعة الأساسية للعروض التقديمية الفعّالة:</p>
+            <ol>
+                <li>فهم جمهورك (Understanding Your Audience).</li>
+                <li>إعداد المحتوى الخاص بك (Preparing Your Content).</li>
+                <li>الإلقاء بثقة (Delivering Confidently).</li>
+                <li>التحكم في بيئة العرض وإدارتها (Controlling the Environment).</li>
+            </ol>
+
+            <h3>1. فهم جمهورك (الأسئلة: 2، 5، 9)</h3>
+            <p>يُقاس نجاح معظم العروض التقديمية عادةً بمدى استجابة الجمهور. قبل أن تبدأ حتى في تصميم شرائح العرض (PowerPoint)، فإن أول ما عليك فعله هو فهم ما يريده جمهورك عبر الخطوات التالية:</p>
+            <ul>
+                <li>حدد من هم أعضاء الجمهور المستهدف.</li>
+                <li>اكتشف ما يريدونه ويتوقعونه من عرضك، وما يحتاجون إلى تعلمه، وما يعرفونه مسبقاً حتى لا تكرره.</li>
+                <li>ضع مخططاً عاماً (Outline) لعرضك، واطلب تغذية راجعة مسبقة حول المحتوى المقترح.</li>
+            </ul>
+            <p>عندما يتوافق حديثك مع احتياجات الجمهور، ستتلقى تعزيزاً إيجابياً طوال العرض من خلال إيماءات الموافقة والابتسامات، مما يحفزك على تقديم أداء رائع.</p>
+
+            <h3>2. إعداد المحتوى الخاص بك (الأسئلة: 6، 11)</h3>
+            <p>تقديم المعلومات الصحيحة بترتيب خاطئ قد يترك الجمهور في حالة من الارتباك أو الملل. نظّم محتواك بشكل جذاب لتضمن تذكر رسالتك من خلال المبادئ التالية:</p>
+            <ul>
+                <li><strong>حدد نقاطاً رئيسية قليلة:</strong> استخدم مبدأ التجميع (Chunking) لتنظيم معلوماتك في 5 إلى 7 نقاط رئيسية يسهل تذكرها.</li>
+                <li><strong>لا تذكر كل التفاصيل:</strong> العروض الجيدة تُلهم الجمهور للبحث وطرح الأسئلة لفهم أعمق.</li>
+                <li><strong>استخدم مخططاً تمهيدياً:</strong> أخبر جمهورك في البداية بما ستغطيه لبناء التشويق والاهتمام.</li>
+                <li><strong>ابدأ بقوة واختم بقوة:</strong> اجذب الانتباه منذ اللحظة الأولى واترك رسالة ختامية لا تُنسى.</li>
+                <li><strong>استخدم الأمثلة والقصص:</strong> ادعم نقاطك بأمثلة واقعية وتشبيهات لإضفاء الحيوية على العرض.</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>تسلسل مونرو التحفيزي (Monroe's Motivated Sequence) للإقناع:</strong>
+                <ol>
+                    <li><strong>جذب الانتباه:</strong> استخدم نقطة افتتاحية مثيرة أو إحصائية صادمة.</li>
+                    <li><strong>خلق الحاجة:</strong> أقنع الجمهور بوجود مشكلة تؤثر عليهم وتحتاج إلى تغيير.</li>
+                    <li><strong>تحديد الحل:</strong> اشرح بوضوح ما يجب القيام به لحل المشكلة.</li>
+                    <li><strong>رسم صورة تفصيلية للنجاح:</strong> امنح الجمهور رؤية ملموسة لنتائج تطبيق الحل.</li>
+                    <li><strong>الدعوة لاتخاذ إجراء فوري:</strong> أشرك الجمهور عملياً منذ البداية.</li>
+                </ol>
+                <p style="margin-bottom:0;">كما يُنصح بالاستعانة بـ <strong>المثلث البلاغي (The Rhetorical Triangle)</strong> لموازنة التواصل من ثلاث زوايا: المتحدث، والجمهور، والسياق.</p>
+            </div>
+
+            <h3>3. الإلقاء بثقة (الأسئلة: 1، 4، 7، 10)</h3>
+            <p>حتى أفضل محتوى قد يفقد تأثيره إذا كان أسلوب إلقائك يشتت الانتباه أو يفتقر للثقة. إليك أهم النصائح لتعزيز ثقتك:</p>
+            <ul>
+                <li><strong>تدرّب لبناء الثقة:</strong> لا تحفظ النص حرفياً فتبدو آلياً، بل أتقن المحتوى لدرجة تمكّنك من التحدث بطلاقة ومرونة.</li>
+                <li><strong>كن مرناً ورحّب بالأسئلة:</strong> الترحيب بأسئلة الجمهور يعكس تمكنك ويبني الثقة، وإذا لم تعرف إجابة سؤال فاعترف بذلك والتزم بالبحث عنها.</li>
+                <li><strong>اجعل الوسائل المرئية بسيطة وموجزة:</strong> لا تكدّس الشرائح بالنصوص والرسوم؛ يجب أن تلخص الشريحة نقطة أو نقطتين فقط لتدعم حديثك لا أن تحل محله.</li>
+                <li><strong>أدِر توترك بذكاء:</strong> القليل من التوتر يولّد طاقة إيجابية، لكن زيادته تُربكك. استخدم تقنيات الاسترخاء الجسدي كالتنفس العميق، والتصور الذهني الإيجابي (Imagery) لتخيل نجاحك قبل الصعود للمنصة.</li>
+            </ul>
+
+            <h3>4. التحكم في بيئة العرض وإدارتها (الأسئلة: 3، 4، 8، 12)</h3>
+            <p>يمكنك تقليل المخاطر المحتملة في مكان العرض من خلال ثلاث خطوات عملية:</p>
+            <ul>
+                <li><strong>تدرّب داخل قاعة العرض نفسها:</strong> تعرّف على مساحة القاعة، الإضاءة، الميكروفون، وتأكد من عمل ملف العرض بسلاسة.</li>
+                <li><strong>قم بإعداد تجهيزاتك بنفسك:</strong> لا تعتمد كلياً على الآخرين في تجهيز معداتك؛ فالتجربة اليدوية المسبقة تمنع المفاجآت غير السارة.</li>
+                <li><strong>اختبر التوقيت بدقة:</strong> احترم وقت جمهورك والتزم بالجدول الزمني المحدد؛ فإنهاء العرض في وقته المحدد يترك انطباعاً احترافياً قوياً.</li>
+            </ul>
+
+            <h3>النقاط الرئيسية</h3>
+            <p>لا يجب أن يكون تقديم العروض أمراً مخيفاً أو شيئاً تتجنبه. ابحث عن فرص لممارسة هذه النصائح والتقنيات، وطوّر مهاراتك في إيصال أفكارك بوضوح وهدف وثقة وتأثير.</p>
+
+            <div class="note-box">
+                <strong>ملحوظة:</strong> لم يتم التحقق من صحة هذا التقييم إحصائياً وهو مخصص للأغراض التوضيحية والتطويرية فقط لمساعدتك على تقييم مهاراتك المهنية.
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    function updateProgress() {
+        const totalQuestions = 12;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 12;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                totalScore += parseInt(selected.value, 10);
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 12 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 60`;
+
+        if (totalScore <= 27) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (12 - 27): تحتاج إلى تطوير مهارات العرض والتقديم";
+            textElem.innerText = "عروضك التقديمية قد تكون ضعيفة بعض الشيء، وربما مملة قليلاً. هناك الكثير من الطرق لإضفاء مزيد من التشويق والحيوية على ما تقدمه وكيفية تقديمه. أنت ببساطة بحاجة إلى مزيد من التدريب على تطوير المحتوى المناسب، وتعلم كيفية تحويل توترك إلى تدفق من الطاقة الإيجابية. اقرأ الدليل أدناه للبدء في بناء ثقتك بنفسك.";
+        } else if (totalScore <= 44) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (28 - 44): أداء جيد ولكن يحتاج إلى لمسة تميز";
+            textElem.innerText = "عروضك التقديمية مقبولة وجيدة، وهي نموذجية لمعظم المقدمين المتوسطين. الانطباع الذي تتركه ليس سيئاً ولا استثنائياً، ومن المرجح أن تُنسى رسالتك بسرعة. استخدم النصائح والأدوات الواردة أدناه لإضفاء الحيوية على عروضك التقديمية حتى يتذكرك جمهورك للأسباب الصحيحة والمميزة.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (45 - 60): عمل رائع! أنت متحدث ومُقدِّم متميز";
+            textElem.innerText = "عمل رائع! أنت تقدم عروضاً تقديمية ممتازة؛ فهي شيقة ومناسبة تماماً لجمهورك، وتدرك أن تخصيص الوقت للتحضير يؤتي ثماره في النهاية. راجع الاستراتيجيات الواردة في الدليل أدناه، وتحدَّ نفسك لمواصلة تطوير مهاراتك في العرض والتقديم.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

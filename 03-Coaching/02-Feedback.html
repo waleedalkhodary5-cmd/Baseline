@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار: ما مدى جودة التغذية الراجعة التي تقدمها؟ | Welz Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0d9488;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f8fafc;
+            margin-bottom: 4px;
+        }
+
+        .brand-author {
+            font-size: 1.1rem;
+            color: #93c5fd;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .quiz-title {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .instructions-card {
+            background: var(--card-bg);
+            border-right: 5px solid var(--primary-light);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .instructions-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            padding-top: 4px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-light);
+            background: #eff6ff;
+        }
+
+        .option-label.selected {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+        }
+
+        .result-box {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+            border: 2px solid var(--primary-light);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .result-category {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #334155;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .analysis-section {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+
+        .analysis-section h2 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--primary-light);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .factor-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .factor-card h3 {
+            color: var(--secondary);
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .factor-questions {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .tip-box {
+            background: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 500;
+            color: #b45309;
+        }
+
+        .key-points {
+            background: #f0fdf4;
+            border-right: 4px solid #22c55e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .key-points h3 {
+            color: #15803d;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            padding-right: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .alert-missing {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="brand-title">Welz Academy</div>
+        <div class="brand-author">Created By Waleed Alkhodary</div>
+        <h1 class="quiz-title">ما مدى جودة التغذية الراجعة التي تقدمها؟</h1>
+        <div class="intro-text">
+            <strong>تقديم ملاحظات واضحة لتحسين الأداء</strong><br>
+            بصفتك مديرًا، فإن تقديم التغذية الراجعة (الملاحظات التوجيهية) يُعدّ من أهم المهام التي تقوم بها. عندما تُطلع موظفيك على مستوى أدائهم، فإنك تمنحهم الفرصة لتغيير العادات غير المفيدة، وفي الوقت نفسه تكافئ وتُعزز السلوكيات الإيجابية.
+            <br><br>
+            استخدم هذا الاختبار لتعرف مدى جودة التغذية الراجعة التي تقدمها، ولتكتشف كيف يمكنك تقديم ملاحظات أفضل مستقبلاً.
+        </div>
+    </header>
+
+    <div class="instructions-card">
+        <h3>تعليمات الاختبار</h3>
+        <p>قَيّم كل عبارة بناءً على واقعك الفعلي، وعند الانتهاء، انقر على زر <strong>"حساب المجموع الكلي"</strong> للاطلاع على النتيجة والتحليل.</p>
+    </div>
+
+    <form id="quizForm">
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">1</span>
+                <div class="question-text">عندما أقدم تغذية راجعة، أستمع لما يقوله عضو الفريق وأحاول فهم وجهة نظره ومشاعره.</div>
+            </div>
+            <div class="options-grid" data-q="1">
+                <label class="option-label"><input type="radio" name="q1" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q1" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q1" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q1" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q1" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">2</span>
+                <div class="question-text">أُحيل فريقي إلى رؤية المؤسسة ورسالتها، وأترك للإدارة العليا مهمة شرح الاتجاه والاستراتيجية العامة للشركة، فهم يقدمون ذلك بشكل أفضل مما أستطيع. (سؤال عكسي)</div>
+            </div>
+            <div class="options-grid" data-q="2">
+                <label class="option-label"><input type="radio" name="q2" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q2" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q2" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q2" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q2" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">3</span>
+                <div class="question-text">أطلع على الوصف الوظيفي، واتفاقيات الأداء، وتقييمات الأداء السابقة للموظفين للتحضير لجلسات التغذية الراجعة.</div>
+            </div>
+            <div class="options-grid" data-q="3">
+                <label class="option-label"><input type="radio" name="q3" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q3" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q3" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q3" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q3" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">4</span>
+                <div class="question-text">بعد تقديم التغذية الراجعة، أترك الموظفين ليعملوا التغييرات بالشكل الذي يرونه مناسباً دون تدخل. (سؤال عكسي)</div>
+            </div>
+            <div class="options-grid" data-q="4">
+                <label class="option-label"><input type="radio" name="q4" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q4" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q4" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q4" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q4" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">5</span>
+                <div class="question-text">أحرص على أن يعرف أعضاء فريقي كيف تضيف وظائفهم قيمة ملموسة للمؤسسة.</div>
+            </div>
+            <div class="options-grid" data-q="5">
+                <label class="option-label"><input type="radio" name="q5" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q5" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q5" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q5" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q5" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">6</span>
+                <div class="question-text">أعتمد على مواقف وأحداث محددة بدلاً من التعميمات عند تقديم التغذية الراجعة.</div>
+            </div>
+            <div class="options-grid" data-q="6">
+                <label class="option-label"><input type="radio" name="q6" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q6" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q6" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q6" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q6" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">7</span>
+                <div class="question-text">أتابع بانتظام التغذية الراجعة التي أقدمها للموظفين.</div>
+            </div>
+            <div class="options-grid" data-q="7">
+                <label class="option-label"><input type="radio" name="q7" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q7" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q7" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q7" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q7" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">8</span>
+                <div class="question-text">أستخدم عبارات تساعد الموظفين على فهم أثر سلوكهم وتأثيره على العمل.</div>
+            </div>
+            <div class="options-grid" data-q="8">
+                <label class="option-label"><input type="radio" name="q8" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q8" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q8" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q8" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q8" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">9</span>
+                <div class="question-text">أعرف ما يعمل عليه أعضاء فريقي وأزور أماكن عملهم بشكل متكرر.</div>
+            </div>
+            <div class="options-grid" data-q="9">
+                <label class="option-label"><input type="radio" name="q9" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q9" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q9" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q9" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q9" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">10</span>
+                <div class="question-text">أقدم تغذية راجعة تركز على ما يحتاج الموظفون إلى تحسينه أو تغييره.</div>
+            </div>
+            <div class="options-grid" data-q="10">
+                <label class="option-label"><input type="radio" name="q10" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q10" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q10" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q10" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q10" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">11</span>
+                <div class="question-text">أقدم التغذية الراجعة بناءً على ملاحظاتي ومشاعري الشخصية بشكل أساسي، ولا أجمع الحقائق أو الآراء الأخرى. (سؤال عكسي)</div>
+            </div>
+            <div class="options-grid" data-q="11">
+                <label class="option-label"><input type="radio" name="q11" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q11" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q11" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q11" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q11" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">12</span>
+                <div class="question-text">أتحدث مع الشخص مباشرة، وأحافظ على هدوئي، وأشرح ما أشعر به، وأحدد ما يجب تغييره.</div>
+            </div>
+            <div class="options-grid" data-q="12">
+                <label class="option-label"><input type="radio" name="q12" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q12" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q12" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q12" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q12" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">13</span>
+                <div class="question-text">أُقَيّم الاحتياجات التطويرية الفردية لأعضاء فريقي.</div>
+            </div>
+            <div class="options-grid" data-q="13">
+                <label class="option-label"><input type="radio" name="q13" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q13" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q13" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q13" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q13" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">14</span>
+                <div class="question-text">أساعد أعضاء فريقي على وضع أهداف واضحة.</div>
+            </div>
+            <div class="options-grid" data-q="14">
+                <label class="option-label"><input type="radio" name="q14" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q14" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q14" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q14" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q14" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">15</span>
+                <div class="question-text">أقيس مستوى تحسن الأداء باستخدام مؤشرات ومعايير محددة.</div>
+            </div>
+            <div class="options-grid" data-q="15">
+                <label class="option-label"><input type="radio" name="q15" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q15" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q15" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q15" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q15" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div id="missingAlert" class="alert-missing">
+            يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة! (الأسئلة المتبقية: <span id="missingCount">0</span>)
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="calc-btn" onclick="calculateScore()">حساب المجموع الكلي</button>
+        </div>
+    </form>
+
+    <div id="resultBox" class="result-box">
+        <div class="result-header">
+            <h3>مجموع الدرجات والنتيجة النهائية</h3>
+            <div id="resultScore" class="result-score">0 / 75</div>
+            <div id="resultCategory" class="result-category">--</div>
+        </div>
+        <div id="resultDescription" class="result-description"></div>
+    </div>
+
+    <div id="analysisSection" class="analysis-section">
+        <h2>التحليل التفصيلي لمجالات التغذية الراجعة</h2>
+        <p style="margin-bottom: 25px; color: var(--text-muted);">
+            يسلط هذا الاختبار الضوء على مجالات رئيسية متعلقة بتقديم التغذية الراجعة الفعالة. راجع التحليل أدناه لمعرفة كيفية تحسين أدائك:
+        </p>
+
+        <div class="factor-card">
+            <h3>1. التحضير لتقديم التغذية الراجعة</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 3، 9، 11</span>
+            <p>قبل تقديم الملاحظات لأحد أعضاء فريقك، تأكد من فهم الموقف بالكامل. اقرأ الوصف الوظيفي والأهداف الخاصة به، واطلع على تقييمات الأداء السابقة للوقوف على الملاحظات المدونة سابقاً.</p>
+        </div>
+
+        <div class="factor-card">
+            <h3>2. هيكلة التغذية الراجعة والموازنة بين النقد والتحفيز</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 8، 10، 12</span>
+            <p>من المهم هيكلة التغذية الراجعة بفاعلية ليفهم الموظف أثر تصرفاته. أداة (الموقف - السلوك - الأثر / SBI) تساعدك على تقديم أمثلة محددة للسلوك المطلوب تغييره.</p>
+        </div>
+
+        <div class="factor-card">
+            <h3>3. ربط التغذية الراجعة بالتوجه الاستراتيجي</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 2، 5، 14</span>
+            <p>تساعد التغذية الراجعة الموظفين على فهم كيفية مساهمتهم في تحقيق أهداف المؤسسة وكيف يضيفون قيمة حقيقية.</p>
+        </div>
+
+        <div class="factor-card">
+            <h3>4. وضع التغذية الراجعة في سياقها التطويري</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 1، 6، 13</span>
+            <p>الهدف الأساسي من التغذية الراجعة هو توفير فرص للنمو والتدريب، استمع لمخاوفهم باهتمام وتعاطف.</p>
+        </div>
+
+        <div class="factor-card">
+            <h3>5. المتابعة وإدارة الأداء</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 4، 7، 15</span>
+            <p>التغذية الراجعة ليست نشاطاً يُمارس مرة واحدة، بل هي حوار مستمر حول التوقعات.</p>
+        </div>
+
+        <div class="key-points">
+            <h3>النقاط الرئيسية</h3>
+            <ul>
+                <li>تقديم التغذية الراجعة التوجيهية والمُحفزة هو أحد أهم أدوارك كمدير.</li>
+                <li>التغذية الراجعة أساسية للتطور الشخصي والمهني لأعضاء فريقك.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div><strong>Welz Academy</strong></div>
+        <div style="margin-top: 5px;">Created By Waleed Alkhodary</div>
+    </footer>
+</div>
+
+<script>
+    document.querySelectorAll('.option-label input').forEach(input => {
+        input.addEventListener('change', function() {
+            const grid = this.closest('.options-grid');
+            grid.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+            if(this.checked) {
+                this.parentElement.classList.add('selected');
+            }
+        });
+    });
+
+    function calculateScore() {
+        let total = 0;
+        let answeredCount = 0;
+        let totalQuestions = 15;
+        let missing = [];
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected) {
+                total += parseInt(selected.value, 10);
+                answeredCount++;
+            } else {
+                missing.push(i);
+            }
+        }
+
+        const alertBox = document.getElementById('missingAlert');
+        if (answeredCount < totalQuestions) {
+            alertBox.style.display = 'block';
+            document.getElementById('missingCount').innerText = `${totalQuestions - answeredCount} (الأسئلة: ${missing.join(', ')})`;
+            return;
+        } else {
+            alertBox.style.display = 'none';
+        }
+
+        const resultBox = document.getElementById('resultBox');
+        const scoreElem = document.getElementById('resultScore');
+        const catElem = document.getElementById('resultCategory');
+        const descElem = document.getElementById('resultDescription');
+        const analysisSection = document.getElementById('analysisSection');
+
+        scoreElem.innerText = `${total} / 75`;
+
+        if (total >= 15 && total <= 34) {
+            catElem.innerText = "تغذيتك الراجعة ليست واضحة دائماً";
+            descElem.innerText = "تغذيتك الراجعة ليست واضحة دائماً، مما يعني أن الموظفين قد لا يعملون بموجبها، أو قد لا يفهمون ما يحتاجون إلى تغييره ولماذا.";
+        } else if (total >= 35 && total <= 55) {
+            catElem.innerText = "أداء متوسط - استجابة غير منتظمة";
+            descElem.innerText = "يستجيب الموظفون لملاحظاتك أحياناً، ولكن بعضهم قد يشكك فيها أو يطبقها بشكل غير منتظم.";
+        } else if (total >= 56 && total <= 75) {
+            catElem.innerText = "ممتاز! تغذية راجعة فعالة ومؤثرة";
+            descElem.innerText = "ممتاز! يستمع الموظفون لملاحظاتك ويعملون بها وينمون على المستوى الشخصي والمهني نتيجة لذلك.";
+        }
+
+        resultBox.style.display = 'block';
+        analysisSection.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

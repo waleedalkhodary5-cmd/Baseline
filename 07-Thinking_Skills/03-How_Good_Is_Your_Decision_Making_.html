@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى جودة اتخاذ القرار لديك؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin: 10px 25px 18px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+        }
+
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- المقدمة -->
+    <section class="card orange-top">
+        <h2>ما مدى جودة اتخاذ القرار لديك؟ (Be Ready for Your Next Big Decision)</h2>
+        <p>يعد اتخاذ القرار مهارة أساسية في بيئة العمل، ويحظى بأهمية بالغة لكي تكون قائداً فعالاً. سواء كنت تقرر الشخص الذي توظفه، أو المورد الذي تستخدمه، فإن القدرة على اتخاذ قرار سليم بناءً على المعلومات المتاحة أمر حاسم.</p>
+        <p>لا يوجد صيغة واحدة صالحة لكل المواقف؛ لذا فأنت بحاجة إلى نهج منظم لاتخاذ القرار بثقة تامة.</p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة، انقر فوق الزر في العمود الذي يصفك بأفضل شكل. أجب كما أنت في الواقع. عندما تنتهي، انقر فوق زر <strong>"احسب إجمالي نقاطي"</strong> في الأسفل.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 18</span>
+    </div>
+
+    <!-- الاختبار (18 عبارة) -->
+    <section class="card">
+        <h2>اختبار تقييم مهارات اتخاذ القرار (18 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- 1 (دائماً = 5) -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- أقوم بتقييم المخاطر المرتبطة بكل بديل قبل اتخاذ القرار.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 2 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- بعد أن أتخذ قراراً يكون القرار نهائياً – لأنني أعلم أن عمليتي قوية.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 3 (دائماً = 5) -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- أحاول تحديد المشكلة الحقيقية قبل البدء في عملية اتخاذ القرار.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 4 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- أعتمد على تجربتي الخاصة لإيجاد الحلول المحتملة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 5 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- أميل إلى امتلاك "غريزة حدسية" قوية وأعتمد عليها في اتخاذ القرار.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 6 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- أتفاجأ أحياناً بالعواقب الفعلية لقراراتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 7 (دائماً = 5) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- استخدم عملية محددة جيداً لتنظيم قراراتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 8 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- أعتقد أن إشراك العديد من أصحاب المصلحة في إيجاد الحلول يمكن أن يجعل العملية أكثر تعقيداً مما ينبغي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 9 (دائماً = 5) -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- إذا كانت لدي شكوك حول قراري فسأعود وأعيد التحقق من افتراضاتي وعمليتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 10 (دائماً = 5) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- أستغرق الوقت اللازم لاختيار أفضل أداة لاتخاذ القرار لكل قرار محدد.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 11 (دائماً = 5) -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- أفكر في مجموعة متنوعة من الحلول المحتملة قبل اتخاذ قراري.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 12 (دائماً = 5) -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- قبل أن أبلغ قراري أقوم بوضع خطة التنفيذ.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 13 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-13">
+                <div class="question-text">13- في عملية اتخاذ القرار الجماعية أحاول دعم آراء أصدقائي وأحاول إيجاد حلول لهم لتنفيذها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q13" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 14 (دائماً = 5) -->
+            <div class="question-item" id="q-box-14">
+                <div class="question-text">14- عند إبلاغ قراري، أقوم بتضمين مبرراتي المنطقية وأسبابى.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q14" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 15 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-15">
+                <div class="question-text">15- كان تنفيذ بعض الخيارات التي اخترتها أصعب بكثير مما كنت أتوقع.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q15" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 16 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-16">
+                <div class="question-text">16- أفضّل اتخاذ القرارات بنفسي ثم إخبار الآخرين بما قررته.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q16" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 17 (دائماً = 5) -->
+            <div class="question-item" id="q-box-17">
+                <div class="question-text">17- أحدد العوامل الأكثر أهمية لاتخاذ القرار ثم أستخدم تلك العوامل لتقييم اختياراتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q17" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="1"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- 18 (أبداً = 5، دائماً = 1) -->
+            <div class="question-item" id="q-box-18">
+                <div class="question-text">18- أؤكد على مدى ثقتي في قرari كوسيلة للحصول على الدعم لخططي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q18" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="5"><span>ليست إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- النتائج والتفسير (مخفية لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتائج (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 90</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <section class="card">
+            <h2>الخطوات الأساسية لصنع القرار السليم</h2>
+            <p>تستند عملية صنع القرار الفعالة إلى استراتيجيات منظمة تشمل:</p>
+            <ol>
+                <li><strong>تهيئة بيئة إيجابية لاتخاذ القرار:</strong> تحديد الهدف بوضوح وإشراك أصحاب المصلحة.</li>
+                <li><strong>توليد حلول بديلة:</strong> استعراض العديد من الخيارات الممكنة وعدم الاكتفاء بالحل الأول.</li>
+                <li><strong>تقييم الحلول:</strong> دراسة المخاطر، العواقب، والجدوى التنفيذية بدقة.</li>
+                <li><strong>اتخاذ القرار:</strong> الاعتماد على منهجية منظمة لموازنة الأمور.</li>
+                <li><strong>مراجعة القرار:</strong> التحقق من صحة الافتراضات والمنطق المستخدم.</li>
+                <li><strong>التواصل والتنفيذ:</strong> شرح الأسباب المنطقية وبناء خطة عمل واضحة للتنفيذ.</li>
+            </ol>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    // الأسئلة المعكوسة (التي تكون الإجابة المثالية فيها "أبداً" وتأخذ 5 نقاط): 2, 4, 5, 6, 8, 13, 15, 16, 18
+    const invertedQuestions = [2, 4, 5, 6, 8, 13, 15, 16, 18];
+
+    function updateProgress() {
+        const totalQuestions = 18;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 18;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                let val = parseInt(selected.value, 10);
+                if (invertedQuestions.includes(i)) {
+                    val = 6 - val; // عكس الدرجة للأسئلة المعكوسة
+                }
+                totalScore += val;
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 18 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 90`;
+
+        if (totalScore >= 18 && totalScore <= 42) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (18 - 42 نقطة): عملية اتخاذ القرار لم تنضج تماماً";
+            textElem.innerText = "لست موضوعياً بالقدر الكافي، وتعتمد بشكل مفرط على الحظ أو الحدس أو التوقيت. ابدأ بتحسين مهاراتك بالتركيز على العملية التي تؤدي للقرار بدلاً من القرار نفسه.";
+        } else if (totalScore >= 43 && totalScore <= 66) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (43 - 66 نقطة): عملية اتخاذ القرار مقبولة (جيدة)";
+            textElem.innerText = "لديك فهم جيد للأساسيات، ولكن تحتاج لتطوير عمليتك لتكون أكثر استباقية. ركز على إيجاد خيارات متعددة واكتشاف أكبر قدر ممكن من المخاطر والعواقب.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (67 - 90 نقطة): نهج ممتاز في اتخاذ القرار!";
+            textElem.innerText = "أنت تمتلك نهجاً رائعاً! تعرف كيف تنظم العملية وتولد حلولاً بديلة محتملة، ثم تحلل الخيارات بعناية وتتخذ القرارات الأفضل بناءً على المعطيات المتاحة.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

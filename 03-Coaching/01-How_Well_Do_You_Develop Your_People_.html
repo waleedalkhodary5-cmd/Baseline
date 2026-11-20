@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار: كيف تطوّر موظفيك بفاعلية؟ | Welz Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0d9488;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .brand-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f8fafc;
+            margin-bottom: 4px;
+        }
+
+        .brand-author {
+            font-size: 1.1rem;
+            color: #93c5fd;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .quiz-title {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        /* Instructions Card */
+        .instructions-card {
+            background: var(--card-bg);
+            border-right: 5px solid var(--primary-light);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .instructions-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            padding-top: 4px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 8px;
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-light);
+            background: #eff6ff;
+        }
+
+        .option-label.selected {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        /* Calculate Button */
+        .btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+        }
+
+        /* Result Box */
+        .result-box {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+            border: 2px solid var(--primary-light);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .result-category {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #334155;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        /* Report / Breakdown Sections */
+        .analysis-section {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+
+        .analysis-section h2 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--primary-light);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .factor-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .factor-card h3 {
+            color: var(--secondary);
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .factor-questions {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .tip-box {
+            background: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 500;
+            color: #b45309;
+        }
+
+        .key-points {
+            background: #f0fdf4;
+            border-right: 4px solid #22c55e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .key-points h3 {
+            color: #15803d;
+            margin-bottom: 10px;
+        }
+
+        .key-points ul {
+            padding-right: 20px;
+        }
+
+        .key-points li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .alert-missing {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <div class="brand-title">Welz Academy</div>
+        <div class="brand-author">Created By Waleed Alkhodary</div>
+        <h1 class="quiz-title">كيف تطوّر موظفيك بفاعلية؟</h1>
+        <div class="intro-text">
+            عندما تدير فريقًا، غالبًا ما يعتمد مستوى أداء الفريق على مدى جودة تدريبك وتطويرك لأفراده. يحتاج الأفراد إلى تدريب وتطوير مستمرين لمساعدتهم على زيادة فاعليتهم، وتولي تحديات أكبر وأكثر أهمية. والأهم من ذلك، فهم بحاجة إلى المساعدة لتعلم مهارات جديدة مع تغير طبيعة عملهم – وطبيعة مؤسستك.
+            <br><br>
+            في كثير من الأحيان، تحصر الشركات التدريب والتطوير في الموظفين الجدد أو الأشخاص الذين ينتقلون إلى أدوار جديدة. وهذا خطأ، لأن التدريب المستمر يساعد الموظفين على التكيف مع متطلبات الوظيفة المتغيرة. كما أنه يخلق مجموعة من الكفاءات المؤهلة والجاهزة للانتقال إلى أدوار جديدة وفقًا لاحتياجات المؤسسة. تساعدك هذه العملية على بناء قوة عاملة أكثر فاعلية، كفاءة، إنتاجية، وتحفيزًا. وإذا تُمّت هذه العملية بشكل صحيح، فستضمن تحقيق أهدافك وتعزيز موقعك التنافسي.
+        </div>
+    </header>
+
+    <!-- Instructions -->
+    <div class="instructions-card">
+        <h3>التعليمات</h3>
+        <p>لكل عبارة، اختر الخيار الذي يصفك بأفضل شكل. يُرجى الإجابة بناءً على واقعك الفعلي (وليس بناءً على ما تعتقد أنه ينبغي أن تكون عليه)، ولا تقلق إذا كانت بعض الأسئلة تبدو وكأنها تُسجَّل في "الاتجاه الخاطئ". عند الانتهاء، انقر على زر <strong>"حساب المجموع الكلي"</strong> في أسفل الاختبار.</p>
+    </div>
+
+    <!-- Questions Form -->
+    <form id="quizForm">
+
+        <!-- Q1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">1</span>
+                <div class="question-text">نُجري مقابلات المغادرة (Exit Interviews) عندما يترك الموظفون المؤسسة.</div>
+            </div>
+            <div class="options-grid" data-q="1">
+                <label class="option-label"><input type="radio" name="q1" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q1" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q1" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q1" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q1" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">2</span>
+                <div class="question-text">أبحث بفاعلية عن فرص التعلم لفريقي في المواقف اليومية.</div>
+            </div>
+            <div class="options-grid" data-q="2">
+                <label class="option-label"><input type="radio" name="q2" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q2" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q2" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q2" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q2" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">3</span>
+                <div class="question-text">أستخدم نفس أساليب التحفيز مع جميع أعضاء فريقي.</div>
+            </div>
+            <div class="options-grid" data-q="3">
+                <label class="option-label"><input type="radio" name="q3" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q3" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q3" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q3" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q3" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">4</span>
+                <div class="question-text">أقوم بترقية الأشخاص كمكافأة على أدائهم الجيد.</div>
+            </div>
+            <div class="options-grid" data-q="4">
+                <label class="option-label"><input type="radio" name="q4" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q4" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q4" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q4" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q4" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">5</span>
+                <div class="question-text">عندما يأتي إليّ الموظفون بمشكلة، أطرح أسئلة لفهم المشكلة بشكل أفضل.</div>
+            </div>
+            <div class="options-grid" data-q="5">
+                <label class="option-label"><input type="radio" name="q5" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q5" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q5" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q5" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q5" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">6</span>
+                <div class="question-text">أغيّر أسلوب تواصلِي ليتناسب مع الموقف، وكذلك لتلبية احتياجات الشخص الذي أتواصل معه.</div>
+            </div>
+            <div class="options-grid" data-q="6">
+                <label class="option-label"><input type="radio" name="q6" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q6" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q6" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q6" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q6" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">7</span>
+                <div class="question-text">أتتبع الإمكانات والقدرات القيادية بين أعضاء فريقي.</div>
+            </div>
+            <div class="options-grid" data-q="7">
+                <label class="option-label"><input type="radio" name="q7" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q7" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q7" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q7" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q7" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">8</span>
+                <div class="question-text">أقوم بتوجيه موظفيّ من خلال إخبارهم بما يجب وما لا يجب عليهم فعله للارتقاء في مسارهم الوظيفي داخل المؤسسة.</div>
+            </div>
+            <div class="options-grid" data-q="8">
+                <label class="option-label"><input type="radio" name="q8" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q8" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q8" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q8" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q8" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">9</span>
+                <div class="question-text">يركز برنامج التدريب الخاص بنا للموظفين الجدد فقط على الأمور اللوجستية والمساعدة في توجيههم لأدوارهم الجديدة.</div>
+            </div>
+            <div class="options-grid" data-q="9">
+                <label class="option-label"><input type="radio" name="q9" value="1">دائماً</label>
+                <label class="option-label"><input type="radio" name="q9" value="2">غالباً</label>
+                <label class="option-label"><input type="radio" name="q9" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q9" value="4">نادراً</label>
+                <label class="option-label"><input type="radio" name="q9" value="5">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">10</span>
+                <div class="question-text">أتتبع وأدير كفاءات فريقي المتعلقة بالاحتياجات الشخصية والمؤسسية.</div>
+            </div>
+            <div class="options-grid" data-q="10">
+                <label class="option-label"><input type="radio" name="q10" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q10" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q10" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q10" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q10" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">11</span>
+                <div class="question-text">أشجع على التوجيه والإرشاد (Mentoring) داخل فريقي وفي مؤسستي.</div>
+            </div>
+            <div class="options-grid" data-q="11">
+                <label class="option-label"><input type="radio" name="q11" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q11" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q11" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q11" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q11" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">12</span>
+                <div class="question-text">أساعد أعضاء الفريق على تطوير خطط مهنية، ورسم مسار تقدمهم الوظيفي داخل مؤسستنا.</div>
+            </div>
+            <div class="options-grid" data-q="12">
+                <label class="option-label"><input type="radio" name="q12" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q12" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q12" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q12" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q12" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">13</span>
+                <div class="question-text">لدي خطة تعاقب وظيفي (Succession Plan) للمناصب الرئيسية في فريقي.</div>
+            </div>
+            <div class="options-grid" data-q="13">
+                <label class="option-label"><input type="radio" name="q13" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q13" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q13" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q13" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q13" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">14</span>
+                <div class="question-text">أعمل مع موظفيّ لتطوير مهاراتهم ومواهبهم القيادية.</div>
+            </div>
+            <div class="options-grid" data-q="14">
+                <label class="option-label"><input type="radio" name="q14" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q14" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q14" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q14" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q14" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">15</span>
+                <div class="question-text">أعرف المهارات التي يحتاج كل عضو في فريقي إلى تطويرها.</div>
+            </div>
+            <div class="options-grid" data-q="15">
+                <label class="option-label"><input type="radio" name="q15" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q15" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q15" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q15" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q15" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">16</span>
+                <div class="question-text">عندما يحضر الموظفون دورات أو فعاليات تدريبية أخرى، يُطلب منهم مشاركة معرفتهم مع بقية أعضاء الفريق.</div>
+            </div>
+            <div class="options-grid" data-q="16">
+                <label class="option-label"><input type="radio" name="q16" value="5">دائماً</label>
+                <label class="option-label"><input type="radio" name="q16" value="4">غالباً</label>
+                <label class="option-label"><input type="radio" name="q16" value="3">أحياناً</label>
+                <label class="option-label"><input type="radio" name="q16" value="2">نادراً</label>
+                <label class="option-label"><input type="radio" name="q16" value="1">أبداً</label>
+            </div>
+        </div>
+
+        <div id="missingAlert" class="alert-missing">
+            يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة! (الأسئلة المتبقية: <span id="missingCount">0</span>)
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="calc-btn" onclick="calculateScore()">حساب المجموع الكلي</button>
+        </div>
+    </form>
+
+    <!-- Result Display -->
+    <div id="resultBox" class="result-box">
+        <div class="result-header">
+            <h3>النتيجة النهائية</h3>
+            <div id="resultScore" class="result-score">0 / 80</div>
+            <div id="resultCategory" class="result-category">--</div>
+        </div>
+        <div id="resultDescription" class="result-description"></div>
+    </div>
+
+    <!-- Deep Analysis -->
+    <div id="analysisSection" class="analysis-section">
+        <h2>تحليل الفئات الرئيسية لتطوير الموظفين</h2>
+        <p style="margin-bottom: 25px; color: var(--text-muted);">
+            يسلط هذا الاختبار الضوء على 5 عوامل رئيسية متعلقة بتطوير الموظفين. راجع هذه الفئات بالتفصيل أدناه لتحديد مجالات القوة والمجالات التي يمكنك تحسينها:
+        </p>
+
+        <!-- Factor 1 -->
+        <div class="factor-card">
+            <h3>1. فهم احتياجات المؤسسة والفريق</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 3، 6، 10، 15</span>
+            <p>قبل تطوير فريقك، يجب عليك أولاً تحديد أفضل فرص التطوير لموظفيك ولمؤسستك.</p>
+            <p>عقد اجتماعات فردية منتظمة مع الموظفين لمناقشة وفهم الاحتياجات التطويرية للأفراد. في هذه الاجتماعات، استكشف أدائهم الحالي وحدد مجالات التحسين. ومن هناك، أنشئ خطة تطوير لسد أي فجوات في المهارات وإعداد عضو الفريق لمواجهة التحديات القادمة. هنا يفيد وجود إطار كفاءات (Competency Framework) لكل دور وظيفي، ويستحق الأمر إجراء تقييم الاحتياجات التدريبية (Training Needs Assessment) لتحديد التدريب والتطوير الذي يحتاجه كل شخص.</p>
+            <p>خلال هذه العملية، سيرغب أو يحتاج أشخاص مختلفون إلى أشياء مختلفة فيما يتعلق بالعمل والتدريب. على سبيل المثال، يستجيب بعض الأشخاص بشكل جيد لزيادة المسؤولية، بينما قد يفضل آخرون تطوير مجموعة واسعة من المهارات. تخبرنا نظريّة ماكليلاند في التحفيز البشري (McClelland's Human Motivation Theory) أن لكل منا مُحفِّزًا مهيمنًا، وتؤثر هذه المحفزات على أمور مثل نوع التطوير الذي نريده، ونوع الأهداف التي ستجعلنا نستجيب بإيجابية، ونوع المكافآت التي نرغب فيها. كمدير، يجب أن تفهم هذه الأنماط المختلفة من التحفيز.</p>
+            <p>يمكنك أيضًا استخدام نماذج مثل تدرج الحاجات لماسلو (Maslow's Hierarchy of Needs) وعوامل التحفيز والنظافة لهرتزبرغ (Herzberg's Motivators and Hygiene Factors) لتقييم الاحتياجات الفردية، وتوفير فرص التدريب والتطوير وفقًا لذلك.</p>
+            <p>تحدث إلى الموظفين لمعرفة التدريب الذي يريدونه ويحتاجونه، ثم اعمل معهم لتطوير خطة تدريب وتطوير شخصية تساعدهم على الحصول على هذا التدريب باقتصاد وفاعلية.</p>
+        </div>
+
+        <!-- Factor 2 -->
+        <div class="factor-card">
+            <h3>2. التطوير القيادي</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 4، 7، 14</span>
+            <p>تضع الفرق والمؤسسات الناجحة عادةً الكثير من الجهد في تطوير قادة المستقبل. إذا قمت بتحديد وتطوير مدراء ومشرفين أكفاء، فستضمن أن لديك أشخاصًا مدربين وجاهزين لشغل مناصب قيادية جديدة، بدلاً من الاضطرار إلى توظيف أشخاص غير مثبتي الكفاءة من الخرج.</p>
+            <p>تعتمد هذه البرامج بشدة على اختيار الأشخاص المناسبين للمشاركة. ابدأ بتتبع الإمكانات القيادية من المراحل الأولى لتطوير الموظف. تساعدك مبادرات إدارة المواهب (Talent Management) على التركيز على أفضل الموظفين والاحتفاظ بهم. كما تساعدك هذه المبادرات على توظيف أفضل المواهب وخلق ثقافة عالية الأداء.</p>
+            <p>احرص على تحديد أصحاب الأداء القوي في وقت مبكر - سيسهم ذلك في ضمان مكافأة الأفضل والأذكى في فريقك بفرص الترقية المناسبة.</p>
+            <p>ومع ذلك، تأكد من ترقية الأشخاص بناءً على إمكانية نجاحهم في الدور القيادي: أما إذا استخدمت الترقية كمكافأة عامة للأداء الجيد، فقد يؤدي ذلك إلى مبدأ بيتر (Peter Principle) – بعبارة أخرى، قد ترقي شخصًا إلى مستوى يفوق مهاراته وكفاءاته.</p>
+            <div class="tip-box">
+                💡 <strong>نصيحة:</strong> تُعد Mind Tools وسيلة رائعة لتوفير تدريب عالي الجودة في الإدارة والقيادة!
+            </div>
+        </div>
+
+        <!-- Factor 3 -->
+        <div class="factor-card">
+            <h3>3. التدريب والتطوير المهني</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 2، 9، 12</span>
+            <p>ليس كل شخص يرغب في أن يكون قائدًا، ومع ذلك، يمكن لكل شخص تحقيق أقصى إمكاناته. لذا، أياً كانت مجموعة المهارات أو الخبرة أو المنصب، يجب تشجيع الموظفين على التعلم طوال مسيرتهم المهنية.</p>
+            <p>ابحث عن طرق لتدريب الموظفين يوميًا من خلال التغذية الراجعة (Feedback) السريعة والفعالة، وقدم دورات وبرامج تدريبية لمساعدة الموظفين على تطوير المهارات المحددة التي يحتاجونها. سواء قمت بذلك داخليًا أو أرسلت الموظفين إلى تدريب خارجي، يجب أن يعلم فريقك أن التعلم مرتبط بشكل مباشر بالأداء الناجح.</p>
+            <p>وصّل هذا التوجه منذ البداية. أثناء تهيئة وتوجيه الموظفين الجدد (Induction)، أكد على التزامك بالتطوير المهني المستمر. شجع الموظفين على القدوم إليك بأفكار تدريبية وخطط تطوير وظيفي. اجعل التطوير المهني هدفًا استراتيجيًا. عندما يستطيع الموظفون رسم مسارات مهنية داخل فريقك ومؤسستك، فإن هذا يحسّن من معدل الاحتفاظ بالموظفين ويزيد من احتمال تطويرهم للمهارات التي يحتاجونها للمستقبل - وكذلك لليوم.</p>
+            <div class="tip-box">
+                💡 <strong>نصيحة:</strong> ستساعدك جلسة التدريب السريعة "التدريب لغير المدربين" (Training for Non-Trainers) على التخطيط لتداخلات تدريبية محددة. لتقديم تدريب فعال، ارجع إلى نموذج 4MAT الذي يراجع طرقًا مختلفة لتقديم المادة التدريبية، وكذلك نموذج مستويات التعلم التسعة لغانييه (Gagne's Nine Levels of Learning) والذي يوفر إطارًا خطوة بخطوة لخلق تجربة تعلم رائعة.
+            </div>
+        </div>
+
+        <!-- Factor 4 -->
+        <div class="factor-card">
+            <h3>4. إدارة المعرفة</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 1، 13، 16</span>
+            <p>في العديد من المؤسسات، يعد الاحتفاظ بالمعرفة المؤسسية ومشاركتها أمرًا حاسمًا للنجاح. تعتبر إدارة المعرفة (Managing Knowledge) طريقة رائعة أخرى لتوفير فرص التطوير لموظفيك حيث يتبادلون الأفكار والخبرات مع بعضهم البعض، ويحددون أفضل الممارسات، ويبحثون عن طرق للعمل بكفاءة أكبر معًا. كلما بدأ الموظفون في الحديث عن ممارسات العمل، ستجد على الأرجح طرقًا للإلهام والابتكار، وهو أمر مثير للأفراد ومفيد للمؤسسة.</p>
+            <p>أنشئ طرقًا بسيطة لمشاركة الأفكار، مثل إنشاء ويكي (Wiki) خاص بالشركة أو عقد اجتماعات طاولة مستديرة منتظمة لمناقشة المشكلات وإيجاد الحلول.</p>
+            <p>طريقة قوية أخرى للحفاظ على المعرفة داخل مؤسستك هي من خلال التخطيط للتعاقب الوظيفي (Succession Planning). حدد الأشخاص الذين يمكنهم تولي المناصب الرئيسية عندما تصبح تلك المناصب شاغرة. (عادةً ما يُستخدم هذا في حالات التقاعد، حيث يعمل الشخص الذي يشغل المنصب كمرشد وينقل معرفته إلى المتدرب.)</p>
+            <p>هناك العديد من الطرق الأخرى لنقل المعرفة – بما في ذلك توجيه وإرشاد الآخرين (Mentoring)، أو إعداد وثيقة أو دليل توجيهي، أو حتى إجراء تدريب أثناء العمل. الأشخاص الذين قضوا فترة طويلة مع الشركة، أو الذين شغلوا مناصب عليا، لديهم ثروة من المعلومات التي لا يمكن اكتسابها بسهولة إلا من خلال الخبرة. لذا فإن السماح للآخرين بالوصول إلى هذه المعلومات والخبرات يمكن أن يكون فرصة تطويرية رائعة.</p>
+            <p>وبالمثل، من المفيد غالبًا إجراء مقابلات المغادرة (Exit Interviews) مع الأشخاص الذين يغادرون المؤسسة. اطلب من هؤلاء الأشخاص الحصول على تغذية راجعة، ثم استخدم هذه الملاحظات لتحديد الاحتياجات التدريبية وتطوير الموظفين وتحسين العمليات.</p>
+        </div>
+
+        <!-- Factor 5 -->
+        <div class="factor-card">
+            <h3>5. التوجيه والإرشاد (Coaching and Mentoring)</h3>
+            <span class="factor-questions">الأسئلة المرتبطة: 5، 8، 11</span>
+            <p>ربما تكون أفضل طريقة لتطوير الموظفين هي دعم وتشجيع تدريبهم ونموهم. من التوجيه غير الرسمي (Informal Coaching) إلى إرشاد الموظفين (Mentoring) للتطوير على المدى الطويل، أظهر لأعضاء فريقك أنك تهتم حقًا بتحسين مهاراتهم وتطوير مسيرة مهنية مرضية لهم. هذا أمر محفز للغاية – وهو كفيل بتحسين الأداء بشكل شبه مضمون.</p>
+            <p>كـ موجّه (Coach) ومرشد (Mentor)، تذكر أن دورك الرئيسي هو مساعدة الموظفين على فهم مناصبهم بشكل أفضل. ليس من وظيفتك إخبارهم بما يجب فعله أو كيفية القيام به – فمن الأفضل بكثير أن تطرح أسئلة لمساعدتهم على تطوير حلولهم الخاصة. استخدم نموذج GROW وقدم التوجيه القائم على التغذية الراجعة (Feedback-based coaching) لتحسين جلسات التوجيه الخاصة بك، وستساعد أعضاء فريقك على تطوير مهارات وقدرات سيبقون محتفظين بها طوال مسيرتهم المهنية.</p>
+            <p>الميزة هنا هي أن كلاً من الموجه والمرشد يمكنهما الاستفادة من هذه العلاقة. عندما تتاح لك الفرصة للتفكير في تجاربك الخاصة ومشاركتها مع الآخرين، فإنك تتعلم وتطور نفسك. هذا الاستعداد لدعم تطوير الآخرين يضرب مثالاً رائعًا لقادة المستقبل داخل مؤسستك، ويساهم في بناء ثقافة إيجابية للتدريب والتطوير.</p>
+        </div>
+
+        <!-- Key Points -->
+        <div class="key-points">
+            <h3>النقاط الرئيسية</h3>
+            <ul>
+                <li>التزامك بتدريب وتطوير موظفيك هو عامل رئيسي في تحديد النجاح المستمر لفريقك ومؤسستك.</li>
+                <li>من خلال الالتزام بتطوير وتدريب فريقك، فإنك ترسل رسالة واضحة مفادها أنك تهتم بموظفيك، وأنك مستعد لدعم نموهم ورضاهم الوظيفي. يساعدك هذا على الاحتفاظ بالموظفين الجيدين، ويضمن أن مؤسستك تمتلك المهارات التي تحتاجها في المستقبل.</li>
+                <li>غالبًا ما يتغير العمل بوتيرة سريعة. عندما يواكب موظفوك هذا التغيير وينجحون – يكون ذلك مفيدًا لهم وكذلك لمؤسستك.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div><strong>Welz Academy</strong></div>
+        <div style="margin-top: 5px;">Created By Waleed Alkhodary</div>
+        <div style="margin-top: 10px; font-size: 0.85rem; color: #94a3b8;">ملاحظة: لم يتم التحقق من صحة هذا التقييم علميًا، وهو مخصص لأغراض توضيحية وتطويرية فقط.</div>
+    </footer>
+</div>
+
+<script>
+    // Styling option labels on select
+    document.querySelectorAll('.option-label input').forEach(input => {
+        input.addEventListener('change', function() {
+            const grid = this.closest('.options-grid');
+            grid.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+            if(this.checked) {
+                this.parentElement.classList.add('selected');
+            }
+        });
+    });
+
+    function calculateScore() {
+        let total = 0;
+        let answeredCount = 0;
+        let totalQuestions = 16;
+        let missing = [];
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected) {
+                total += parseInt(selected.value, 10);
+                answeredCount++;
+            } else {
+                missing.push(i);
+            }
+        }
+
+        const alertBox = document.getElementById('missingAlert');
+        if (answeredCount < totalQuestions) {
+            alertBox.style.display = 'block';
+            document.getElementById('missingCount').innerText = `${totalQuestions - answeredCount} (الأسئلة: ${missing.join(', ')})`;
+            return;
+        } else {
+            alertBox.style.display = 'none';
+        }
+
+        // Show result box
+        const resultBox = document.getElementById('resultBox');
+        const scoreElem = document.getElementById('resultScore');
+        const catElem = document.getElementById('resultCategory');
+        const descElem = document.getElementById('resultDescription');
+        const analysisSection = document.getElementById('analysisSection');
+
+        scoreElem.innerText = `${total} / 80`;
+
+        if (total >= 16 && total <= 36) {
+            catElem.innerText = "بحاجة للتركيز على تطوير الموظفين";
+            descElem.innerText = "قد تكون تحاول التركيز على تطوير الموظفين، لكن هناك أنشطة أخرى لها أولوية أعلى. حاول تخصيص وقت بانتظام لتلبية الاحتياجات التطويرية لفريقك. ستستفيد أنت وفريقك ومؤسستك من خلال تعزيز الإنتاجية ومساعدة الموظفين على الشعور بالسعادة في وظائفهم.";
+        } else if (total >= 37 && total <= 58) {
+            catElem.innerText = "أداء جيد مع إمكانية للتحسين";
+            descElem.innerText = "أنت تقوم بالعديد من الأشياء الصحيحة لتطوير وتدريب موظفيك. انتقل بها إلى المستوى التالي من خلال جعل تطوير الموظفين أولوية. فكّر في طرق إبداعية لمشاركة المعرفة وإلهام موظفيك لتحسين مهاراتهم يوميًا. كلما أظهرت التزامك بنجاحهم على المدى الطويل، كلما زاد تحفيزهم ورضاهم وإنتاجيتهم، وهذا سيجعل عملك أسهل بكثير.";
+        } else if (total >= 59 && total <= 80) {
+            catElem.innerText = "ممتاز! قادِم ورائد في تطوير الموظفين";
+            descElem.innerText = "أحسنت! أنت تدرك بوضوح أن موظفيك هم مستقبل المؤسسة. حافظ على هذا الزخم من خلال الاستمرار في أن تكون قدوة للآخرين، وإظهار أن تدريب وتطوير الموظفين يحقق نتائج ملموسة.";
+        }
+
+        resultBox.style.display = 'block';
+        analysisSection.style.display = 'block';
+
+        // Scroll to result
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

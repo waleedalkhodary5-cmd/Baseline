@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقييم فاعلية الفريق - Wel Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b89628;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        /* Branding Header & Footer */
+        .brand-header, .brand-footer {
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .brand-header {
+            margin-bottom: 20px;
+        }
+
+        .brand-footer {
+            margin-top: 40px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            color: white;
+            padding: 25px;
+        }
+
+        .brand-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
+        }
+
+        .brand-footer .brand-title {
+            color: var(--accent-gold);
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .brand-footer .brand-subtitle {
+            color: #e2e8f0;
+        }
+
+        /* Main Quiz Title */
+        .quiz-main-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        /* Intro & Instructions Boxes */
+        .intro-box {
+            background-color: #fefcbf38;
+            border-right: 6px solid #ecc94b;
+            background-image: linear-gradient(to left, #fffdf5, #fffbf0);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .intro-box h3 {
+            color: #b7791f;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box {
+            background-color: #ebf8ff;
+            border-right: 6px solid #3182ce;
+            background-image: linear-gradient(to left, #f7fafc, #ebf8ff);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .instructions-box h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Quiz Question Cards */
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-label {
+            flex: 1;
+            min-width: 100px;
+            background: #f7fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #edf2f7;
+        }
+
+        .option-label input {
+            margin-left: 8px;
+        }
+
+        /* Calculate Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        /* Results Section */
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 10px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .result-comment {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #276749;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border-right: 4px solid #48bb78;
+        }
+
+        /* Analysis Sections */
+        .analysis-section {
+            margin-top: 30px;
+            line-height: 1.9;
+        }
+
+        .analysis-section h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+
+        .key-points {
+            background: #fffaf0;
+            border-right: 4px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Branding -->
+    <div class="brand-header">
+        <h1 class="brand-title">Wel Academy</h1>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+
+    <!-- Quiz Main Title -->
+    <h2 class="quiz-main-title">تقييم فاعلية الفريق - ما مدى جودة فريقك؟</h2>
+
+    <!-- Introduction Box -->
+    <div class="intro-box">
+        <h3>مقدمة الاختبار</h3>
+        <p>للعمل الجماعي تأثير حاسم وهائل على أداء المؤسسة؛ فالفريق الفعال يمكنه مساعدة المنظمة على تحقيق نتائج استثنائية، بينما قد يؤدي الفريق غير الفعال إلى اضطرابات لا داعي لها، وفشل في التسليم، وإخفاقات استراتيجية.</p>
+        <p>في عصرنا الحالي، أصبح من المباشر أو غير المباشر أن تكون عضواً في فريق عمل. لذا، فإن فهم نقاط قوتك ونقاط ضعفك في العمل الجماعي أمر حيوي لتطورك الشخصي والمهني.</p>
+        <p>يساعدك هذا التقييم على كشف المشكلات الشائعة التي قد تواجهها في العمل الجماعي، ويرشدك نحو الأدوات الإدارية المفيدة لتطوير هذه المهارات الأساسية.</p>
+    </div>
+
+    <!-- Instructions Box -->
+    <div class="instructions-box">
+        <h3>تعليمات الإجابة</h3>
+        <p>لكل عبارة أدناه، اختر الخيار الذي يصف حالتك وحالة فريقك الفعليه بدقة (وليس كما تعتقد أنه ينبغي أن تكون)، ولا تقلق إذا كانت بعض الأسئلة تُحسب في "الاتجاه العكسي". عند الانتهاء، انقر فوق زر "احسب نتيجتي وتقييم الفاعلية" في أسفل الاختبار.</p>
+    </div>
+
+    <!-- Quiz Form -->
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="calculateScore()">احسب نتيجتي وتقييم الفاعلية</button>
+    </form>
+
+    <!-- Result & Output Section -->
+    <div id="result-section">
+        <div class="score-display">درجتك الكلية: <span id="scoreValue">0</span> من 90</div>
+        <div class="result-comment" id="resultComment"></div>
+
+        <div class="analysis-section">
+            <h2>تحليل مهارات العمل الجماعي وبناء الفرق</h2>
+
+            <h3>1. تطوير الفريق Team Development (الأسئلة 1، 11)</h3>
+            <p>لا تصبح الفرق فعالة بين عشية وضحاها؛ فبناء الفريق عملية تتطلب العناية والاهتمام المناسبين. تخطي مراحل التطوير الأساسية يهدد بعدم بناء القاعدة المتينة المطلوبة عند مواجهة الأزمات. تتضمن هذه العملية استيعاب مراحل التطور (Forming, Storming, Norming, Performing) وإعداد ميثاق واضح للفريق (Team Charter).</p>
+
+            <h3>2. التغذية الراجعة Feedback (الأسئلة 2، 13)</h3>
+            <p>من أفضل الطرق لتحسين الأداء تزود أعضاء الفريق بالمعلومات حول أدائهم الفردي وأداء الفريق الكلي. لكي تكون التغذية الراجعة إيجابية ومحفزة على النمو، يجب تقديمها بشكل صحيح يراعي كيفية استقبال العضو لها ومعالجتها (مثل استخدام نموذج GROW أو التقييم الدائري 360°).</p>
+
+            <h3>3. المشاركة وصياغة الرؤية Participation & Articulating Vision (الأسئلة 3، 9، 10)</h3>
+            <p>صياغة رؤية الفريق عنصر جوهري لتطوير فريق عالي الأداء؛ فالرؤية هي ما تحفز وتوجه الفريق لتحقيق أهدافه. تبني الفرق الناجحة رؤيتها عبر عملية مشاركة جماعية تتيح لكل فرد فهم كيف يساهم دوره الفردي في النجاح العام (باستخدام الإدارة بالأهداف MBO والتفويض الناجح).</p>
+
+            <h3>4. إدارة الصراع Managing Conflict (الأسئلة 4، 12، 14)</h3>
+            <p>الصراع نتيجة حتمية للعمل مع الآخرين نظراً لاختلاف الآراء والشخصيات. هذا الاختلاف هو في الواقع جزء من سبب فاعلية الفرق؛ فالتنوع يثري النتائج. لكن ترك الخلافات تخرج عن السيطرة يؤدي لإرباك علاقات العمل. إدارة الصراع بوعي وفهم نظريات العمل تضمن تحويل الصراع لبناء إيجابي.</p>
+
+            <h3>5. أدوار المجموعات والهيكل التنظيمي Group Roles & Structure (الأسئلة 6، 8، 15)</h3>
+            <p>الفريق الفعال يستغل الاختلافات الطبيعية بين أفراده من خلال وضع الأشخاص المناسبين في الأدوار المناسبة (باستخدام مصفوفات RACI وتوزيع المهام واستيعاب أدوار Belbin)، مما يضمن توظيف السلوكيات البناءة لأقصى درجة.</p>
+
+            <h3>6. تطوير أعضاء الفريق Team Member Development (السؤال 7)</h3>
+            <p>بالرغم من عدم وجود حرف "أنا" في كلمة "فريق"، إلا أنه لا يوجد فريق بدون أفراد! بناء وتنمية مهارات الأفراد بما يتوافق مع احتياجات الفريق (عبر تحليل الاحتياجات التدريبية TNA) هو المفتاح لرفع كفاءة المنظومة ككل.</p>
+
+            <h3>7. الفهم والتعاون Understanding & Collaboration (السؤال 5)</h3>
+            <p>يتعلق هذا المحور بمدى قدرتك وقدرة فريقك على التعاون وفهم القضايا الرئيسية. يتجه أعضاء الفرق الناجحة نحو نفس الاتجاه ويعملون لنفس الغرض. التوافق والاتفاق يعززان تماسك الفريق ليصبح الناتج الكلي أكبر من مجموع أجزائه.</p>
+
+            <div class="key-points">
+                <h4>نقاط رئيسية تذكرها دائماً:</h4>
+                <p>الفريق الفعال هو أكثر بكثير من مجرد مجموعة من الأشخاص تم جمعهم لإنجاز هدف. باستخدام هذا الاختبار، يمكنك كشف مجالات التحسين التي ستساعدك على أن تصبح عضواً أفضل في الفريق وبانياً لفرق أكثر قوة وفاعلية.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Branding -->
+    <div class="brand-footer">
+        <h2 class="brand-title">Wel Academy</h2>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { text: "1- هو أو هي لا يساهم بأي شيء في اجتماعات الفريق.", scores: [5, 4, 3, 2, 1] },
+        { text: "2- يقتربون مني دون أن يُطلب منهم مشاركة آرائهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "3- إنهم لا يضعون أيديهم للتدريب لتطوير مهارة جديدة.", scores: [5, 4, 3, 2, 1] },
+        { text: "4- لا يبتسمون.", scores: [1, 2, 3, 4, 5] },
+        { text: "5- يتوافق عملهم مع قيم المنظمة ورسالتها.", scores: [1, 2, 3, 4, 5] },
+        { text: "6- إنهم يتجاوزون المسؤوليات في الوصف الوظيفي الخاص بهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "7- أحتفل بعملهم الجيد.", scores: [5, 4, 3, 2, 1] },
+        { text: "8- يحضرون المناسبات الاجتماعية للفريق.", scores: [1, 2, 3, 4, 5] },
+        { text: "9- لا يظهرون أي اهتمام بالتقدم الوظيفي.", scores: [5, 4, 3, 2, 1] },
+        { text: "10- يعبرون عن الغضب أو الإحباط.", scores: [5, 4, 3, 2, 1] },
+        { text: "11- يتعاملون بشكل جيد مع زملائهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "12- عملهم إبداعي.", scores: [1, 2, 3, 4, 5] },
+        { text: "13- يتأخرون.", scores: [1, 2, 3, 4, 5] },
+        { text: "14- يمكن الوصول إلى كبار الزملاء ويستمعون إليهم.", scores: [5, 4, 3, 2, 1] },
+        { text: "15- إنهم حريصون على دخول حصول الشركة على الجوائز الخاصة بالصناعة عند ظهور مثل هذه الجوائز أو المسابقات.", scores: [1, 2, 3, 4, 5] },
+        { text: "16- إنتاجيتهم أقل من المتوقع.", scores: [1, 2, 3, 4, 5] },
+        { text: "17- يجلسون وحدهم.", scores: [1, 2, 3, 4, 5] },
+        { text: "18- لا يظهرون سوى القليل من الحافز.", scores: [1, 2, 3, 4, 5] }
+    ];
+
+    const optionsText = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        
+        let optionsHTML = '';
+        q.scores.forEach((score, oIndex) => {
+            optionsHTML += `
+                <label class="option-label">
+                    <input type="radio" name="q${index}" value="${score}" required>
+                    ${optionsText[oIndex]}
+                </label>
+            `;
+        });
+
+        qCard.innerHTML = `
+            <div class="question-title">${q.text}</div>
+            <div class="options-group">${optionsHTML}</div>
+        `;
+        container.appendChild(qCard);
+    });
+
+    function calculateScore() {
+        const form = document.getElementById('quizForm');
+        if (!form.checkValidity()) {
+            alert("يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة.");
+            return;
+        }
+
+        let totalScore = 0;
+        questions.forEach((_, index) => {
+            const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selectedOption) {
+                totalScore += parseInt(selectedOption.value);
+            }
+        });
+
+        document.getElementById('scoreValue').innerText = totalScore;
+        
+        let commentText = "";
+        if (totalScore >= 15 && totalScore <= 30) {
+            commentText = "هذا التقييم يدعو للقلق. الخبر الجيد هو أن لديك فرصة عظيمة لتحسين فاعليتك كعضو في الفريق، وتطوير فاعلية فريقك ككل. ركز على النقاط والتوصيات أدناه لبناء بيئة عمل أكثر قوة.";
+        } else if (totalScore >= 31 && totalScore <= 45) {
+            commentText = "فاعليتك كعضو في الفريق وفاعلية فريقك متفاوتة. أنت جيد في بعض الجوانب، ولكن هناك مجال للمزيد من التحسين. ركز على المعالجة الجادة للنقاط أدناه وستلاحظ تحسناً سريعاً.";
+        } else if (totalScore >= 46 && totalScore <= 90) {
+            commentText = "أنت عضو قوي في الفريق وتعمل بشكل جيد ضمن فريق فعال! على الرغم من ذلك، قد تشير الدرجات المنخفضة في بعض المحاور إلى وجود فرص للتطوير والوصول لأعلى مستويات الأداء.";
+        }
+
+        document.getElementById('resultComment').innerText = commentText;
+        
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

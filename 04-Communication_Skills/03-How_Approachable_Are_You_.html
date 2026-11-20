@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار مدى سهولة التواصل معك | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* Header Branding */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards & Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.25rem;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* Quiz Styling */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .option-label input[type="radio"] {
+            display: none;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label.selected {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Conclusion & Results Wrapper (Hidden Initially) */
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .trait-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-right: 4px solid var(--primary-orange);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .trait-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+
+        .trait-score {
+            font-weight: 800;
+            color: var(--primary-orange);
+            font-size: 1.1rem;
+        }
+
+        .tip-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .note-box {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- المقدمة -->
+    <section class="card orange-top">
+        <h2>ما مدى سهولة التواصل معك؟ (مدى قابليتك للوصول)</h2>
+        <h3>بناء العلاقات مع فريقك</h3>
+        <p>إن كونك ودوداً هو المفتاح لبناء العلاقات مع زملائك ولإنشاء فريق قوي يمكن أن تتدفق فيه الثقة والأفكار. عندما تكون ودوداً لا يتجاهل أعضاء الفريق المشكلات أو يتسترون عليها - فهم قادرون على عرض المشكلات عليك قبل أن تتحول إلى أزمات كاملة لأنهم يعرفون أنك لن تتصرف بشكل سيئ.</p>
+        <p>يشعر أعضاء الفريق الذين لديهم مديرون ودودون بالقدرة على المساهمة بالأفكار في بيئة عمل آمنة. إنهم ليسوا خائفين من التراجع؛ إنهم يعلمون أن مديرهم منفتح على اقتراحاتهم وسيأخذها بعين الاعتبار بشكل عادل.</p>
+        <p>تتمتع بعض المنظمات بسمعة - سواء كانت صحيحة أو غير صحيحة - في إبقاء قادتها في <strong>"أبراج عاجية"</strong> بعيداً عن أعضاء فريقهم. تخلق هذه المؤسسات ما يسمى بـ <strong>"مسافة السلطة" (Power-Distance)</strong>، حيث قد تضطر إلى مناداة رئيسك بـ "سيدتي" أو "سيدي" بدلاً من اسمه الأول إذا كنت تريد التحدث إليه أو تطلب من مساعده تحديد موعد، وقد يكون لديهم مكان مخصص لوقوف السيارات، ورئاسة الاجتماعات من نهاية الطاولة. قد يكون الاقتراب من هذا النوع من الأشخاص أمراً مخيفاً!</p>
+        <p>في كثير من الأحيان، القادة الذين يتصرفون بهذه الطريقة يفعلون ذلك كوسيلة للحفاظ على سلطتهم. ومع ذلك، فإنهم سيفقدون الفرص لتحديد المشكلات أو اكتشاف أفكار للتحسين من خلال عدم التواجد "في الخط الأمامي". ستكون ودوداً أكثر إذا قمت بتقليل مسافة السلطة.</p>
+        <p>تتعلق إمكانية الوصول إليك بالكسر الواعي للحواجز المتصورة، وامتلاك لغة جسد مناسبة، واستخدام مهارات التواصل اللفظي والاستماع الصحيحة. <strong>شارك في اختبارنا أدناه لتعرف مدى سهولة التواصل معك، واكتشف الاستراتيجيات التي تساعدك على التحسن.</strong></p>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 16</span>
+    </div>
+
+    <!-- الاختبار -->
+    <section class="card">
+        <h2>اختبار التقييم الذاتي (16 عبارة)</h2>
+        <p>يرجى الإجابة عن كل عبارة كما أنت في الواقع (وليس كما تعتقد أنك يجب أن تكون):</p>
+        
+        <form id="quiz-form">
+            <div id="questions-container"></div>
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب نتيجتي واعرض التحليل</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة والنتائج (مخفية تماماً لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        
+        <!-- قسم النتيجة -->
+        <section id="result-section" class="card orange-top">
+            <h2>الخاتمة: تفسير النتيجة</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 80</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+
+            <h3>تحليل أدائك في السمات الأربع لسهولة التواصل:</h3>
+            <div class="traits-grid" id="traits-breakdown"></div>
+
+            <div class="note-box">
+                <strong>ملحوظة:</strong> لم يتم التحقق من صحة هذا التقييم إحصائياً وهو مخصص للأغراض التوضيحية والتطويرية فقط. يعتمد اختبارنا على أربع سمات تشكل سهولة التواصل: المظهر المتاح، استخدام لغة الجسد الصحيحة، وامتلاك مهارات تواصل لفظي واستماع جيدة.
+            </div>
+        </section>
+
+        <!-- الدليل الإرشادي والتفصيلي -->
+        <section class="card">
+            <h2>دليل تطوير السمات الأربع لسهولة التواصل</h2>
+
+            <h3>1. أظهر أنك متاح (الأسئلة: 2، 6، 14)</h3>
+            <p>الظهور متاحاً هو إحدى الخطوات الأكثر فعالية لكسر الحواجز المادية وتقليل مسافة السلطة والحفاظ على خطوط الاتصال مفتوحة. لا يوجد شيء يقول "اتركني وشأني" أكثر من إبقاء باب مكتبك مغلقاً أو عدم التحدث مع أعضاء الفريق الأقل رتبة.</p>
+            <p>مكتبك هو معقلك الخاص، مما قد يصعّب على الفريق الاقتراب منه. لذا توجه إلى <strong>"مقر العمل الميداني" (Shop Floor)</strong> وتحدث مع الناس في أماكن عملهم أو في أماكن محايدة. اشتهر مؤسسا شركة Hewlett-Packard بهذا النهج تحت مصطلح <strong>MBWA (الإدارة بالتجوال - Management by Wandering Around)</strong>؛ أي بذل جهد حقيقي لفهم فريقك، ومعرفة احتياجاتهم، وتصحيح المسار.</p>
+            <p>لا تتحدث عن العمل فقط؛ شارك جانباً بسيطاً من <strong>الإفصاح الشخصي</strong> (عائلتك، هواياتك، عطلتك) لبناء الألفة. وإذا كنت في اجتماعات أو ساعات عمل مرنة، أخبر فريقك بمكانك ومتى ستعود.</p>
+            <div class="tip-box">
+                <strong>💡 نصيحة:</strong> يدور هذا الاختبار حول أن تكون ودوداً يسهل الوصول إليك، وليس متاحاً باستمرار طوال الوقت. ضع حدوداً واضحة لحماية وقتك وتجنب خلق تبعية للمدير، ومكّن موظفيك عبر التفويض والثقة. (وإذا كنت تتجنب فريقك لشعورك بالتهديد من كفاءتهم، فاعمل على تجاوز هذا الشعور لتعزيز ثقتك القيادية).
+            </div>
+
+            <h3>2. مهارات الإصغاء والاستماع (الأسئلة: 5، 7، 8، 9، 16)</h3>
+            <p>الاستماع الجيد لا يعني مجرد انتظار انتهاء المتحدث لتدلي برأيك. عليك إشراك عينيك وأذنيك ومنح الشخص انتباهك الكامل بذكاء عاطفي؛ هذا <strong>الاستماع اليقظ</strong> يبني الثقة والاحترام.</p>
+            <p>مارس <strong>الاستماع النشط (Active Listening)</strong> لفهم الرسالة الكاملة وإشعار الزملاء بالتقدير، وكذلك <strong>الاستماع التعاطفي (Empathic Listening)</strong> عبر تلخيص النقاط الرئيسية وإعادتها للمتحدث لمساعدته على الانفتاح، مع الانتباه لما <em>لا يُقال</em> أيضاً.</p>
+
+            <h3>3. التواصل اللفظي من أجل الوصول (الأسئلة: 1، 4، 11، 13، 15)</h3>
+            <p>ما تقوله يمتلك القدرة على بناء الثقة وخلق روح فريق قوية. احرص على تقديم ردود فعل إيجابية أكثر من السلبية (لأن الناس يتأثرون بالنقد أكثر من الثناء). كلمة بسيطة مثل "شكراً على اقتراحك" تشجع الآخرين على الانفتاح.</p>
+            <p>تُظهر الأبحاث أن تلقي الثناء يرفع مستويات <strong>الدوبامين</strong> المرتبط بالسعادة والرضا، مما يرسخ عادات عمل إيجابية. وإذا لم تكن الفكرة مناسبة، اشرح السبب بلطف حتى لا تخنق الإبداع. أما الاختبار الحقيقي فهو <strong>رد فعلك تجاه الأخبار السيئة</strong>؛ تحلَّ بالانضباط الذاتي واشكر الشخص دائماً على شجاعته في إبلاغك بالمشكلة قبل تفاقمها.</p>
+
+            <h3>4. لغة الجسد الودودة (الأسئلة: 3، 8، 10، 12)</h3>
+            <p>الإيجابية تظهر في نظرة العين، وحركة اليدين، ونبرة الصوت، وطريقة المشي. استخدام لغة الجسد الصحيحة يرفع من قابليتك للتواصل فوراً: ابتسم أكثر، افرد ذراعيك ولا تكتفهما، حافظ على التواصل البصري، وتحدث بنبرة هادئة ومعتدلة، وانظر حولك بابتسامة أثناء تنقلك في مكان العمل.</p>
+        </section>
+
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    const questions = [
+        { id: 1, text: "ردود الفعل السلبية التي أقدمها تفوق تعليقاتي الإيجابية.", scores: [1, 2, 3, 4, 5] },
+        { id: 2, text: "أبتعد عن مكتبي وأتجول للتحدث مع زملائي.", scores: [5, 4, 3, 2, 1] },
+        { id: 3, text: "أنا أبتسم للناس مهما كان مستواهم في المنظمة.", scores: [5, 4, 3, 2, 1] },
+        { id: 4, text: "عندما يطرح زميلي فكرة ما لا أقدم أي تعليق.", scores: [1, 2, 3, 4, 5] },
+        { id: 5, text: "أخصص وقتاً للتحدث مع أعضاء الفريق.", scores: [5, 4, 3, 2, 1] },
+        { id: 6, text: "أسمح لزملائي بمعرفة أين سأكون إذا كنت بعيداً عن مكتبي.", scores: [5, 4, 3, 2, 1] },
+        { id: 7, text: "أترك المشاعر السلبية تظهر بقوة عندما أتلقى أخباراً سيئة.", scores: [1, 2, 3, 4, 5] },
+        { id: 8, text: "إذا كنت أتحدث إلى أحد أعضاء الفريق ووردت مكالمة أو رسالة أخرى، أوقف المحادثة وأحول انتباهي.", scores: [1, 2, 3, 4, 5] },
+        { id: 9, text: "أتعاطف مع مواقف زملائي وآرائهم.", scores: [5, 4, 3, 2, 1] },
+        { id: 10, text: "لا أقوم بالاتصال بالعين عندما أتحدث مع الناس.", scores: [1, 2, 3, 4, 5] },
+        { id: 11, text: "أتحدث مع كل عضو في الفريق بنفس الطريقة سواء كانوا ذوي بشرة سميكة (لا يتأثرون بسهولة) أو حساسة.", scores: [1, 2, 3, 4, 5] },
+        { id: 12, text: "أتحدث وذراعاي مطويتان.", scores: [1, 2, 3, 4, 5] },
+        { id: 13, text: "أنا لا أشكو.", scores: [5, 4, 3, 2, 1] },
+        { id: 14, text: "أعطي أعضاء الفريق رقم هاتفي المحمول.", scores: [5, 4, 3, 2, 1] },
+        { id: 15, text: "أتحدث عن حياتي خارج العمل مع زملائي.", scores: [2, 4, 5, 3, 1] },
+        { id: 16, text: "أوفر منصة للأفكار.", scores: [5, 4, 3, 2, 1] }
+    ];
+
+    const optionLabels = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+    const container = document.getElementById("questions-container");
+
+    questions.forEach((q) => {
+        const qDiv = document.createElement("div");
+        qDiv.className = "question-item";
+        qDiv.id = `q-box-${q.id}`;
+
+        let optionsHTML = `<div class="options-grid">`;
+        optionLabels.forEach((label, optIndex) => {
+            const scoreVal = q.scores[optIndex];
+            optionsHTML += `
+                <label class="option-label" onclick="selectOption(${q.id}, this)">
+                    <input type="radio" name="q${q.id}" value="${scoreVal}">
+                    <span>${label}</span>
+                </label>
+            `;
+        });
+        optionsHTML += `</div>`;
+
+        qDiv.innerHTML = `
+            <div class="question-text">${q.id}- ${q.text}</div>
+            ${optionsHTML}
+        `;
+        container.appendChild(qDiv);
+    });
+
+    function selectOption(qId, labelElem) {
+        const box = document.getElementById(`q-box-${qId}`);
+        box.classList.remove("unanswered");
+        const labels = box.querySelectorAll(".option-label");
+        labels.forEach(l => l.classList.remove("selected"));
+        labelElem.classList.add("selected");
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const answeredCount = document.querySelectorAll('input[type="radio"]:checked').length;
+        const percentage = (answeredCount / questions.length) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${questions.length}`;
+    }
+
+    function calculateScore() {
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        let traits = {
+            available: { score: 0, max: 15, name: "المظهر المتاح (الأسئلة 2، 6، 14)" },
+            listening: { score: 0, max: 25, name: "مهارات الإصغاء (الأسئلة 5، 7، 8، 9، 16)" },
+            verbal: { score: 0, max: 25, name: "التواصل اللفظي (الأسئلة 1، 4، 11، 13، 15)" },
+            body: { score: 0, max: 20, name: "لغة الجسد الودودة (الأسئلة 3، 8، 10، 12)" }
+        };
+
+        questions.forEach(q => {
+            const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+            const box = document.getElementById(`q-box-${q.id}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                const val = parseInt(selected.value);
+                totalScore += val;
+                
+                if ([2, 6, 14].includes(q.id)) traits.available.score += val;
+                if ([5, 7, 8, 9, 16].includes(q.id)) traits.listening.score += val;
+                if ([1, 4, 11, 13, 15].includes(q.id)) traits.verbal.score += val;
+                if ([3, 8, 10, 12].includes(q.id)) traits.body.score += val;
+            }
+        });
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 16 المحددة باللون الأحمر لحساب النتيجة وإظهار الخاتمة.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 80`;
+
+        if (totalScore <= 36) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة (16 - 36): تحتاج إلى العمل على سهولة الوصول إليك";
+            textElem.innerText = "أنت بحاجة إلى العمل على سهولة الوصول إليك. يؤدي موقفك وسلوكك إلى قطع تدفق المعلومات التي تتلقاها من أعضاء فريقك. قد يعني هذا إخفاء المشكلات أو عدم السماح للأفكار العظيمة بالازدهار. قد يتعين عليك إجراء بعض التغييرات الأساسية على كيفية إدارتك، ولكن لا تقلق، فهناك الكثير من الطرق البسيطة للبدء وتعزيز إمكانية التواصل معك.";
+        } else if (totalScore <= 58) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة (37 - 58): أنت في وضع رائع للتحسن";
+            textElem.innerText = "أنت في وضع رائع للتحسن. يمكنك أن تكون ودوداً لذلك قد تأتي إليك المشاكل قبل أن تصبح خطيرة. ومع ذلك قد يتأخر أعضاء فريقك أيضاً في إخبارك عندما يحدث شيء ما لأنهم قلقون بشأن رد فعلك. ألق نظرة فاحصة على نتائجك وركز أكثر على النقاط التي تكون فيها درجاتك منخفضة. قد تجد أن تغييراً بسيطاً في الطريقة التي تدير بها الأمور سيحدث فرقاً كبيراً.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة (59 - 80): أحسنت! أنت قائد ودود ويسهل التواصل معك";
+            textElem.innerText = "أحسنت! أنت ودود، مما يعني أن أعضاء فريقك يشعرون بخوف قليل نسبياً من القدوم إليك عندما يكون لديهم مشكلة أو فكرة. وذلك لأن رد فعلك على الأخبار السيئة يكون محسوباً وهادئاً، وتتعامل مع الأفكار باستمتاع وإيجابية. ونتيجة لذلك فإن الأزمات تتطور بشكل أقل بكثير مما قد يحدث في ظل مدير يصعب الوصول إليه، وتستفيد مؤسستك من ثقافة الأفكار التي عززها موقفك الودود. ومع ذلك، هناك دائماً مجال للتحسين!";
+        }
+
+        const breakdownContainer = document.getElementById("traits-breakdown");
+        breakdownContainer.innerHTML = "";
+        Object.values(traits).forEach(t => {
+            breakdownContainer.innerHTML += `
+                <div class="trait-box">
+                    <h4>${t.name}</h4>
+                    <div class="trait-score">${t.score} من ${t.max}</div>
+                </div>
+            `;
+        });
+
+        // إظهار الخاتمة والنتيجة والتمرير إليها بسلاسة
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

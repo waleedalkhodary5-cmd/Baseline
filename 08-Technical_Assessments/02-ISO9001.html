@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار تقييم مديري الإنتاج لنظام الجودة ISO 9001 | Welz Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0d9488;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f8fafc;
+            margin-bottom: 4px;
+        }
+
+        .brand-author {
+            font-size: 1.1rem;
+            color: #93c5fd;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .quiz-title {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px;
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .instructions-card {
+            background: var(--card-bg);
+            border-right: 5px solid var(--primary-light);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .instructions-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            padding-top: 4px;
+        }
+
+        .options-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.98rem;
+            font-weight: 500;
+        }
+
+        .option-label input {
+            margin-top: 4px;
+            accent-color: var(--primary);
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-light);
+            background: #eff6ff;
+        }
+
+        .option-label.selected {
+            background: #eff6ff;
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 700;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+        }
+
+        .result-box {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+            border: 2px solid var(--primary-light);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .result-category {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .result-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #334155;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .alert-missing {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="brand-title">Welz Academy</div>
+        <div class="brand-author">Created by Waleed Alkhodary</div>
+        <h1 class="quiz-title">اختبار تقييم مديري الإنتاج لنظام إدارة الجودة ISO 9001</h1>
+        <div class="intro-text">
+            <strong>اختبار حالات عملية (Case Studies) في التطبيق الميداني لمتطلبات آيزو 9001</strong><br>
+            صُمم هذا الاختبار الاحترافي خصيصاً لمديري الإنتاج والعمليات لقياس مدى عمق فهمهم وتطبيقهم العملي لبنود وعمليات نظام إدارة الجودة ISO 9001 في البيئة الصناعية. يحتوي الاختبار على 40 حالة عملية، وكل سؤال يطرح سيناريو تشغيلياً مع 4 بدائل تتفاوت من حيث الكفاءة والاحترافية والالتزام بمعايير الجودة العالمية.
+        </div>
+    </header>
+
+    <div class="instructions-card">
+        <h3>تعليمات الاختبار</h3>
+        <p>اقرأ كل حالة عملية (Case Study) بعناية فائقة، واختر البديل الأكثر ملاءمة واحترافية من بين الخيارات الأربعة المتاحة الذي يمثل التصرف القيادي والتشغيلي الأصح. عند الانتهاء، انقر على زر <strong>"حساب النتيجة النهائية"</strong> لعرض تقييمك الشامل.</p>
+    </div>
+
+    <form id="quizForm">
+
+        <!-- Q1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">1</span>
+                <div class="question-text">أثناء مراجعة سياق المنظمة (Clause 4.1)، اكتشف مدير الإنتاج وجود تغيرات مستمرة في متطلبات عملاء التصدير. ما هو التصرف الأنسب؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q1" value="3"><span>الانتظار حتى موعد المراجعة الإدارية القادمة لمناقشة هذه التغيرات وتوثيقها.</span></label>
+                <label class="option-label"><input type="radio" name="q1" value="5"><span>تحديث تحليل المخاطر وفرص التصدير وإشراك المعنيين الرئيسيين ومراجعة العمليات الإنتاجية فوراً لتلبية المتطلبات الجديدة.</span></label>
+                <label class="option-label"><input type="radio" name="q1" value="1"><span>الاستمرار في الإنتاج وفق المواصفات القديمة طالما أن العقد لم يُلغَ رسمياً.</span></label>
+                <label class="option-label"><input type="radio" name="q1" value="4"><span>إبلاغ قسم المبيعات بضرورة تعديل العقود دون تعديل جوهري في خطوط الإنتاج الحالية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">2</span>
+                <div class="question-text">عند تحديد الأطراف المعنية (Stakeholders) المؤثرة على خط الإنتاج (Clause 4.2)، من يجب اعتباره طرفاً رئيسياً مؤثراً في جودة المنتج؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q2" value="4"><span>العملاء والإدارة العليا فقط لكونهم أصحاب القرار المالي.</span></label>
+                <label class="option-label"><input type="radio" name="q2" value="1"><span>المنافسون في السوق المحلي فقط لقياس الحصة السوقية.</span></label>
+                <label class="option-label"><input type="radio" name="q2" value="5"><span>العملاء، الموردون الرئيسيون، الهيئات التنظيمية والقانونية، والعاملون بخط الإنتاج.</span></label>
+                <label class="option-label"><input type="radio" name="q2" value="3"><span>العاملون بقسم الصيانة وجودة الخطوط فقط دون الجهات الخارجية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">3</span>
+                <div class="question-text">لتحديد نطاق نظام إدارة الجودة (Clause 4.3) لمصنع يمتلك خطين للإنتاج أحدهما محلي والآخر للتصدير:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q3" value="1"><span>ترك النطاق مفتوحاً وغير محدد بوثيقة رسمية لسهولة التعديل مستقبلاً.</span></label>
+                <label class="option-label"><input type="radio" name="q3" value="4"><span>الاكتفاء بتطبيق النظام على خط التصدير لتقليل تكاليف المراجعة الخارجية.</span></label>
+                <label class="option-label"><input type="radio" name="q3" value="3"><span>تطبيق النظام على الإدارات المكتبية فقط وتجاهل الورش الفنية.</span></label>
+                <label class="option-label"><input type="radio" name="q3" value="5"><span>يجب أن يشمل النطاق كافة العمليات والمنتجات والمواقع المؤثرة على جودة التصدير والمحلي مع تبرير أي استثناءات منطقية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">4</span>
+                <div class="question-text">عند رسم خريطة العمليات الإنتاجية (Clause 4.4)، كيف يتأكد مدير الإنتاج من تفاعل العمليات (Process Interactions)؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q4" value="3"><span>بتعريف كل قسم بمعزل عن الأقسام الأخرى لعدم تداخل الصلاحيات.</span></label>
+                <label class="option-label"><input type="radio" name="q4" value="5"><span>بتحديد المدخلات والمخرجات، ومؤشرات الأداء، والمسؤوليات، وتتبع مسار المواد والمعلومات بين التخطيط والمخازن والإنتاج والصيانة والجودة.</span></label>
+                <label class="option-label"><input type="radio" name="q4" value="4"><span>بالاعتماد على الهيكل التنظيمي التقليدي للمصنع وسلطات رؤساء الأقسام.</span></label>
+                <label class="option-label"><input type="radio" name="q4" value="1"><span>الاكتفاء بدليل الجودة العام دون رسم تفصيلي لتتابع العمليات.</span></label>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">5</span>
+                <div class="question-text">فيما يخص القيادة والالتزام (Clause 5.1)، كيف يبرهن مدير الإنتاج للتدقيق الخارجي أنه يقود ثقافة الجودة في ورش الإنتاج؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q5" value="4"><span>بتوقيع تقارير الإنتاج اليومية وإرسالها لإدارة الجودة في مواعيدها.</span></label>
+                <label class="option-label"><input type="radio" name="q5" value="1"><span>بترديد شعارات الجودة في الاجتماعات الشهرية فقط دون أفعال تشغيلية ملموسة.</span></label>
+                <label class="option-label"><input type="radio" name="q5" value="3"><span>بتفويض مشرفي الورش بالكامل في اتخاذ قرارات الجودة دون تدخل شخصي.</span></label>
+                <label class="option-label"><input type="radio" name="q5" value="5"><span>بتحمل المسؤولية الكاملة عن فاعلية النظام، وضمان توافر الموارد، وتشجيع التحسين المستمر والتركيز الدائم على رضا العميل.</span></label>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">6</span>
+                <div class="question-text">عند صياغة سياسة الجودة (Clause 5.2)، ما هي القاعدة الأساسية التي يجب أن يحرص مدير الإنتاج على توافرها لكي تكون السياسة ملائمة للمصنع؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q6" value="5"><span>أن تتضمن التزاماً بتلبية المتطلبات المعمول بها والتحسين المستمر، وأن تُفهم وتُطبق بداخل ورش الإنتاج.</span></label>
+                <label class="option-label"><input type="radio" name="q6" value="3"><span>أن تركز فقط على حجم الإنتاجية والأرباح المالية السنوية للمصنع.</span></label>
+                <label class="option-label"><input type="radio" name="q6" value="4"><span>أن تكون مكتوبة بلغة أجنبية ومطبوعة على لوحات إعلانية فاخرة بالاستقبال.</span></label>
+                <label class="option-label"><input type="radio" name="q6" value="1"><span>أن يتم تغييرها كل ستة أشهر لتبدو متجددة أمام المدققين.</span></label>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">7</span>
+                <div class="question-text">في توزيع الأدوار والمسؤوليات (Clause 5.3)، اكتشف مدير الإنتاج أن مشغلي الآلات لا يعرفون صلاحيتهم في إيقاف الخط عند ظهور عيب متكرر:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q7" value="3"><span>ترك صلاحية إيقاف الخط محصورة فقط في مدير الإنتاج ورئيس الورشة.</span></label>
+                <label class="option-label"><input type="radio" name="q7" value="4"><span>إخبار العمال شفهياً بأنه يحق لهم إيقاف الخط عند الضرورة القصوى.</span></label>
+                <label class="option-label"><input type="radio" name="q7" value="5"><span>مراجعة وتحديث الوصف الوظيفي وصلاحيات إيقاف الخط فوراً وتدريب العمال وتوثيق ذلك.</span></label>
+                <label class="option-label"><input type="radio" name="q7" value="1"><span>معاقبة العامل إذا أوقف الخط دون إذن مسبق تجنباً لتعطيل العملية الإنتاجية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">8</span>
+                <div class="question-text">عند التعامل مع المخاطر والفرص في الإنتاج (Clause 6.1)، ما هو الإجراء الأكثر منهجية للتعامل مع احتمال تعطل الماكينة الرئيسية بالخط؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q8" value="4"><span>شراء ماكينة جديدة احتياطية فوراً مهما كانت التكلفة المالية.</span></label>
+                <label class="option-label"><input type="radio" name="q8" value="5"><span>تقييم احتمالية التوقف وتأثيره على تسليم العميل، وضع خطة صيانة وقائية، وتوفير قطع غيار حرجة، وتحديد مسار بديل (Contingency Plan).</span></label>
+                <label class="option-label"><input type="radio" name="q8" value="1"><span>تجاهل الأمر لكون الماكينة حديثة نسبياً ولا تتعطل غالباً.</span></label>
+                <label class="option-label"><input type="radio" name="q8" value="3"><span>الانتظار حتى تعطل الماكينة ثم إصلاحها بسرعة عبر فريق الصيانة الطارئة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">9</span>
+                <div class="question-text">عند وضع أهداف الجودة لعمليات التصنيع (Clause 6.2)، أي من الأهداف التالية يُعتبر متوافقاً تماماً مع متطلبات آيزو 9001 (SMART)؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q9" value="3"><span>إنتاج أكبر عدد ممكن من الوحدات دون النظر للتلفيات.</span></label>
+                <label class="option-label"><input type="radio" name="q9" value="1"><span>الوصول بالمنتجات إلى الكمال المطلق بنسبة 100% دون تحديد فترة زمنية.</span></label>
+                <label class="option-label"><input type="radio" name="q9" value="4"><span>التحسين المستمر لجودة المنتجات وزيادة كفاءة العمال طوال السنة.</span></label>
+                <label class="option-label"><input type="radio" name="q9" value="5"><span>خفض نسبة الهالك على خط التجميع رقم 3 من 4% إلى أقل من 1.5% خلال الربع الثالث من العام، مع متابعة أسبوعية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">10</span>
+                <div class="question-text">عند إحداث تغير جوهري في خطوط الإنتاج وإدخال روبوتات جديدة (Clause 6.3)، ما التصرف الإداري الصحيح طبقاً للمواصفات؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q10" value="5"><span>التخطيط المسبق للتغيير، دراسة عواقبه، توفير الموارد والتدريب اللازم، والتأكد من سلامة تكامل العمليات قبل التشغيل الفعلي.</span></label>
+                <label class="option-label"><input type="radio" name="q10" value="3"><span>الاعتماد على خبرة مهندسي التركيب فقط دون تحديث وثائق العمل التشغيلية.</span></label>
+                <label class="option-label"><input type="radio" name="q10" value="4"><span>تركيب الروبوتات ليلاً وبدء الإنتاج فجراً دون إشعار قسم الجودة لسرعة الإنجاز.</span></label>
+                <label class="option-label"><input type="radio" name="q10" value="1"><span>ترك المشغلين يكتشفون طريقة عمل الروبوتات بالتجربة والخطأ.</span></label>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">11</span>
+                <div class="question-text">فيما يتعلق بتوفير بيئة تشغيل العمليات (Clause 7.1.4)، ما هو المعيار الصحيح لبيئة العمل في ورش التجميع الحساسة؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q11" value="4"><span>الاكتفاء بتركيب مراوح تهوية عادية بغض النظر عن درجات حرارة الصيف.</span></label>
+                <label class="option-label"><input type="radio" name="q11" value="1"><span>بيئة العمل لا تأثير جوهري لها على جودة المنتج النهائي طالما العامل يرتدي الزي.</span></label>
+                <label class="option-label"><input type="radio" name="q11" value="5"><span>ضبط عوامل الحرارة، الرطوبة، الإضاءة، والنظافة بما يمنع تلف المنتج ويحمي سلامة العاملين.</span></label>
+                <label class="option-label"><input type="radio" name="q11" value="3"><span>ترك الورشة مفتوحة لتدفق الهواء الطبيعي لتقليل استهلاك الطاقة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">12</span>
+                <div class="question-text">عند استخدام أجهزة قياس واختبار أبعاد المنتجات (Clause 7.1.5)، كيف يتعامل مدير الإنتاج مع جهاز قياس انتهت صلاحية معايرته؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q12" value="3"><span>إرساله لمعمل المعايرة مع غض الطرف عن المنتجات السابقة لعدم تعطيل التسليم.</span></label>
+                <label class="option-label"><input type="radio" name="q12" value="5"><span>سحب الجهاز فوراً، تمييزه بوضوح بأنه غير صالح، وتقييم صحة المنتجات التي قِيسَت به منذ آخر معايرة سليمة.</span></label>
+                <label class="option-label"><input type="radio" name="q12" value="4"><span>الاستمرار في استخدامه أسبوعاً إضافياً حتى انتهاء طلبيات الإنتاج الحالية.</span></label>
+                <label class="option-label"><input type="radio" name="q12" value="1"><span>طالما أن الجهاز يعطي قراءات قريبة من الطبيعي فلا ضرر من استمراره.</span></label>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">13</span>
+                <div class="question-text">في بناء المعرفة التنظيمية للمصنع (Clause 7.1.6)، كيف يحفظ مدير الإنتاج خبرات الفنيين القدامى قبل تقاعدهم؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q13" value="4"><span>الاعتماد على الذاكرة الفنية للعاملين الجدد واكتساب الخبرة بالممارسة.</span></label>
+                <label class="option-label"><input type="radio" name="q13" value="1"><span>المعرفة تنتقل تلقائياً ولا تحتاج لتوثيق مكتوب أو أدلة إجراءات.</span></label>
+                <label class="option-label"><input type="radio" name="q13" value="3"><span>الاستعانة بمهندسين استشاريين من الخارج عند حدوث مشكلة كبرى فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q13" value="5"><span>توثيق الخبرات في كتيبات تشغيل، تنفيذ برامج الإحلال والتدريب المزدوج (Mentorship)، وبناء قاعدة بيانات للأعطال وحلولها.</span></label>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">14</span>
+                <div class="question-text">عند تعيين مشغل جديد على ماكينة ذات دقة أو خطورة عالية (Clause 7.2)، ما هو الإجراء الإلزامي قبل السماح له بالعمل المنفرد؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q14" value="5"><span>التحقق من كفاءته عبر التعليم والتدريب والخبرة، وتقييم أدائه عملياً، وتوثيق سجلات تدريبه واعتماده رسمياً.</span></label>
+                <label class="option-label"><input type="radio" name="q14" value="3"><span>الاعتماد على شهادته الدراسية دون الحاجة لتدريب داخلي مخصص.</span></label>
+                <label class="option-label"><input type="radio" name="q14" value="4"><span>إعطاؤه نبذة شفهية لمدة ساعة عن تشغيل الماكينة ثم تركه للعمل.</span></label>
+                <label class="option-label"><input type="radio" name="q14" value="1"><span>الماكينات الحديثة آمنة تماماً ولا تحتاج لأي تأهيل مسبق للمشغل.</span></label>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">15</span>
+                <div class="question-text">لضمان وعي العاملين بنظام الجودة (Clause 7.3)، ما الذي يجب أن يدركه عامل الإنتاج على خط التجميع؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q15" value="3"><span>أرقام هواتف الإدارة العليا للاستغاثة عند الطوارئ فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q15" value="5"><span>سياسة الجودة، الأهداف ذات الصلة بعمله، دوره في فاعلية النظام، وعواقب عدم مطابقة متطلبات الإنتاج.</span></label>
+                <label class="option-label"><input type="radio" name="q15" value="4"><span>مواعيد الحضور والانصراف ونظام الحوافز المالية فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q15" value="1"><span>الوعي بالجودة يخص مهندسي الجودة وحدهم ولا علاقة للعمال به.</span></label>
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">16</span>
+                <div class="question-text">عند إدارة التواصل الداخلي بالمصنع (Clause 7.4)، ما هي الوسيلة المثلى لإبلاغ أقسام الإنتاج بتعديل مواصفات منتج عاجل؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q16" value="4"><span>إرسال رسالة بريد إلكتروني سريعة لمدير الإنتاج لتبليغ العمال شفهياً.</span></label>
+                <label class="option-label"><input type="radio" name="q16" value="1"><span>ترك العمال يلاحظون التعديل بأنفسهم أثناء فحص المنتجات الأولى.</span></label>
+                <label class="option-label"><input type="radio" name="q16" value="5"><span>إصدار نشرة تغيير هندسي معتمدة (ECO)، وسحب النسخ القديمة، وتوزيع النسخ المحدثة رسمياً على نقاط التشغيل مع التوقيع بالاستلام.</span></label>
+                <label class="option-label"><input type="radio" name="q16" value="3"><span>إبلاغ العمال شفهياً عند تغيير وردية العمل دون وثائق رسمية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">17</span>
+                <div class="question-text">فيما يخص المعلومات الموثقة (Clause 7.5)، وجد المدقق الخارجي ورقة بخط اليد على ماكينة التعبئة تشرح طريقة تشغيل مخالفة للدليل المعتمد:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q17" value="4"><span>الاحتفاظ بالورقة طالما أنها تسهل عمل العامل وتزيد الإنتاجية.</span></label>
+                <label class="option-label"><input type="radio" name="q17" value="5"><span>سحب الورقة غير المعتمدة فوراً، توجيه العامل للعمل بالطريقة الرسمية المعتمدة، وتحليل سبب لجوء العامل لكتابة ورقة خارجية.</span></label>
+                <label class="option-label"><input type="radio" name="q17" value="1"><span>معاقبة العامل شفهياً وترك الورقة مكانها.</span></label>
+                <label class="option-label"><input type="radio" name="q17" value="3"><span>اعتماد الورقة اليدوية بأثر رجعي دون مراجعة هندسية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">18</span>
+                <div class="question-text">عند إنشاء وتحديث وثائق الإنتاج (Clause 7.5.2)، ما هو العنصر الضروري الذي يجب التأكد منه قبل إصدار أي إجراء تشغيلي جديد؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q18" value="3"><span>كتابة الوثيقة بواسطة مشرف الورشة دون توقيع أو تاريخ إصدار.</span></label>
+                <label class="option-label"><input type="radio" name="q18" value="5"><span>المراجعة والاعتماد من حيث الكفاية والملاءمة بواسطة الشخص المخول قبل الإصدار والتوزيع.</span></label>
+                <label class="option-label"><input type="radio" name="q18" value="4"><span>طباعة الوثيقة ووضعها في الورشة ليطلع عليها الجميع مباشرة قبل اعتمادها.</span></label>
+                <label class="option-label"><input type="radio" name="q18" value="1"><span>لا داعي للمراجعة الرسمية طالما أن العاملين يفهمون العمل بالفطرة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">19</span>
+                <div class="question-text">عند ضبط المعلومات الموثقة (Clause 7.5.3)، كيف يتعامل مدير الإنتاج مع الوثائق الفنية القديمة بعد تحديثها؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q19" value="4"><span>ترك النسخ القديمة بجانب الجديدة ليقارن العمال بينهما.</span></label>
+                <label class="option-label"><input type="radio" name="q19" value="5"><span>سحب النسخ القديمة من كافة نقاط الاستخدام فوراً، ومنع استخدامها، والاحتفاظ بنسخة أرشيفية محددة بختم "ملغاة" إذا لزم الأمر.</span></label>
+                <label class="option-label"><input type="radio" name="q19" value="1"><span>حفظ الوثائق القديمة في الأدراج دون تمييز لتجنب إتلافها.</span></label>
+                <label class="option-label"><input type="radio" name="q19" value="3"><span>تمزيق كافة الوثائق القديمة فوراً والتخلص منها دون أرشفة المرجع التاريخي.</span></label>
+            </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">20</span>
+                <div class="question-text">في التخطيط للتشغيل وضبطه (Clause 8.1)، كيف يضمن مدير الإنتاج تلبية متطلبات المنتج لمنع أي انحراف؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q20" value="3"><span>الاعتماد على الفحص النهائي للمنتج فقط دون تتبع مراحل التشغيل الوسطى.</span></label>
+                <label class="option-label"><input type="radio" name="q20" value="4"><span>ترك الأمر لمهارة العمال في نهاية وردية العمل.</span></label>
+                <label class="option-label"><input type="radio" name="q20" value="5"><span>تحديد معايير قبول المنتجات، وتخطيط عمليات الخط، وتحديد الموارد اللازمة، والاحتفاظ بمعلومات موثقة تثبت مطابقة الإنتاج للخطة.</span></label>
+                <label class="option-label"><input type="radio" name="q20" value="1"><span>الإنتاج المفتوح حتى شكوى العميل ثم تعديل الخطأ لاحقاً.</span></label>
+            </div>
+        </div>
+
+        <!-- Q21 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">21</span>
+                <div class="question-text">عند استلام متطلبات العملاء ومراجعتها (Clause 8.2.3)، اكتشف مدير الإنتاج أن العميل يطلب مواصفات فنية تعجز ماكينات المصنع عن تحقيقها:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q21" value="5"><span>إيقاف قبول الطلبية فوراً، التواصل مع قسم المبيعات والعميل لتوضيح الفجوة الفنية وتعديل المتطلبات أو الاعتذار عن الطلب قبل بدء الإنتاج.</span></label>
+                <label class="option-label"><input type="radio" name="q21" value="3"><span>تمرير الطلبية لقسم الإنتاج دون إبداء أي ملاحظات فنية.</span></label>
+                <label class="option-label"><input type="radio" name="q21" value="4"><span>قبول الطلبية ومحاولة إنتاجها بالقوة وتحمل غرامات التأخير أو العيوب لاحقاً.</span></label>
+                <label class="option-label"><input type="radio" name="q21" value="1"><span>إخفاء الأمر عن الإدارة والعميل حتى اكتشاف العيب في مرحلة التسليم النهائي.</span></label>
+            </div>
+        </div>
+
+        <!-- Q22 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">22</span>
+                <div class="question-text">عند حدوث تعديل طارئ في متطلبات العميل بعد بدء التصنيع (Clause 8.2.4):</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q22" value="4"><span>إبلاغ رئيس الورشة شفهياً ليقوم بتعديل الإعدادات على الماكينة.</span></label>
+                <label class="option-label"><input type="radio" name="q22" value="1"><span>تجاهل التعديل لتجنب إرباك العمال وخفض سرعة خط الإنتاج.</span></label>
+                <label class="option-label"><input type="radio" name="q22" value="5"><span>تحديث المعلومات الموثقة ذات الصلة، وإبلاغ كافة الأفراد المعنيين بالإنتاج فوراً بالتعديل الجديد، والتأكد من استيعابهم للمواصفات المعدلة.</span></label>
+                <label class="option-label"><input type="radio" name="q22" value="3"><span>استكمال الطلبية الحالية بالمواصفات القديمة وتطبيق التعديل على الطلبية القادمة فقط.</span></label>
+            </div>
+        </div>
+
+        <!-- Q23 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">23</span>
+                <div class="question-text">في التصميم والتطوير للمنتجات الجديدة (Clause 8.3)، ما هي المرحلة الحاسمة التي يجب على مدير الإنتاج حضورها لتقييم قابلية التصنيع؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q23" value="3"><span>مرحلة حساب التكاليف المالية وتقدير سعر بيع المنتج فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q23" value="5"><span>مرحلة مراجعة التصميم (Design Review) للتأكد من أن التصميم الجديد يمكن تصنيعه بكفاءة وبأقل معدلات تلف على الخطوط الحالية.</span></label>
+                <label class="option-label"><input type="radio" name="q23" value="4"><span>مرحلة إطلاق المنتج التجاري في السوق وتوزيع العينات على العملاء.</span></label>
+                <label class="option-label"><input type="radio" name="q23" value="1"><span>التدخل فقط عند حدوث مشاكل فادحة بعد تسليم المنتج للعميل.</span></label>
+            </div>
+        </div>
+
+        <!-- Q24 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">24</span>
+                <div class="question-text">عند تقييم واختيار الموردين الخارجيين للمواد الخام (Clause 8.4)، ما هو المعيار الأساسي لمدير الإنتاج لقبول خامة جديدة؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q24" value="4"><span>اختيار المورد الذي يقدم أرخص سعر بغض النظر عن تاريخ الجودة السابق.</span></label>
+                <label class="option-label"><input type="radio" name="q24" value="1"><span>شراء المواد الخام المتوافرة بالسوق المحلي فوراً دون فحص مسبق.</span></label>
+                <label class="option-label"><input type="radio" name="q24" value="3"><span>الاعتماد على العلاقات الشخصية والتوصيات التجارية السريعة.</span></label>
+                <label class="option-label"><input type="radio" name="q24" value="5"><span>تقييم قدرتهم على تلبية المواصفات الفنية المحددة، فحص عينات أولية، وتوافر شهادات مطابقة الجودة وسجلات الأداء الموثقة للمورد.</span></label>
+            </div>
+        </div>
+
+        <!-- Q25 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">25</span>
+                <div class="question-text">عند ضبط الإنتاج وتقديم الخدمات (Clause 8.5.1)، ما هي أهمية توافر تعليمات العمل (Work Instructions) عند نقاط التشغيل؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q25" value="5"><span>توفير المعايير والخطوات الواضحة لضمان توحيد جودة التشغيل ومنع الاختلافات بين الورديات المختلفة.</span></label>
+                <label class="option-label"><input type="radio" name="q25" value="3"><span>تزيين جدران الورش وإظهار احترافية المصنع للزوار.</span></label>
+                <label class="option-label"><input type="radio" name="q25" value="4"><span>إكمال ملفات التدقيق الخارجي وتجنب حالات عدم التطابق أثناء المراجعة فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q25" value="1"><span>تعليمات العمل غير مفيدة لأن العمال يمتلكون خبرة طويلة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q26 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">26</span>
+                <div class="question-text">فيما يخص التمييز والتتبع (Identification and Traceability - Clause 8.5.2)، كيف يتعامل مدير الإنتاج مع منتجات تم تصنيعها بخامة رديئة؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q26" value="3"><span>بيع الدفعة بخصم تجاري للعملاء دون إبلاغهم بطبيعة العيب.</span></label>
+                <label class="option-label"><input type="radio" name="q26" value="4"><span>خلط المنتجات الرديئة بالمنتجات السليمة بنسبة بسيطة لتخفيف نسبة التلف.</span></label>
+                <label class="option-label"><input type="radio" name="q26" value="5"><span>عزل الدفعة المتضررة فوراً باستخدام نظام التتبع الآلي أو البطاقات المميزة، وتحديد كافة المنتجات الوسيطة والنهائية المرتبطة بنفس الخامة.</span></label>
+                <label class="option-label"><input type="radio" name="q26" value="1"><span>تجاهل التتبع لكونه يستهلك وقتاً طويلاً وجهداً إدارياً كبيراً.</span></label>
+            </div>
+        </div>
+
+        <!-- Q27 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">27</span>
+                <div class="question-text">عند الحفاظ على ممتلكات العملاء أو الموردين (Clause 8.5.3)، تلفت خامة أرسلها العميل لتصنيعها خصيصاً داخل المصنع:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q27" value="4"><span>محاولة إصلاح التلف سراً واستخدام الخامة دون علم العميل.</span></label>
+                <label class="option-label"><input type="radio" name="q27" value="5"><span>إبلاغ العميل كتابياً فوراً، توثيق حالة التلف، عزل المواد التالفة، وعدم استكمال العمل حتى تلقي توجيهات رسمية واضحة من العميل.</span></label>
+                <label class="option-label"><input type="radio" name="q27" value="1"><span>العميل يتحمل مسؤولية إرسال خامة بها عيوب ولا علاقة للمصنع بذلك.</span></label>
+                <label class="option-label"><input type="radio" name="q27" value="3"><span>إخفاء الخامة التالفة في المخزن وطلب خامة إضافية من العميل بحجة زيادة الطلبية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q28 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">28</span>
+                <div class="question-text">في مرحلة الحفظ (Preservation - Clause 8.5.4)، ما هي مسؤولية مدير الإنتاج تجاه المنتجات نصف المصنعة والتامة بالمخازن؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q28" value="3"><span>إلقاء المنتجات في ساحة المصنع الخارجية لحين وصول سيارات النقل.</span></label>
+                <label class="option-label"><input type="radio" name="q28" value="4"><span>تسليم المنتجات لشركة الشحن فور انتهائها دون الاكتراث بظروف التخزين المؤقت.</span></label>
+                <label class="option-label"><input type="radio" name="q28" value="5"><span>ضمان ظروف مناولة وتعبئة وتخزين سليمة تحمي المنتجات من التلف أو التلوث أو الصدأ طوال مراحل الإنتاج وحتى التسليم.</span></label>
+                <label class="option-label"><input type="radio" name="q28" value="1"><span>دور الإنتاج ينتهي بمجرد خروج المنتج من خط التجميع تماماً.</span></label>
+            </div>
+        </div>
+
+        <!-- Q29 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">29</span>
+                <div class="question-text">عند ضبط التغييرات في خطوط الإنتاج (Clause 8.5.6)، قام رئيس الورشة بتغيير نوع الزيت المستخدم في الماكينة دون إبلاغ الجودة أو الصيانة:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q29" value="5"><span>إيقاف الماكينة مؤقتاً لتقييم أثر هذا التغيير على جودة المنتج وعمر الماكينة، ومراجعة وتوثيق التغيير رسمياً بعد اعتماده من الهندسة.</span></label>
+                <label class="option-label"><input type="radio" name="q29" value="3"><span>مدح رئيس الورشة لاجتهاده الذاتي في توفير بدائل تشغيلية.</span></label>
+                <label class="option-label"><input type="radio" name="q29" value="4"><span>ترك الماكينة تعمل ومراقبة جودة المنتجات الناتجة لمعرفة النتيجة.</span></label>
+                <label class="option-label"><input type="radio" name="q29" value="1"><span>أنواع الزيوت تفصيل تقني بحت ولا علاقة له بنظام الجودة ISO 9001.</span></label>
+            </div>
+        </div>
+
+        <!-- Q30 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">30</span>
+                <div class="question-text">عند الإفراج عن المنتجات والخدمات (Clause 8.6)، متى يحق لمدير الإنتاج السماح بخروج المنتجات لعملية التسليم النهائي؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q30" value="4"><span>فور انتهاء العمال من تجميع الوحدات وقبل مراجعة معمل الجودة لتدارك تأخير الشحن.</span></label>
+                <label class="option-label"><input type="radio" name="q30" value="1"><span>تسليم المنتجات فوراً عند إلحاح العميل المستمر على الاستلام.</span></label>
+                <label class="option-label"><input type="radio" name="q30" value="5"><span>بعد استيفاء كافة الفحوصات والاختبارات المخططة بنجاح، ووجود توقيع اعتمادي موثق من الجهة المختصة بالجودة.</span></label>
+                <label class="option-label"><input type="radio" name="q30" value="3"><span>بالاعتماد على المظهر الخارجي للمنتج دون قياسات دقيقة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q31 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">31</span>
+                <div class="question-text">عند ضبط المخرجات غير المطابقة للمواصفات (Clause 8.7)، ظهرت عيوب ظاهرية في منتجات الوردية الصباحية:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q31" value="3"><span>إرسال المنتجات المعيبة للعملاء بأسعار مخفضة للتخلص منها سريعاً.</span></label>
+                <label class="option-label"><input type="radio" name="q31" value="4"><span>ترك المنتجات في مكانها على الخط لحين انتهاء الوردية المسائية.</span></label>
+                <label class="option-label"><input type="radio" name="q31" value="5"><span>تمييز المنتجات المعيبة فوراً، عزلها في منطقة الحجر، منع استخدامها، وتحديد مسار التعامل معها (إصلاح، إعادة تشغيل، أو إعدام).</span></label>
+                <label class="option-label"><input type="radio" name="q31" value="1"><span>إعادة تشغيل العيوب داخل الماكينة دون تسجيلها في سجل الهالك.</span></label>
+            </div>
+        </div>
+
+        <!-- Q32 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">32</span>
+                <div class="question-text">في قياس الأداء وتقييم العمليات (Clause 9.1.1)، ما هي المؤشرات التي يجب أن يعتمد عليها مدير الإنتاج بصفة دورية؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q32" value="4"><span>عدد الساعات الإضافية التي قضاها العمال في المصنع فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q32" value="5"><span>كفاءة المعدات (OEE)، نسبة الهالك والتلف، معدل الالتزام بخطة الإنتاج، ونتائج الفحص والمطابقة للعمليات.</span></label>
+                <label class="option-label"><input type="radio" name="q32" value="1"><span>لا داعي للمؤشرات الرقمية طالما أن العمل يسير بصورة هادئة.</span></label>
+                <label class="option-label"><input type="radio" name="q32" value="3"><span>عدد الشكاوى الواردة من الإدارة العليا نهاية كل شهر.</span></label>
+            </div>
+        </div>
+
+        <!-- Q33 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">33</span>
+                <div class="question-text">عند تقييم رضا العملاء (Clause 9.1.2)، وردت شكوى من عميل رئيسي بخصوص تأخر تسليم طلبيات الإنتاج:</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q33" value="3"><span>لوم قسم الشحن والتوزيع وتحميلهم المسؤولية كاملة.</span></label>
+                <label class="option-label"><input type="radio" name="q33" value="4"><span>إرسال اعتذار شفهي للعميل دون بحث أسباب التأخير الفنية في المصنع.</span></label>
+                <label class="option-label"><input type="radio" name="q33" value="5"><span>دراسة أسباب التأخير في خطوط الإنتاج وجدولة التخطيط، فتح تقرير عدم مطابقة، الرد الرسمي على العميل، واتخاذ إجراء تصحيحي جذري.</span></label>
+                <label class="option-label"><input type="radio" name="q33" value="1"><span>تجاهل الشكوى باعتبار التأخير أمراً شائعاً في قطاع الصناعة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q34 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">34</span>
+                <div class="question-text">في تحليل وتقييم البيانات التشغيلية (Clause 9.1.3)، كيف يستفيد مدير الإنتاج من تقارير الأعطال الشهرية؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q34" value="4"><span>أرشفة التقارير في ملفات إلكترونية لتقديمها للمدقق الخارجي وقت المراجعة.</span></label>
+                <label class="option-label"><input type="radio" name="q34" value="5"><span>تحليل الأعطال المتكررة (Pareto Analysis) لمعرفة الماكينات الأكثر تسبباً للتوقف وتوجيه الصيانة الوقائية نحوها لرفع الكفاءة.</span></label>
+                <label class="option-label"><input type="radio" name="q34" value="1"><span>التقارير الإحصائية مجرد أرقام نظرية ولا تمس الواقع التشغيلي.</span></label>
+                <label class="option-label"><input type="radio" name="q34" value="3"><span>قراءة التقارير مرور الكرام دون اتخاذ قرارات تصحيحية هندسية.</span></label>
+            </div>
+        </div>
+
+        <!-- Q35 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">35</span>
+                <div class="question-text">عند التخطيط لعمليات المراجعة الداخلية (Clause 9.2)، ما هو الغرض الأساسي من تدقيق المراجع الداخلي لخط الإنتاج؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q35" value="3"><span>إرضاء إدارة الجودة وتجاوز المراجعة بأقل الخسائر الممكنة.</span></label>
+                <label class="option-label"><input type="radio" name="q35" value="5"><span>التحقق من مدى مطابقة عمليات الإنتاج لمتطلبات نظام الجودة ISO 9001 والإجراءات الداخلية، واكتشاف فرص التحسين بفعالية.</span></label>
+                <label class="option-label"><input type="radio" name="q35" value="4"><span>ترصد أخطاء العمال وتوقيع جزاءات إدارية ومالية ضدهم.</span></label>
+                <label class="option-label"><input type="radio" name="q35" value="1"><span>إثبات أن قسم الإنتاج يعمل بدون أي عيوب مطلقة.</span></label>
+            </div>
+        </div>
+
+        <!-- Q36 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">36</span>
+                <div class="question-text">في اجتماعات المراجعة الإدارية (Clause 9.3)، ما هي المدخلات الرئيسية التي يجب أن يقدمها مدير الإنتاج للإدارة العليا؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q36" value="4"><span>طلبات شراء ماكينات جديدة وزيادة رواتب عمال الورش فقط.</span></label>
+                <label class="option-label"><input type="radio" name="q36" value="1"><span>تقديم تقرير مالي بحت دون أي مؤشرات تشغيلية تخص الجودة.</span></label>
+                <label class="option-label"><input type="radio" name="q36" value="5"><span>حالة أهداف الجودة، أداء العمليات ومطابقة المنتجات، تقارير الهالك والأعطال، حالة الإجراءات التصحيحية، ومقترحات التطوير التشغيلي.</span></label>
+                <label class="option-label"><input type="radio" name="q36" value="3"><span>سرد تفصيلي لعدد ساعات العمل وسجلات الحضور والانصراف.</span></label>
+            </div>
+        </div>
+
+        <!-- Q37 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">37</span>
+                <div class="question-text">عند حدوث عدم مطابقة في خط الإنتاج (Clause 10.2)، ما هي الخطوة الأولى التي يجب على مدير الإنتاج اتخاذها؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q37" value="4"><span>الانتظار حتى نهاية الأسبوع لدراسة المشكلة في اجتماع الأقسام.</span></label>
+                <label class="option-label"><input type="radio" name="q37" value="5"><span>الاستجابة لعدم المطابقة فوراً، السيطرة عليها وتصحيحها، والتعامل مع النتائج والآثار المترتبة عليها.</span></label>
+                <label class="option-label"><input type="radio" name="q37" value="1"><span>تجاهل المشكلة طالما أن العميل لم يلاحظها بعد.</span></label>
+                <label class="option-label"><input type="radio" name="q37" value="3"><span>لوم المشغل المسؤول عن الوردية وتحذيره شفهياً.</span></label>
+            </div>
+        </div>
+
+        <!-- Q38 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">38</span>
+                <div class="question-text">لتطبيق الإجراء التصحيحي الجذري (Corrective Action - Clause 10.2.1)، ما هي الطريقة الأصح لمعرفة سبب تكرار تلف المنتج؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q38" value="3"><span>معاقبة العامل المتسبب في التلف ليكون عبرة لغيره.</span></label>
+                <label class="option-label"><input type="radio" name="q38" value="5"><span>استخدام أدوات تحليل الجذور مثل "الأسئلة الخمسة لماذا" (5 Whys) أو مخطط عظم السمكة (Ishikawa) للوصول للسبب الحقيقي ومنع تكراره.</span></label>
+                <label class="option-label"><input type="radio" name="q38" value="4"><span>الاعتماد على التخمين والخبرة الشخصية لسرعة إغلاق حالة عدم المطابقة.</span></label>
+                <label class="option-label"><input type="radio" name="q38" value="1"><span>تغيير إعدادات الماكينة عشوائياً حتى تختفي المشكلة مؤقتاً.</span></label>
+            </div>
+        </div>
+
+        <!-- Q39 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">39</span>
+                <div class="question-text">بعد تنفيذ الإجراء التصحيحي لأعطال خط التغليف، ما هي الخطوة اللاحقة للتأكد من فاعليته؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q39" value="4"><span>إغلاق تقرير عدم المطابقة فوراً في نفس يوم اكتشافه لسرعة الإنجاز.</span></label>
+                <label class="option-label"><input type="radio" name="q39" value="1"><span>عدم متابعة الأمر نهائياً والتركيز على خطوط الإنتاج الأخرى.</span></label>
+                <label class="option-label"><input type="radio" name="q39" value="5"><span>مراجعة وتقييم فاعلية الإجراء التصحيحي بعد فترة تشغيلية، وتحديث تقييم المخاطر إن لزم الأمر للتأكد من عدم عودة المشكلة.</span></label>
+                <label class="option-label"><input type="radio" name="q39" value="3"><span>افتراض أن المشكلة انتهت تماماً لعدم تكرارها خلال أول ساعتين.</span></label>
+            </div>
+        </div>
+
+        <!-- Q40 -->
+        <div class="question-card">
+            <div class="question-header">
+                <span class="question-number">40</span>
+                <div class="question-text">في إطار السعي الدائم نحو التحسين المستمر (Continual Improvement - Clause 10.3)، كيف يُرسخ مدير الإنتاج ثقافة التحسين داخل المصنع؟</div>
+            </div>
+            <div class="options-stack">
+                <label class="option-label"><input type="radio" name="q40" value="3"><span>الاكتفاء بما يحققه المصنع من أرباح سنوية مستقرة دون تغيير.</span></label>
+                <label class="option-label"><input type="radio" name="q40" value="4"><span>المطالبة بزيادة أعداد الوردية ورفع سرعة الماكينات بالقوة.</span></label>
+                <label class="option-label"><input type="radio" name="q40" value="5"><span>تشجيع مقترحات العمال التطويرية، تطبيق منهجيات اللين والستة سيجما، والمراجعة الدائمة لمدى ملاءمة وكفاية وفاعلية نظام إدارة الجودة.</span></label>
+                <label class="option-label"><input type="radio" name="q40" value="1"><span>التحسين المستمر مسؤولية استشارية خارجية ولا علاقة للإنتاج بها.</span></label>
+            </div>
+        </div>
+
+        <div id="missingAlert" class="alert-missing">
+            يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة! (الأسئلة المتبقية: <span id="missingCount">0</span>)
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="calc-btn" onclick="calculateScore()">حساب النتيجة النهائية</button>
+        </div>
+    </form>
+
+    <div id="resultBox" class="result-box">
+        <div class="result-header">
+            <h3>نتيجة تقييم مدير الإنتاج لنظام ISO 9001</h3>
+            <div id="resultScore" class="result-score">0 / 200</div>
+            <div id="resultCategory" class="result-category">--</div>
+        </div>
+        <div id="resultDescription" class="result-description"></div>
+    </div>
+
+    <footer>
+        <div><strong>Welz Academy</strong></div>
+        <div style="margin-top: 5px;">Created by Waleed Alkhodary</div>
+        <div style="margin-top: 10px; font-size: 0.85rem; color: #94a3b8;">ملاحظة: هذا الاختبار مصمم خصيصاً لتقييم الاحترافية القيادية والتشغيلية لمديري الإنتاج في تطبيق معايير الآيزو 9001 بدقة عالية.</div>
+    </footer>
+</div>
+
+<script>
+    document.querySelectorAll('.option-label input').forEach(input => {
+        input.addEventListener('change', function() {
+            const stack = this.closest('.options-stack');
+            stack.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+            if(this.checked) {
+                this.parentElement.classList.add('selected');
+            }
+        });
+    });
+
+    function calculateScore() {
+        let total = 0;
+        let answeredCount = 0;
+        let total

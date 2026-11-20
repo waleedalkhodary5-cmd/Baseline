@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى ذكائك العاطفي؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        /* Header Branding */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards & Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        /* Questions Styling */
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Conclusion & Results Wrapper (Hidden Initially) */
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- مقال المقدمة -->
+    <section class="card orange-top">
+        <h2>ما مدى ذكائك العاطفي؟ (تعزيز مهارات التعامل مع الناس لديك)</h2>
+        <p>نعلم جميعاً أشخاصاً يتحكمون بشكل كامل في عواطفهم. إنهم هادئون في الأزمات، ويتخذون القرارات بحساسية، مهما كان الوضع مرهقاً.</p>
+        <p>نحن نعرف أيضاً أشخاصاً يمكنهم قراءة مشاعر الآخرين. إنهم يفهمون ما يجب قوله لجعل الناس يشعرون بالتحسن، ويعرفون كيفية إلهامهم لاتخاذ الإجراءات اللازمة.</p>
+        <p>يتمتع الأشخاص مثل هؤلاء بذكاء عاطفي عالٍ (Emotional Intelligence - EI). لديهم علاقات قوية ويديرون المواقف الصعبة بهدوء وفعالية، ومن المحتمل أيضاً أن يتمتعوا بالمرونة في مواجهة الشدائد.</p>
+        <p><strong>إذن، ما مدى ذكائك العاطفي وكيف يمكنك تطويره بشكل أكبر؟ اكتشف أدناه عبر إجراء الاختبار.</strong></p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة، انقر فوق الخيار في العمود الذي يصفك بأفضل شكل. يُرجى الإجابة عن الأسئلة كما أنت في الواقع (وليس كما تعتقد أنك يجب أن تكون). عندما تنتهي، يرجى النقر فوق زر <strong>"احسب إجمالي نقاطي"</strong> في الأسفل.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 15</span>
+    </div>
+
+    <!-- الاختبار الـ 15 عبارة -->
+    <section class="card">
+        <h2>اختبار تقييم الذكاء العاطفي (15 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- السؤال 1 -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- استطيع التعرف على مشاعري عندما أختبرها.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 2 (معكوس) -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- افقد اعصابى عندما اشعر بالاحباط.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 3 -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- لقد أخبرني الناس أنني مستمع جيد.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 4 -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- اعرف كيف أهدئ نفسي عندما أشعر بالقلق أو الانزعاج.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 5 -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- استمتع بتنظيم المجموعات.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 6 (معكوس) -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- اجد صعوبة فى التركيز على شئ ما على المدى الطويل.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 7 (معكوس) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- أجد صعوبة في المضي قدماً عندما أشعر بالإحباط أو عدم السعادة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 8 -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- اعرف نقاط قوتى وضعفى.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 9 (معكوس) -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- اتجنب الصراعات والمفاوضات.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 10 (معكوس) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- اشعر اننى لا استمتع بعملى.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 11 -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- أطلب من الناس إبداء آرائهم حول ما أقوم به بشكل جيد وكيف يمكنني تحسينه.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 12 -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- أضع أهدافاً طويلة المدى واراجع تقدمى بانتظام.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 13 (معكوس) -->
+            <div class="question-item" id="q-box-13">
+                <div class="question-text">13- اجد صعوبة فى قراءة مشاعر الاخرين.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q13" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 14 (معكوس) -->
+            <div class="question-item" id="q-box-14">
+                <div class="question-text">14- أجد صعوبة فى بناء علاقات مع الاخرين.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q14" value="1"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="5"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 15 -->
+            <div class="question-item" id="q-box-15">
+                <div class="question-text">15- أستخدم مهارات الاستماع النشط عندما يتحدث الناس معي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q15" value="5"><span>دائماً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="1"><span>أبداً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة وتفسير النتائج (مخفية لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتيجة (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 75</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <!-- خصائص الذكاء العاطفي والدليل الإرشادي -->
+        <section class="card">
+            <h2>خصائص الذكاء العاطفي</h2>
+            <p>حدد عالم النفس <strong>دانييل جولمان (Daniel Goleman)</strong> خمسة عناصر تشكل الذكاء العاطفي، وهي:</p>
+            <ol>
+                <li><strong>الوعي الذاتي (Self-Awareness)</strong> - الأسئلة: 1، 8، 11</li>
+                <li><strong>التنظيم الذاتي (Self-Regulation)</strong> - الأسئلة: 2، 4، 7</li>
+                <li><strong>الدافع والتحفيز (Motivation)</strong> - الأسئلة: 6، 10، 12</li>
+                <li><strong>التعاطف (Empathy)</strong> - الأسئلة: 3، 13، 15</li>
+                <li><strong>المهارات الاجتماعية (Social Skills)</strong> - الأسئلة: 5، 9، 14</li>
+            </ol>
+
+            <h3>1. الوعي الذاتي (الأسئلة 1، 8، 11)</h3>
+            <p>في كتابه الصادر عام 1995 بعنوان <em>"الذكاء العاطفي: لماذا يمكن أن يكون أكثر أهمية من الذكاء الرياضي (IQ)؟"</em>، أوضح جولمان أن الأشخاص ذوي الوعي الذاتي العالي "يدركون حالاتهم المزاجية كما يعيشونها".</p>
+            <p><strong>لزيادة الوعي الذاتي:</strong> تعرّف على مفهوم اليقظة الذهنية (Mindfulness) الذي يتضمن التركيز على اللحظة الحالية ومراقبة مشاعرك. احتفظ بمدونة شخصية لتحليل المواقف العاطفية التي تمر بها. كما تحتاج إلى إجراء تحليل SWOT الشخصي وطلب التغذية الراجعة من رؤسائك وزملائك.</p>
+
+            <h3>2. التنظيم الذاتي (الأسئلة 2، 4، 7)</h3>
+            <p>التنظيم الذاتي يدور حول البقاء في قمة السيطرة. لتطوير مهاراتك في هذا المجال، تعلم كيفية إدارة عواطفك بفعالية. إذا كنت تغضب كثيراً، لاحظ ما يثير هذا الشعور واستخدم تقنيات مثل التنفس العميق، ومنح نفسك وقتاً للتوقف قبل الرد على الرسائل أو الطلبات.</p>
+            <p><strong>المسئولية (Accountability):</strong> عنصر مهم آخر؛ تحمل مسؤولية أفعالك وسلوكياتك وتأكد من أنها تتماشى مع قيمك الحقيقية.</p>
+
+            <h3>3. التحفيز (الأسئلة 6، 10، 12)</h3>
+            <p>يتأثر التحفيز الذاتي بشدة بمشاعرك؛ فعندما تتشتت بسبب مشاعرك، تجد صعوبة في إنجاز المهام. لزيادة معدلات تحفيزك، طوّر انضباطك الذاتي (Self-Discipline)، وتطلع إلى النجاحات الصغيرة (Small Wins) واحتفل بها.</p>
+            <p>ضع لنفسك أهدافاً طويلة المدى واراجع تقدمك بانتظام لربط أهدافك الشخصية بالعمل، ووفر وقتاً لإعادة اكتشاف شغفك وهدفك دائماً.</p>
+
+            <h3>4. التعاطف (الأسئلة 3، 13، 15)</h3>
+            <p>التعاطف هو القدرة على التعرف على مشاعر الآخرين وفهم وجهات نظرهم. أسماه جولمان "مهارة الأشخاص الأساسية" (The Fundamental People Skill).</p>
+            <p>لتطوير التعاطف، ضع نفسك مكان الآخرين، واستخدم مهارات الاستماع النشط (Active Listening). حاول ألا تقاطع أو تتحدث عن مشاعرك أثناء محادثة الآخرين، ولاحظ لغة جسدهم لفهم ما يشعرون به.</p>
+
+            <h3>5. المهارات الاجتماعية (الأسئلة 5، 9، 14)</h3>
+            <p>حتى لو لم تكن اجتماعياً بطبعك، فمن الممكن تطوير مهارات اجتماعية أفضل عبر بناء الثقة والعلاقة مع الناس. لا تخجل من المواقف الصعبة وتعلّم كيفية إدارة الصراعات بفعالية. ابدأ ببطء بالانخراط في الأنشطة والمجموعات لتوسيع مهاراتك القيادية.</p>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    // الأسئلة المعكوسة في اختبار الذكاء العاطفي: 2، 6، 7، 9، 10، 13، 14
+    const invertedQuestions = [2, 6, 7, 9, 10, 13, 14];
+
+    function updateProgress() {
+        const totalQuestions = 15;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 15;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                let val = parseInt(selected.value, 10);
+                // إذا كان السؤال معكوساً يتم عكس الدرجة (1->5, 2->4, 3->3, 4->2, 5->1)
+                if (invertedQuestions.includes(i)) {
+                    val = 6 - val;
+                }
+                totalScore += val;
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 15 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 75`;
+
+        if (totalScore >= 15 && totalScore <= 34) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (15 - 34 نقطة)";
+            textElem.innerText = "أنت بحاجة للعمل على ذكائك العاطفى. قد تجد انك مثقل بالمشاعر خاصة فى المواقف العصيبه التي تسبب لك الضغوط، أو قد تتجنب الصراع لأنك تعتقد أنك ستجده محزناً. ومن المحتمل أيضاً أن تجد صعوبة في التهدئة بعد أن شعرت بالانزعاج وقد تواجه صعوبة في بناء علاقات عمل قوية. لا تقلق، فهناك العديد من الطرق لبناء الذكاء العاطفي بدءاً من الآن.";
+        } else if (totalScore >= 35 && totalScore <= 55) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (35 - 55 نقطة)";
+            textElem.innerText = "مستوى ذكائك العاطفي جيد. من المحتمل أن تكون لديك علاقات جيدة مع بعض زملائك ولكن قد يكون العمل مع البعض الآخر أكثر صعوبة. والخبر السار هو أن لديك فرصة عظيمة لتحسين علاقات العمل الخاصة بك بشكل كبير عبر اتباع إرشادات تعزيز الذكاء العاطفي أدناه.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (56 - 75 نقطة)";
+            textElem.innerText = "عظيم! أنت شخص ذكي عاطفياً. لديك علاقات رائعة، وربما تجد أن الناس يلجأون إليك للحصول على المشورة. ومع ذلك، عندما يعجب الكثير من الأشخاص بمهاراتك في التواصل، فمن السهل أن تغفل عن احتياجاتك الخاصة. حقق إمكاناتك القيادية العظيمة من خلال البحث عن فرص للتحسين بشكل أكبر.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

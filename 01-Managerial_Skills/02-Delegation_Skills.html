@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى جودة تفويضك؟ - Wel Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b89628;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        /* Branding Header & Footer */
+        .brand-header, .brand-footer {
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .brand-header {
+            margin-bottom: 20px;
+        }
+
+        .brand-footer {
+            margin-top: 40px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            color: white;
+            padding: 25px;
+        }
+
+        .brand-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
+        }
+
+        .brand-footer .brand-title {
+            color: var(--accent-gold);
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .brand-footer .brand-subtitle {
+            color: #e2e8f0;
+        }
+
+        /* Main Quiz Title */
+        .quiz-main-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        /* Intro & Instructions Boxes */
+        .intro-box {
+            background-color: #fefcbf38;
+            border-right: 6px solid #ecc94b;
+            background-image: linear-gradient(to left, #fffdf5, #fffbf0);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .intro-box h3 {
+            color: #b7791f;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box {
+            background-color: #ebf8ff;
+            border-right: 6px solid #3182ce;
+            background-image: linear-gradient(to left, #f7fafc, #ebf8ff);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .instructions-box h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Quiz Question Cards */
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-label {
+            flex: 1;
+            min-width: 100px;
+            background: #f7fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #edf2f7;
+        }
+
+        .option-label input {
+            margin-left: 8px;
+        }
+
+        /* Calculate Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        /* Results Section */
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 10px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .result-comment {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #276749;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border-right: 4px solid #48bb78;
+        }
+
+        /* Analysis Sections */
+        .analysis-section {
+            margin-top: 30px;
+            line-height: 1.9;
+        }
+
+        .analysis-section h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+
+        .key-points {
+            background: #fffaf0;
+            border-right: 4px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Branding -->
+    <div class="brand-header">
+        <h1 class="brand-title">Wel Academy</h1>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+
+    <!-- Quiz Main Title -->
+    <h2 class="quiz-main-title">ما مدى جودة تفويضك؟</h2>
+
+    <!-- Introduction Box -->
+    <div class="intro-box">
+        <h3>مقدمة الاختبار</h3>
+        <p><strong>مشاركة عبء العمل لإنجاز المزيد من المهام:</strong></p>
+        <p>يُعد تفويض العمل لأعضاء فريقك عنصراً أساسياً لإنجاز المهام. ولكن لماذا نسمع الكثير من المديرين يقولون عبارات مثل:</p>
+        <ul>
+            <li>"أنا أفضل من يقوم بهذه المهمة، لذا سأقوم بها بنفسي."</li>
+            <li>"سوف يستاءون مني إذا طلبت منهم القيام بها."</li>
+            <li>"إنها مهمة مملة، لذا سأكون 'قدوة' وأقوم بها بنفسي."</li>
+            <li>"سيكون الأمر أسرع إذا قمت به بنفسي."</li>
+        </ul>
+        <p>هذه ردود فعل شائعة جداً عند التفكير في التفويض. ومع ذلك، عندما لا تقوم بالتفويض، فإنك تخاطر بالانتهاء بالكثير من العمل دون وقت كافٍ لإنجازه، والوقوع تحت ضغط عصبي كبير لا داعي له.</p>
+        <p>من ناحية أخرى، عند التفويض، قد تقلق من عدم إنجاز العمل بالشكل الصحيح. خض هذا الاختبار القصير لتقييم مدى جودة تفويضك واكتشاف المجالات التي تحتاج إلى تحسين.</p>
+    </div>
+
+    <!-- Instructions Box -->
+    <div class="instructions-box">
+        <h3>تعليمات الإجابة</h3>
+        <p>لكل عبارة أدناه، اختر الخيار الذي يصف سلوكك الفعلي بدقة (وليس كما تعتقد أنه ينبغي أن يكون)، ولا تقلق إذا كانت بعض الأسئلة تُحسب في "الاتجاه العكسي". عند الانتهاء، انقر فوق زر "احسب نتيجتي وتقييم التفويض" في أسفل الاختبار.</p>
+    </div>
+
+    <!-- Quiz Form -->
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="calculateScore()">احسب نتيجتي وتقييم التفويض</button>
+    </form>
+
+    <!-- Result & Output Section -->
+    <div id="result-section">
+        <div class="score-display">درجتك الكلية: <span id="scoreValue">0</span> من 60</div>
+        <div class="result-comment" id="resultComment"></div>
+
+        <div class="analysis-section">
+            <h2>تحليل مهارات التفويض ودليل التحسين</h2>
+
+            <h3>ماذا ومتى تفوض؟ (الأسئلة 2، 5، 9، 11)</h3>
+            <p>ابداً بتحديد ما يمكنك تفويضه ومتى. بعد ذلك، يصبح من السهل جداً تحديد كيف تفوض ولِمن تفوض، وتزويدهم بالموارد والمعرفة التي يحتاجونها.</p>
+            <p>لا تحاول تفويض العمل الذي ينبغي عليك القيام به بنفسك (مثل إعداد كلمة هامة أو العروض التقديمية الخاصة بك). كذلك تجنب التفويض لمجرد التخلص من المهام التي لا تحبها فقط؛ لأن فريقك س يشعر بذلك ويكون أقل استجابة في المستقبل.</p>
+            <p><strong>عوامل يجب مراعاتها عند اتخاذ قرار التفويض:</strong></p>
+            <ul>
+                <li><strong>الوقت:</strong> هل لديك وقت كافٍ للتفويض والمتابعة والتدريب؟</li>
+                <li><strong>الخبرة:</strong> هل يوجد شخص يمتلك الخبرة المناسبة لإنجاز العمل بشكل أفضل وأسرع؟</li>
+                <li><strong>الملائمة:</strong> تجنب تفويض المهام عالية المستوى أو ذات الطابع السري والحساس، بل قم بتفويض المهام الروتينية لفرز وقتك للمهام الاستراتيجية.</li>
+            </ul>
+
+            <h3>كيف تفوض؟ (الأسئلة 1، 4، 6، 10)</h3>
+            <p>يتطلب التفويض الفعال تواصلاً واضحاً وثقة بالآخرين. إليك أهم خطوات التفويض الناجح:</p>
+            <ul>
+                <li><strong>الاتفاق على التوقعات:</strong> اشرح بالضبط ما هو المطلوب ومتى يجب تسليمه ولماذا هو مهم.</li>
+                <li><strong>تفويض النتائج وليس أسلوب العمل:</strong> امنح الاستقلالية للموظف في اختيار أفضل الطرق لتنفيذ المهمة، بدلاً من الديكتاتورية في كل التفاصيل.</li>
+                <li><strong>تحديد نقاط متابعة (Checkpoints):</strong> اتفق مسبقاً على المواعيد التي ستراجع فيها التقدم بدلاً من الميكرو-إدارة والمتابعة كل ساعة.</li>
+                <li><strong>مناقشة العواقب:</strong> وضح للموظف ما هي المكافآت عند النجاح وما هي التبعات عند التقصير.</li>
+                <li><strong>تحديد دورك:</strong> وضح مدى الدعم الذي ستقدمه وقم بتشجيع الموظفين على تقديم حلول للمشكلات بدلاً من طلب التعليمات فقط.</li>
+            </ul>
+
+            <h3>لمن تفوض؟ (الأسئلة 3، 7، 8، 12)</h3>
+            <p>تفويض العمل للشخص الخطأ قد يستهلك وقتك في التوجيه، وتفويض الكثير من العمل لشخص واحد قد يؤدي لإجهاده وتراجع الأداء.</p>
+            <ul>
+                <li><strong>الهيكل التنظيمي:</strong> فوض للأشخاص الخاضعين لإدارتك المباشرة، وإذا احتجت للتفويض خارج فريقك يفضل أخذ إذن مديرهم مباشرة.</li>
+                <li><strong>موافقة وتقبل الموظفين:</strong> إشراك الموظفين وقبولهم للمهمة يزيد من التزامهم بالنتائج.</li>
+                <li><strong>العمل الفردي مقابل الجماعي:</strong> حدد ما إذا كانت المهمة تتطلب مجهود فرد أم مجموعة من المهارات المتكاملة داخل فريق عمل.</li>
+            </ul>
+
+            <div class="key-points">
+                <h4>نقاط رئيسية تذكرها دائماً:</h4>
+                <p>التفويض ليس سلوكاً فطرياً لدى معظمنا؛ حيث نرى غالباً أنه أسهل وآمن أن نقوم بكل شيء بأنفسنا. لكن هذا يؤدي للضغط العصبي وتقليل الوقت المتاح لأولوياتنا وتوقف نمو مهارات فريقنا.</p>
+                <p>التفويض استراتيجية أساسية لإدارة الوقت وتطوير الفريق. عندما تتعلم التفويض بفعالية، ستُكافأ بوقت أكبر وفريق أكثر تمكيناً ورضا، وهو مكسب للجميع!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Branding -->
+    <div class="brand-footer">
+        <h2 class="brand-title">Wel Academy</h2>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { text: "1- أشرح بوضوح ما يجب القيام به.", scores: [5, 4, 3, 2, 1] },
+        { text: "2- أفوض الأمور في اللحظة الأخيرة.", scores: [1, 2, 3, 4, 5] },
+        { text: "3- أقوم بتفويض المشاريع الأكبر لفرق من الأشخاص، وأمنحهم المسؤولية المناسبة، وأحدد بوضوح سلطتهم في اتخاذ القرارات.", scores: [5, 4, 3, 2, 1] },
+        { text: "4- أقدم التوجيهات في بداية المشروع وأنتظر رؤية النتائج عند نقطة النهاية المتفق عليها.", scores: [1, 2, 3, 4, 5] },
+        { text: "5- أختار عدم تفويض مهمة ما إذا كانت مرتبطة بشكل مباشر بأهدافي وأولوياتي.", scores: [5, 4, 3, 2, 1] },
+        { text: "6- أتحدث بصراحة عما أتوقعه وعواقب عدم الالتزام بالمواعيد النهائية والتوقعات.", scores: [5, 4, 3, 2, 1] },
+        { text: "7- أقوم بتفويض أي شخص في المنظمة أعتقد أنه قادر على القيام بهذا العمل.", scores: [1, 2, 3, 4, 5] },
+        { text: "8- استخدم التفويض لتطوير مهارات الآخرين.", scores: [5, 4, 3, 2, 1] },
+        { text: "9- أقوم بتفويض العمل الذي يعتبر بالغ الأهمية لنجاح المشروع.", scores: [1, 2, 3, 4, 5] },
+        { text: "10- أتوقع أن يأتي المندوبون إليّ بحلول للمشاكل وليس فقط لطلب المزيد من التعليمات.", scores: [5, 4, 3, 2, 1] },
+        { text: "11- أقوم بتفويض العمل السري والحساس.", scores: [1, 2, 3, 4, 5] },
+        { text: "12- أنا أفكر في مدى أهمية مشاركة الموظفين وقبولهم للمشاريع والمهام التي أفوضها.", scores: [5, 4, 3, 2, 1] }
+    ];
+
+    const optionsText = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        
+        let optionsHTML = '';
+        q.scores.forEach((score, oIndex) => {
+            optionsHTML += `
+                <label class="option-label">
+                    <input type="radio" name="q${index}" value="${score}" required>
+                    ${optionsText[oIndex]}
+                </label>
+            `;
+        });
+
+        qCard.innerHTML = `
+            <div class="question-title">${q.text}</div>
+            <div class="options-group">${optionsHTML}</div>
+        `;
+        container.appendChild(qCard);
+    });
+
+    function calculateScore() {
+        const form = document.getElementById('quizForm');
+        if (!form.checkValidity()) {
+            alert("يرجى الإجابة على جميع الأسئلة قبل حساب النتيجة.");
+            return;
+        }
+
+        let totalScore = 0;
+        questions.forEach((_, index) => {
+            const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selectedOption) {
+                totalScore += parseInt(selectedOption.value);
+            }
+        });
+
+        document.getElementById('scoreValue').innerText = totalScore;
+        
+        let commentText = "";
+        if (totalScore >= 12 && totalScore <= 27) {
+            commentText = "مهارات التفويض لديك بحاجة إلى تطوير. أنت تفوض كملجأ أخير بدلاً من استخدام التفويض كأداة مفيدة لتحسين مهارات فريقك والعمل بكفاءة أكبر. راجع التحليل والحلول أدناه لوضع خطة ناجحة لتحسين التفويض لديك.";
+        } else if (totalScore >= 28 && totalScore <= 43) {
+            commentText = "أنت تفهم مبادئ التفويض، ولكنك تميل أحياناً إلى اتخاذ الطريق الأسهل! حاول أن تكون أكثر مبادرة في استراتيجية التفويض الخاصة بك. تذكر أهمية إشراك أعضاء الفريق وتوفير الوقت والدعم الكافي لهم للنجاح.";
+        } else if (totalScore >= 44 && totalScore <= 60) {
+            commentText = "ممتاز! أنت تفوض في الظروف المناسبة وللأشخاص المناسبين. أنت تدرك أن التفويض يتطلب الوقت والدعم منك لكي ينجح الجميع، وتعرف أن التفويض جزء أساسي من التمكين، وفريقك أصبح أقوى بسببه.";
+        }
+
+        document.getElementById('resultComment').innerText = commentText;
+        
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

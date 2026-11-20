@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار أسلوب القيادة | Welz Academy</title>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #0284c7;
+            --accent-color: #f59e0b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            padding-bottom: 50px;
+        }
+
+        /* Branding Header */
+        .brand-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .brand-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .brand-header .author-subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #38bdf8;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: -20px auto 0;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-color);
+        }
+
+        .intro-card {
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        .intro-title {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .intro-text {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Question Box */
+        .question-card {
+            transition: all 0.2s ease;
+        }
+
+        .question-card:hover {
+            border-color: var(--secondary-color);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background-color: #e0f2fe;
+            color: var(--secondary-color);
+            font-weight: 700;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            padding-top: 3px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            gap: 12px;
+        }
+
+        .option-label:hover {
+            background: #f0f9ff;
+            border-color: #93c5fd;
+        }
+
+        .option-label input {
+            accent-color: var(--secondary-color);
+            width: 18px;
+            height: 18px;
+        }
+
+        .option-label.selected {
+            background-color: #e0f2fe;
+            border-color: var(--secondary-color);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .option-text {
+            font-size: 1rem;
+        }
+
+        /* Action & Submit */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            scroll-margin-top: 20px;
+        }
+
+        .score-display-card {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #38bdf8;
+            line-height: 1;
+            margin: 15px 0;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .badge-high { background-color: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+        .badge-med { background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+        .badge-low { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+
+        .analysis-section-title {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dimension-card {
+            border-right: 4px solid var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .dimension-card h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .dimension-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 12px;
+        }
+
+        .tools-list {
+            background: #f1f5f9;
+            padding: 12px 20px;
+            border-radius: 8px;
+            list-style: none;
+        }
+
+        .tools-list li {
+            position: relative;
+            padding-right: 20px;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.92rem;
+        }
+
+        .tools-list li::before {
+            content: "✔";
+            position: absolute;
+            right: 0;
+            color: var(--secondary-color);
+        }
+
+        .error-msg {
+            color: var(--danger-color);
+            text-align: center;
+            font-weight: 700;
+            margin-top: 10px;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="brand-header">
+        <h1>Welz Academy</h1>
+        <div class="author-subtitle">Created By Waleed Alkhodary</div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Intro -->
+        <div class="card intro-card" style="margin-top: 25px;">
+            <h2 class="intro-title"><i class="fa-solid fa-compass"></i> ما هو أسلوب قيادتك؟ (What's Your Leadership Style?)</h2>
+            <p class="intro-text">
+                عندما نمارس القيادة لأول مرة، قد نتبنى أسلوباً اختبرناه مع شخص آخر، أو سمعنا عنه وعرضناه. وإذا بدا أنه ناجح، فنحن نتمسك به ليصبح "أسلوبنا الخاص". لكن هناك العديد من المقاربات المتاحة، والقائد الجيد هو القادر على تكييف أسلوبه بناءً على الموقف والأشخاص المعنيين.
+            </p>
+            <p class="intro-text">
+                يستند هذا الاختبار إلى إطار عمل علم نفس القيادة لعالم النفس <strong>كيرت ليفين (Kurt Lewin)</strong> الذي تم تطويره في الثلاثينيات وما زال شائعاً وفعالاً حتى اليوم.
+            </p>
+            <p class="intro-text" style="font-weight: 700; color: var(--primary-color);">
+                تعليمات: أجب بناءً على سلوكك الواقعي في الواقع العملي، وليس بناءً على ما تعتقد أنه يجب أن يكون.
+            </p>
+        </div>
+
+        <!-- Quiz Form -->
+        <form id="quizForm">
+            <div id="questionsContainer"></div>
+            
+            <div class="error-msg" id="errorMessage">
+                <i class="fa-solid fa-triangle-exclamation"></i> يرجى الإجابة على جميع الأسئلة لحساب النتيجة النهائية.
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">
+                <i class="fa-solid fa-calculator"></i> احسب النتيجة والتحليل
+            </button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results-section">
+            
+            <div class="score-display-card">
+                <h3>مجموع نقاطك النهائي</h3>
+                <div class="score-number" id="finalScore">0</div>
+                <div class="score-badge" id="scoreBadge">الدرجة</div>
+                <p id="scoreComment" style="font-size: 1.1rem; opacity: 0.95; max-width: 650px; margin: 10px auto 0;"></p>
+            </div>
+
+            <div class="card">
+                <h3 class="analysis-section-title"><i class="fa-solid fa-sitemap"></i> التحليل التفصيلي لأنماط القيادة (إطار عمل كيرت ليفين)</h3>
+                
+                <!-- Dimension 1 -->
+                <div class="dimension-card">
+                    <h4>1. القيادة التسلطية أو الاستبدادية (Authoritarian / Autocratic) - النطاق (12 - 20)</h4>
+                    <p>تعتمد على إخبار الفريق بما تريد، متى تريده، وكيف تريده دون استشارة مستمرة. تكون مفيدة جداً في حالات الأزمات السريعة وإدارة المخاطر، ولكن الاستمرار عليها يؤدي إلى ارتفاع معدلات الاستقالات والغياب وخنق الابتكار.</p>
+                    <ul class="tools-list">
+                        <li>التفكير تحت الضغط وإدارة الأزمات (Thinking on Your Feet & Crisis Planning).</li>
+                        <li>توضيح سبب وجود القواعد لتخفيف القسوة (Why the Rules Are There).</li>
+                        <li>الموازنة بين سرعة القرار وتجنب إرهاق الفريق واستنفاده.</li>
+                    </ul>
+                </div>
+
+                <!-- Dimension 2 -->
+                <div class="dimension-card">
+                    <h4>2. القيادة الديمقراطية أو التشاركية (Democratic / Participative) - النطاق (21 - 27)</h4>
+                    <p>تضع الحدود والمعايير وتتخذ القرار النهائي، ولكنك تشرّك أعضاء فريقك بنشاط في النقاشات والأفكار. يبني هذا الأسلوب الثقة والانتماء ولكنه قد يكون بطيئاً في الحالات الحرجة ذات الضغط العالي.</p>
+                    <ul class="tools-list">
+                        <li>بناء الاحترام المتبادلة والتشاور الفعال.</li>
+                        <li>مهارات حل النزاعات وإدارة العواطف في الفريق (Conflict Resolution & Managing Emotion).</li>
+                        <li>تشجيع النقاشات الصحية المفتوحة والمرنة.</li>
+                    </ul>
+                </div>
+
+                <!-- Dimension 3 -->
+                <div class="dimension-card">
+                    <h4>3. القيادة التفويضية أو "دَعِ الأمور تجري" (Laissez Faire) - النطاق (28 - 36)</h4>
+                    <p>تمنح فريقك مطلق الحرية لتنظيم العمل والوصول لأهدافهم بطريقتهم الخاصة. هذا الأسلوب مثالي جداً مع الخبراء وأصحاب الدوافع الذاتية العالية أو المستقلين، لكنه قد يتحول لكارثة وفوضى مع المبتدئين أو ذوي المهارات المنخفضة.</p>
+                    <ul class="tools-list">
+                        <li>التفويض الفعال للمهام المناسبة للأشخاص المناسبين (Delegation).</li>
+                        <li>التواصل المستمر بوضوح دون الوقوع في فخ الإدارة المجهرية (Micromanagement).</li>
+                        <li>القيادة التحويلية كمقاربة مثالية طويلة الأمد (Transformational Leadership).</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer>
+            <p>جميع الحقوق محفوظة © Welz Academy | تصميم وإعداد: أ. وليد الخضري</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Quiz Data based on prompt (12 questions)
+        const questions = [
+            {
+                id: 1,
+                text: "إذا كان هناك صراع خطير داخل فريقي:",
+                options: [
+                    { text: "أ. أذّكر الجميع بأن لديهم أهداف يجب تحقيقها.", score: 1 },
+                    { text: "ب. أقوم بجمع أفراد عائلتي معاً حتى نتمكن من مناقشة الأمر.", score: 2 },
+                    { text: "ج. أسمح لهم بالعمل بأنفسهم حتى لا يضطروا إلى إزعاج بعضهم البعض.", score: 3 }
+                ]
+            },
+            {
+                id: 2,
+                text: "أنا أثق بأعضاء فريقي:",
+                options: [
+                    { text: "أ. كثيراً.", score: 3 },
+                    { text: "ب. قدر لا باس به.", score: 2 },
+                    { text: "ج. لا.", score: 1 }
+                ]
+            },
+            {
+                id: 3,
+                text: "بعض أفراد فريقي يتمتعون بمهارات عالية ولديهم دوافعهم:",
+                options: [
+                    { text: "أ. يمكن إطلاق سراحهم لنسج سحرهم.", score: 3 },
+                    { text: "ب. غالباً ما تعقد معي جلسات تخطيط إبداعي.", score: 2 },
+                    { text: "ج. يخضعون لنفس استراتيجيات وعمليات مكان العمل مثل أي شخص آخر.", score: 1 }
+                ]
+            },
+            {
+                id: 4,
+                text: "أفضل طريقة بالنسبة لي لضمان تحقيق فريقي لأهدافه هي:",
+                options: [
+                    { text: "أ. القيادة من الأمام.", score: 1 },
+                    { text: "ب. تشجيع المشاركة من الجميع.", score: 2 },
+                    { text: "ج. التفويض في كثير من الأحيان وعلى نطاق واسع.", score: 3 }
+                ]
+            },
+            {
+                id: 5,
+                text: "لدينا موعد نهائي مدته ثماني ساعات لمشروع أعتقد أنه يتطلب 16 ساعة لذلك قمت بما يلي:",
+                options: [
+                    { text: "أ. قم بتأجيل الموعد النهائي ودع الجميع يتابعونه. إنهم يعرفون ماذا يفعلون.", score: 3 },
+                    { text: "ب. اسأل أعضاء فريقي عما يشعرون أنه أسرع طريقة لإكماله.", score: 2 },
+                    { text: "ج. إصدار التعليمات والمواعيد النهائية لكل عضو في الفريق.", score: 1 }
+                ]
+            },
+            {
+                id: 6,
+                text: "يجب أن يكون الأداء الضعيف:",
+                options: [
+                    { text: "أ. معاقبته حتى لا يتكرر الأمر مرة أخرى.", score: 1 },
+                    { text: "ب. تحدثنا مع الفرد حتى نتمكن من التعلم.", score: 2 },
+                    { text: "ج. تركه وسوف ينجح نفسه.", score: 3 }
+                ]
+            },
+            {
+                id: 7,
+                text: "أحتاج إلى تطوير وتطبيق استراتيجية جديدة لوسائل التواصل الاجتماعي لذلك أقوم بما يلي:",
+                options: [
+                    { text: "أ. أرسم الإستراتيجية بنفسي ثم أبيعها للفريق.", score: 1 },
+                    { text: "ب. أخبر فريقي بالتحدي واطلب اقتراحات حول كيفية مواجهته.", score: 2 },
+                    { text: "ج. قم بتسليم المشروع إلى أعضاء فريقي واطلب منهم العودة بخطة.", score: 3 }
+                ]
+            },
+            {
+                id: 8,
+                text: "أحب أن:",
+                options: [
+                    { text: "أ. أترك لفريقي اتخاذ القرارات.", score: 3 },
+                    { text: "ب. اتخاذ القرار ولكن ليس قبل أن يحصل فريقي على مدخلات.", score: 2 },
+                    { text: "ج. اتخذ قراراً ولكن ليس قبل أن أبلغ الفريق بمبرراتي المنطقية.", score: 1 }
+                ]
+            },
+            {
+                id: 9,
+                text: "لدي عضو جديد في فريقي لذلك أقوم بما يلي:",
+                options: [
+                    { text: "أ. دعهم يكتشفون أفضل طريقة للعمل.", score: 3 },
+                    { text: "ب. ادعوهم إلى الاجتماعات التعاونية للفريق.", score: 2 },
+                    { text: "ج. اجلس معهم حتى يفهموا العمليات والجودة التي أتوقعها.", score: 1 }
+                ]
+            },
+            {
+                id: 10,
+                text: "أعتقد أن القادة العظماء:",
+                options: [
+                    { text: "أ. يعلمون. ولهذا السبب هم قادة.", score: 1 },
+                    { text: "ب. متواضعون ويفهمون أن الفريق يعمل بشكل أفضل بشكل جماعي.", score: 2 },
+                    { text: "ج. امنح أعضاء فريقهم مساحة كبيرة للسماح لهم بالتقدم.", score: 3 }
+                ]
+            },
+            {
+                id: 11,
+                text: "عندما سُئلت عما إذا كنت أرغب في خدمة فريقي قلت:",
+                options: [
+                    { text: "أ. لست متأكداً.", score: 3 },
+                    { text: "ب. قل نعم بكل إخلاص.", score: 2 },
+                    { text: "ج. عبوس.", score: 1 }
+                ]
+            },
+            {
+                id: 12,
+                text: "لاحظت أن أحد أعضاء فريقي محبط لذلك قمت بما يلي:",
+                options: [
+                    { text: "أ. أدير كل مهمة من مهامهم عن كثب للتأكد من أنهم يتبعون الإجراءات بشكل صحيح.", score: 1 },
+                    { text: "ب. بذل جهد إضافي للتأكد من مشاركتهم في مناقشات الفريق.", score: 2 },
+                    { text: "ج. أتراجع لأنهم ربما يحتاجون إلى بعض المساحة.", score: 3 }
+                ]
+            }
+        ];
+
+        // Render Questions
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            let html = '';
+
+            questions.forEach((q) => {
+                html += `
+                <div class="card question-card" id="q-card-${q.id}">
+                    <div class="question-header">
+                        <div class="question-number">${q.id}</div>
+                        <div class="question-text">${q.text}</div>
+                    </div>
+                    <div class="options-list">
+                        ${q.options.map((opt, idx) => `
+                            <label class="option-label" onclick="selectOption(this, ${q.id})">
+                                <input type="radio" name="q${q.id}" value="${opt.score}">
+                                <span class="option-text">${opt.text}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function selectOption(elem, qId) {
+            const parent = document.getElementById(`q-card-${qId}`);
+            const labels = parent.querySelectorAll('.option-label');
+            labels.forEach(l => l.classList.remove('selected'));
+            elem.classList.add('selected');
+        }
+
+        function calculateScore() {
+            let total = 0;
+            let allAnswered = true;
+
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+                if (!selected) {
+                    allAnswered = false;
+                } else {
+                    total += parseInt(selected.value);
+                }
+            });
+
+            const errorMsg = document.getElementById('errorMessage');
+            if (!allAnswered) {
+                errorMsg.style.display = 'block';
+                return;
+            } else {
+                errorMsg.style.display = 'none';
+            }
+
+            // Show results
+            const resultsSection = document.getElementById('results-section');
+            const scoreNum = document.getElementById('finalScore');
+            const scoreBadge = document.getElementById('scoreBadge');
+            const scoreComment = document.getElementById('scoreComment');
+
+            scoreNum.innerText = total;
+            resultsSection.style.display = 'block';
+
+            if (total >= 28) {
+                scoreBadge.innerText = "أسلوب تفويضي أو 'دَعِ الأمور تجري' (28 - 36)";
+                scoreBadge.className = "score-badge badge-high";
+                scoreComment.innerText = "أسلوبك القيادي الافتراضي هو التفويض. تمنح فريقك حرية كاملة للعمل والوصول لأهدافهم. هذا الأسلوب مثالي جداً مع المهارات العالية والمستقلين، لكن احذر من الفوضى إن غاب التوجيه في الأوقات غير المناسبة.";
+            } else if (total >= 21) {
+                scoreBadge.innerText = "أسلوب ديمقراطي أو تشاركي (21 - 27)";
+                scoreBadge.className = "score-badge badge-high";
+                scoreComment.innerText = "أنت تميل نحو القيادة الديمقراطية والتشاركية. تضع الحدود والمعايير وتمتلك القرار النهائي ولكنك تشارك فريقك بنشاط في العملية. يبني هذا الأسلوب الثقة ويجعل فريقك يشعر بقيمته.";
+            } else {
+                scoreBadge.innerText = "أسلوب تسلطي أو استبدادي (12 - 20)";
+                scoreBadge.className = "score-badge badge-med";
+                scoreComment.innerText = "أنت تتبنى غالباً أسلوباً قيادياً تسلطياً أو استبدادياً. نادراً ما تستشير فريقك وتفضل إخبارهم بما تريد ومتى تريده. هذا الأسلوب رائع في الأزمات السريعة، ولكنه قد يقلل الإبداع ويثبط طاقات الأفراد على المدى الطويل.";
+            }
+
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize
+        renderQuestions();
+    </script>
+</body>
+</html>

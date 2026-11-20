@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى جودة مهاراتك في إدارة التغيير؟ - Wel Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b89628;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        /* Branding Header & Footer */
+        .brand-header, .brand-footer {
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .brand-header {
+            margin-bottom: 20px;
+        }
+
+        .brand-footer {
+            margin-top: 40px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            color: white;
+            padding: 25px;
+        }
+
+        .brand-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
+        }
+
+        .brand-footer .brand-title {
+            color: var(--accent-gold);
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .brand-footer .brand-subtitle {
+            color: #e2e8f0;
+        }
+
+        /* Main Quiz Title */
+        .quiz-main-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        /* Intro & Instructions Boxes */
+        .intro-box {
+            background-color: #fefcbf38;
+            border-right: 6px solid #ecc94b;
+            background-image: linear-gradient(to left, #fffdf5, #fffbf0);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .intro-box h3 {
+            color: #b7791f;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box {
+            background-color: #ebf8ff;
+            border-right: 6px solid #3182ce;
+            background-image: linear-gradient(to left, #f7fafc, #ebf8ff);
+            padding: 25px 30px;
+            border-radius: 6px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .instructions-box h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Quiz Question Cards */
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #cbd5e0;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-label {
+            flex: 1;
+            min-width: 100px;
+            background: #f7fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #edf2f7;
+        }
+
+        .option-label input {
+            margin-left: 8px;
+        }
+
+        /* Calculate Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        /* Results Section */
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 10px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .result-comment {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #276749;
+            margin-bottom: 25px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            border-right: 4px solid #48bb78;
+        }
+
+        /* Analysis Sections */
+        .analysis-section {
+            margin-top: 30px;
+            line-height: 1.9;
+        }
+
+        .analysis-section h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+
+        .key-points {
+            background: #fffaf0;
+            border-right: 4px solid var(--accent-gold);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Branding -->
+    <div class="brand-header">
+        <h1 class="brand-title">Wel Academy</h1>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+
+    <!-- Quiz Main Title -->
+    <h2 class="quiz-main-title">ما مدى جودة مهاراتك في إدارة التغيير؟</h2>
+
+    <!-- Introduction Box -->
+    <div class="intro-box">
+        <h3>مقدمة الاختبار</h3>
+        <p>بالنسبة لمعظم المؤسسات، يُعد التغيير أمراً حتمياً ولا مفر منه. ولهذا السبب، فمن المرجح جداً أن تشارك في إدارة التغيير في مرحلة ما – سواء كان تغييراً بسيطاً في طريقة تعامل فريقك مع شكاوى العملاء، أو مشروعاً رئيسياً لتغيير سياسة المؤسسة أو استراتيجيتها.</p>
+        <p>عندما تدير التغيير بفاعلية، يمكنك نقل مؤسستك إلى حالة "العمل المعتاد" الجديدة بسرعة وسلاسة، وستجد أن الآخرين يسارعون إلى قبول التغيير. وهذا يعني أن فريقك ومؤسستك سيواجهان حداً أدنى من الاضطراب، وتنجح المشاريع بدلاً من أن تتعطل أو تفشل.</p>
+        <p>يساعدك الاختبار أدناه على تقييم مهاراتك في إدارة التغيير؛ حيث يمكنك التعرف بنفسك على مكامن قوتك، والمجالات التي تحتاج فيها إلى تطوير مهارات جديدة.</p>
+    </div>
+
+    <!-- Instructions Box -->
+    <div class="instructions-box">
+        <h3>تعليمات الإجابة</h3>
+        <p>لكل عبارة، اختر الخيار الذي يصف سلوكك وممارستك الفعليه بدقة (وليس كما تعتقد أنه ينبغي أن تكون)، ولا تقلق إذا كانت بعض الأسئلة تُحسب في "الاتجاه العكسي". عند الانتهاء، انقر فوق زر "احسب نتيجتي وتقييم المهارات" في أسفل الاختبار.</p>
+    </div>
+
+    <!-- Quiz Form -->
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="calculateScore()">احسب نتيجتي وتقييم المهارات</button>
+    </form>
+
+    <!-- Result & Output Section -->
+    <div id="result-section">
+        <div class="score-display">درجتك الكلية: <span id="scoreValue">0</span> من 80</div>
+        <div class="result-comment" id="resultComment"></div>
+
+        <div class="analysis-section">
+            <h2>تحليل وتفصيل المحاور الرئيسية لإدارة التغيير الناجحة</h2>
+
+            <h3>1. فهم التغيير Understanding Change (الأسئلة 1، 7، 10، 14)</h3>
+            <p>قبل إدارتك لمشروع يتضمن تغيير طريقة عمل الموظفين، يجب عليك أولاً فهم كيف يتفاعل الأفراد مع التغيير؛ لتكون في موقع أفضل للتخطيط الاستباقي لمراحل التغيير وتأثيرها على المؤسسة.</p>
+            <p>تصف نظرية <strong>منحنى التغيير (Change Curve)</strong> ردود أفعال الأفراد التي تتراوح بين "الصدمة والإنكار" وصولاً إلى "القبول والالتزام". يحتاج الكثيرون للوقت للتكيف، وقد ينخفض الأداء مؤقتاً أثناء تعلم الأنظمة الجديدة. يبرز <strong>نموذج كيرت ليوين (Lewin's Model: إذابة الجليد - التغيير - إعادة التجميد)</strong> أهمية إتاحة الوقت الكافي للتكيف وفتح باب المشورة والدعم للمتأثرين.</p>
+
+            <h3>2. التخطيط للتغيير Planning Change (الأسئلة 2، 4، 6، 9)</h3>
+            <p>المقولة الشهيرة "إذا فشلت في التخطيط، فأنت تخطط للفشل" تنطبق بحذافيرها على إدارة التغيير. الإعداد الشامل هو المفتاح للتخطيط الناجح.</p>
+            <p>يساعدك إجراء <strong>تحليل التأثير (Impact Analysis)</strong> على فهم العواقب الإيجابية والسلبية المحتملة لوضع خطط طوارئ. يساعدك <strong>نموذج بورك-ليتوين (Burke-Litwin Model)</strong> و<strong>أشكال ليفيت (Leavitt's Diamond)</strong> على تحليل تأثير التغيير على المكونات الأساسية (الهيكل، التكنولوجيا، الأفراد، والمهام). كما يضمن <strong>إطار مكنزي S7 (McKinsey 7S Framework)</strong> اتساق ومواءمة جميع العناصر التأثيرية في المؤسسة.</p>
+
+            <h3>3. إدارة المقاومة للتغيير Managing Resistance to Change (الأسئلة 5، 11، 13، 16)</h3>
+            <p>يشعر الكثير من الأفراد بعدم الراحة تجاه التغيير، لذا فإن جزءاً كبيراً من إدارة التغيير يكمن في التغلب على المقاومة وتعزيز القبول والإيمان بالرؤية الجديدة.</p>
+
+            <p>يمكنك التغلب على المقاومة عبر التواصل الفعال، ومشاركة رؤيتك، وإشراك أصحاب المصلحة مبكراً. طبق <strong>معادلة بيكهارد وهاريس للتغيير (Beckhard & Harris's Change Equation)</strong> لتقييم مدى الاستعداد والتأكد من وجود عدم رضا عن الوضع الحالي ورغبة في الحل البديل. استخدم <strong>مصفوفة RACI</strong> لتوزيع المسؤوليات بوضوح وإبقاء قنوات التواصل مفتوحة ومُنظمة.</p>
+
+            <h3>4. تنفيذ التغيير Implementing Change (الأسئلة 3، 8، 12، 15)</h3>
+            <p>عند تنفيذ التغيير، يظل التواصل المستمر حاسماً لتجنب عودة الأفراد إلى الطرق القديمة. قم بإجراء <strong>تقييم الاحتياجات التدريبية (TNA)</strong> لضمان امتلاك الأفراد للمهارات المكتسبة قبل وأثناء وبعد التغيير.</p>
+            <p>يُعد <strong>نموذج كوتر ذو الخطوات الثماني (Kotter's 8-Step Change Model)</strong> أداة متكاملة ممتازة، وتعتبر خطواته الثلاث الأخيرة حاسمة لنجاح التنفيذ:</p>
+            <ul>
+                <li>تحقيق مكاسب قصيرة الأجل (Short-term wins).</li>
+                <li>البناء على التغيير وتعميقه (Build on the change).</li>
+                <li>تثبيت التغييرات في الثقافة المؤسسية (Anchor the changes in corporate culture).</li>
+            </ul>
+
+            <div class="key-points">
+                <h4>نقاط رئيسية تذكرها دائماً:</h4>
+                <p>إدارة التغيير مهمة حاسمة وتنافسية. لتنجح، لا ينتهي دورك فور تطبيق التغيير؛ بل يستمر من خلال تعزيز الإنجازات والتأكد من استدامة المهارات المكتسبة. من خلال اتخاذ نهج شامل واستباقي لمشاريع التغيير، ستتمتع بنجاح أكبر وقدرة على قيادة المؤسسة نحو نمو مستمر ومستدام.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Branding -->
+    <div class="brand-footer">
+        <h2 class="brand-title">Wel Academy</h2>
+        <div class="brand-subtitle">Created By Waleed Alkhodary</div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { text: "1- عادة ما أتلقى دعماً جيداً من كبار المسؤولين التنفيذيين للتغييرات التي أرغب في تنفيذها.", scores: [5, 4, 3, 2, 1] },
+        { text: "2- أقوم بوضع خطة للتغيير لإدارتي وفريقي وأسمح للأقسام الأخرى بالتعامل مع التأثيرات حسب اختيارهم.", scores: [1, 2, 3, 4, 5] },
+        { text: "3- اقوم بنقل النجاحات في جميع أنحاء المنظمة، حتى يفهم الجميع التأثير الإيجابي لمشروع التغيير.", scores: [5, 4, 3, 2, 1] },
+        { text: "4- لو حقق التغيير المطلوب نتائج مادية وتشغيليه اذن التغيير سيتم.", scores: [1, 2, 3, 4, 5] },
+        { text: "5- إذا كان الفريق غير راضى عن كيفية عمل شيء ما أو عمله في الوقت الحالي، فمن المرجح أن يكون التغيير ناجحاً.", scores: [5, 4, 3, 2, 1] },
+        { text: "6- أحاول أن أفهم ثقافة منظمتي وقيمها كعناصر مهمة لمشروع التغيير.", scores: [5, 4, 3, 2, 1] },
+        { text: "7- عندما يحدث التغيير أتوقع أن يستمر الأشخاص في الأداء بنسبة 100 بالمائة.", scores: [1, 2, 3, 4, 5] },
+        { text: "8- بمجرد نجاحي في مشروع التغيير، أعلن النصر وأنتقل إلى المشروع التالي.", scores: [1, 2, 3, 4, 5] },
+        { text: "9- اضع فى اعتبارى أشياء مثل التأثير على الأشخاص والهيكل التنظيمي عند التخطيط لمشروع التغيير.", scores: [5, 4, 3, 2, 1] },
+        { text: "10- إذا اعتقدت أنه يجب تغيير شيء ما أبدأ على الفور وأحققه.", scores: [1, 2, 3, 4, 5] },
+        { text: "11- للحصول على الدعم والمساندة من فريقي، أتحدث مع أعضاء الفريق حول أسباب الحاجة إلى التغيير.", scores: [5, 4, 3, 2, 1] },
+        { text: "12- اسمح للأشخاص بالارتياح تجاه التغييرات قبل أن أقرر ما إذا كان أي تدريب ضرورياً أم لا.", scores: [1, 2, 3, 4, 5] },
+        { text: "13- إذا كان الأفراد الرئيسيون مقتنعين بأن هناك حاجة إلى التغيير، فإن بقية أصحاب المصلحة عادة ما ينضمون إلى هذا التغيير.", scores: [1, 2, 3, 4, 5] },
+        { text: "14- من الصعب ادارة التغيير بفاعلية اذا كانت الشركة ادارت تغييرات سابقة بشكل سئ.", scores: [5, 4, 3, 2, 1] },
+        { text: "15- عند تنفيذ مشروع تغيير اضع اهداف قصيرة الاجل وقابلة للتحقيق والتى ستحفز الناس جدا للاستمرار والسعى والمحاولة بمجرد تحقيق هذه الاهداف.", scores: [5, 4, 3, 2, 1] },
+        { text: "16- يعتبر التغيير مهم جدا مثل الراحة حتى وان كان غير مهم الا انه يساعد الفريق على خلط الاشياء معاً بعض الشئ.", scores: [1, 2, 3, 4, 5] }
+    ];
+
+    const optionsText = ["دائماً", "غالباً", "أحياناً", "نادراً", "أبداً"];
+
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        
+        let optionsHTML = '';
+        q.scores.forEach((score, oIndex) => {
+            optionsHTML += `
+                <label class="option-label">
+                    <input type="radio" name="q${index}" value="${score}" required>
+                    ${optionsText[oIndex]}
+                </label>
+            `;
+        });
+
+        qCard.innerHTML = `
+            <div class="question-title">${q.text}</div>
+            <div class="options-group">${optionsHTML}</div>
+        `;
+        container.appendChild(qCard);
+    });
+
+    function calculateScore() {
+        const form = document.getElementById('quizForm');
+        if (!form.checkValidity()) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 16 قبل حساب النتيجة.");
+            return;
+        }
+
+        let totalScore = 0;
+        questions.forEach((_, index) => {
+            const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selectedOption) {
+                totalScore += parseInt(selectedOption.value);
+            }
+        });
+
+        document.getElementById('scoreValue').innerText = totalScore;
+        
+        let commentText = "";
+        if (totalScore >= 16 && totalScore <= 36) {
+            commentText = "تميل إلى التركيز على النتيجة النهائية وتنسى التركيز على الاحتياجات التخطيطية الفورية. لكي تنجح في التغيير، يجب أن تجد طريقة للتواصل ومشاركة الحماس للهدف النهائي مع فريقك لإنشاء الدعم المطلوب. خذ الوقت الكافي للعمل عبر المحاور أدناه.";
+        } else if (totalScore >= 37 && totalScore <= 58) {
+            commentText = "أنت تفهم العديد من العناصر المطلوبة للتغيير، لكن وضعها موضع التنفيذ لا يعطي نتائج جيدة دائماً. ركز على تطوير عملية تسمح لك بالعمل على كل عنصر من عناصر التغيير واحداً تلو الآخر باستفاضة.";
+        } else if (totalScore >= 59 && totalScore <= 80) {
+            commentText = "لديك فهم ممتاز لما يجعل التغيير ناجحاً، وتمتلك معرفة جيدة بإدارة التغيير والتخطيط له وتنفيذه. استعرض الأقسام أدناه للاطلاع على أفكار إضافية يمكنك استخدامها لتصبح أفضل وأكثر احترافية.";
+        }
+
+        document.getElementById('resultComment').innerText = commentText;
+        
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

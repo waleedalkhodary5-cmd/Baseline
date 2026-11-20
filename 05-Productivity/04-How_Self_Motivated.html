@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما مدى تحفيزك لنفسك؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        /* Header Branding */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards & Sections */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin: 10px 25px 18px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        /* Questions Styling */
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 5px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-bottom: 4px;
+            accent-color: var(--primary-orange);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: var(--primary-orange);
+            color: #ffffff;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.3);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        /* Conclusion & Results Wrapper (Hidden Initially) */
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 650px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-label {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <!-- مقال المقدمة المترجم -->
+    <section class="card orange-top">
+        <h2>ما مدى تحفيزك لنفسك؟ (تولي زمام الأمور لتحقيق أهدافك وإنجازاتك)</h2>
+        <p>هل أنت متحفز لتحقيق ما تريده حقاً في الحياة؟ وإلى أي مدى تدفع نفسك لإنجاز الأمور؟</p>
+        <p>رغبة في فعل شيء ما وتحفيز نفسك للقيام به فعلياً هما شيئان مختلفان. إذن، ما الفرق بين أولئك الذين لا يصلون أبداً إلى أهدافهم، عاماً بعد عام، وأولئك الذين يحققون هدفاً تلو الآخر؟ غالباً، يكون السر هو <strong>التحفيز الذاتي (Self-Motivation)</strong>.</p>
+        <p>التحفيز الذاتي هو القوة التي تستمر في دفعنا للمضي قدماً – وهو دافعنا الداخلي للإنجاز، والإنتاج، والتطوير، والتقدم المستمر. عندما تشعر أنك مستعد للاستسلام أو أنك لا تعرف من أين تبدأ، فإن تحفيزك الذاتي هو ما يدفعك للمتابعة.</p>
+        <p>باستخدام التحفيز الذاتي، ستتعلم وتنمو بغض النظر عن الظروف. ولهذا السبب يُعد أداة أساسية للوصول إلى أهدافك، وتحقيق أحلامك، والنجاح في هذه الرحلة التي نسمى الحياة.</p>
+        <p>إذن، ما مدى تحفيزك لنفسك؟ لقد جمعنا اختباراً قصيراً لمنحك فهمًا أفضل لمستوى تحفيزك الذاتي. بعد الاختبار، سنناقش نصائح محددة لتحسين تحفيزك الذاتي لتتمكن من تحقيق المزيد في حياتك.</p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل عبارة، انقر فوق الزر في العمود الذي يصفك بأفضل شكل. يُرجى الإجابة عن الأسئلة كما أنت في الواقع (وليس كما تعتقد أنك يجب أن تكون)، ولا تقلق إذا بدت بعض الأسئلة وكأنها تُحتسب في "الاتجاه المعاكس". عندما تنتهي، يرجى النقر فوق زر <strong>"احسب إجمالي نقاطي"</strong> في الأسفل.
+        </div>
+    </section>
+
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 12</span>
+    </div>
+
+    <!-- الاختبار (12 عبارة) -->
+    <section class="card">
+        <h2>اختبار تقييم التحفيز الذاتي (12 عبارة)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- السؤال 1 (معكوس) -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- لست متأكداً من قدرتي على تحقيق الأهداف التي أضعها لنفسي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="1"><span>إطلاقاً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="5"><span>دائماً جداً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 2 -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- عند العمل على أهدافي، أُبذل أقصى جهدي وأعمل بجهد أكبر إذا واجهت انتكاسة.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q2" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="1"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 3 -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- أضع بانتظام أهدافاً وغايات لتحقيق رؤيتي لحياتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="1"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 4 -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- أفكر بشكل إيجابي حول وضع الأهداف والتأكد من تلبية احتياجاتي.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="1"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 5 -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- أستخدم المكافآت (والعواقب) لإبقاء نفسي مركزاً (مثل: السماح لنفسي باستراحة قهوة عند إنهاء التقرير).</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="1"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 6 -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- أؤمن أنه إذا عملت بجهد وطبقت قدراتي ومواهبي فسوف أكون ناجحاً.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="1"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 7 (معكوس) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- أقلق بشأن المواعيد النهائية وإنجاز الأمور، مما يسبب لي التوتر والقلق.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q7" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="5"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 8 (معكوس) -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- عندما يهدد حدث غير متوقع هدفي أو يعرضه للخطر، أبتعد وأحدد هدفاً مختلفاً في اتجاه جديد.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="5"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 9 (معكوس) -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- عندما تتوارد لدي فكرة رائعة، أتفاجأ بإبداعي وأعتبره يوم حظ فقط وأحذر نفسي ألا أعتاد على هذا الشعور.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q9" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="5"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 10 (معكوس) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- أكتفي بحد أدنى من العمل لإبقاء مديري وفريقي في حالة رضا.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="5"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 11 (معكوس) -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- أمتلك ميلاً للقلق بشأن الأسباب التي قد تمنعني من تحقيق أهدافي، وأركز غالباً على سبب فشل الأمور.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q11" value="1"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="2"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="4"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="5"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <!-- السؤال 12 -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- أخلق رؤية حية وقوية لنجاحي المستقبلي قبل الشروع في أي هدف جديد.</div>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q12" value="5"><span>دائماً جداً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="4"><span>غالباً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="3"><span>أحياناً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="2"><span>نادراً</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="1"><span>إطلاقاً</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <!-- الخاتمة وتفسير النتائج (مخفية لحين انتهاء الاختبار) -->
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتائج (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 60</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <!-- عوامل التحفيز الذاتي الأربعة -->
+        <section class="card">
+            <h2>العوامل الأربعة الضرورية لبناء أقوى مستويات التحفيز الذاتي</h2>
+            <p>التحفيز الذاتي عملية مركبة ترتبط بمستوى مبادرتك وإيمانك بقدراتك. العوامل الأربعة الرئيسية هي:</p>
+            <ol>
+                <li><strong>الثقة بالنفس والكفاءة الذاتية (Self-Confidence & Self-Efficacy):</strong> الإيمان بالقدرة على النجاح وتحديد أهداف صعبة والتعافي من الانكساست.</li>
+                <li><strong>التفكير الإيجابي للمستقبل (Positive Thinking):</strong> استبدال الأفكار السلبية بأخرى إيجابية وخلق رؤية جذابة للنجاح.</li>
+                <li><strong>التركيز والأهداف القوية (Focus & Strong Goals):</strong> وضع أهداف واضحة، قابلة للقياس، صعبة ولكنها قابلة للتحقيق وفق نظرية لوك (Locke's Goal-Setting Theory).</li>
+                <li><strong>البيئة المحفزة (Motivating Environment):</strong> إحاطة نفسك بالأشخاص والموارد التي تدعمك وتبقيك مساهماً ومحاسباً.</li>
+            </ol>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    // الأسئلة المعكوسة في اختبار التحفيز الذاتي: 1، 7، 8، 9، 10، 11
+    const invertedQuestions = [1, 7, 8, 9, 10, 11];
+
+    function updateProgress() {
+        const totalQuestions = 12;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 12;
+        let totalScore = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                let val = parseInt(selected.value, 10);
+                // عكس الدرجة للأسئلة المعكوسة (1->5, 2->4, 3->3, 4->2, 5->1)
+                if (invertedQuestions.includes(i)) {
+                    val = 6 - val;
+                }
+                totalScore += val;
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 12 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 60`;
+
+        if (totalScore >= 12 && totalScore <= 27) {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "الفئة الأولى (12 - 27 نقطة)";
+            textElem.innerText = "أنت تسمح لشكوك مخاوفك الشخصية بمنعك من النجاح. ربما واجهت بعض الأهداف غير المكتملة في الماضي، لذا أقنعت نفسك بأنك لست محفزاً ذاتياً - ثم جعلت ذلك حقيقة واقعة. اكسر هذا النمط الضار الآن وابدأ في الإيمان بنفسك مجدداً.";
+        } else if (totalScore >= 28 && totalScore <= 43) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "الفئة الثانية (28 - 43 نقطة)";
+            textElem.innerText = "أنت تؤدي بشكل جيد فيما يتعلق بالتحفيز الذاتي. أنت بالتأكيد لست فاشلاً - ومع ذلك، يمكنك تحقيق الكثير. لتحقيق ما تريد، حاول زيادة عوامل التحفيز في جميع مجالات حياتك.";
+        } else {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "الفئة الثالثة (44 - 60 نقطة)";
+            textElem.innerText = "رائع! أنت تنجز المهام ولا تسمح لأي شيء بالوقوف في طريقك. أنت تبذل جهداً واعياً لتبقى محفزاً ذاتياً، وتقضي وقتاً وجهداً كبيراً في وضع الأهداف والعمل على تحقيقها. أنت تجذب وتلهم الآخرين بنجاحك!";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

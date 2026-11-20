@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز التحكم: هل أنت متحكم في مصيرك؟ | Welz Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2c353d;
+            --primary-orange: #f39200;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success: #16a34a;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.75;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e252b 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        header p.creator {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary-dark);
+        }
+
+        .card.orange-top {
+            border-top-color: var(--primary-orange);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 26px;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin: 22px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            padding: 15px 25px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-orange);
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .question-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-orange);
+            box-shadow: 0 2px 8px rgba(243, 146, 0, 0.1);
+        }
+
+        .question-item.unanswered {
+            border: 2px solid var(--danger);
+            background-color: #fef2f2;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .options-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .option-label input[type="radio"] {
+            margin-top: 5px;
+            accent-color: var(--primary-orange);
+            transform: scale(1.2);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-orange);
+            background-color: #fffaf0;
+        }
+
+        .option-label:has(input:checked) {
+            background-color: #fff7ed;
+            color: #9a3412;
+            border-color: var(--primary-orange);
+            box-shadow: 0 3px 8px rgba(243, 146, 0, 0.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-orange);
+        }
+
+        #conclusion-wrapper {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-badge {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fffbeb;
+            border-right: 5px solid var(--primary-orange);
+            padding: 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-dark);
+            color: #cbd5e1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welz Academy</h1>
+    <p class="creator">Created By Waleed Alkhodary</p>
+</header>
+
+<div class="container">
+
+    <section class="card orange-top">
+        <h2>مركز التحكم: هل أنت متحكم في مصيرك؟ (Locus of Control)</h2>
+        <p>مع تغير البيئة من حولك، يمكنك إما أن تنسب النجاح والفشل إلى أمور تسيطر عليها، أو إلى قوى خارجة عن إرادتك.</p>
+        <p>يصف مركز التحكم الدرجة التي يدرك الأفراد من خلالها أن النتائج تنتج عن سلوكياتهم الخاصة (داخلي)، أو عن قوى خارجية عنهم (خارجي).</p>
+        <p>استخدم الاختبار التفاعلي أدناه لتحديد مركز التحكم الحالي لديك:</p>
+        
+        <div class="highlight-box">
+            <strong>التعليمات:</strong> لكل زوج من العبارات، اختر العبارة التي تعتقد أنها الأكثر دقة بالنسبة لك (وليست التي تمنى لو كانت صحيحة). لا توجد إجابات صحيحة أو خاطئة. عندما تنتهي، انقر على زر <strong>"احسب إجمالي نقاطي"</strong> في الأسفل.
+        </div>
+    </section>
+
+    <div class="progress-container">
+        <span><strong>نسبة الإنجاز:</strong></span>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span id="progress-text">0 / 22</span>
+    </div>
+
+    <section class="card">
+        <h2>اختبار مقياس مركز التحكم (22 سؤالاً)</h2>
+        <form id="quiz-form" onchange="updateProgress()">
+
+            <!-- س 1: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-1">
+                <div class="question-text">1- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q1" value="external"><span><strong>أ:</strong> الحظ السيئ هو ما يؤدي إلى العديد من خيبة الأمل في الحياة.</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="internal"><span><strong>ب:</strong> خيبات الأمل هي عادة نتيجة أخطاء ترتكبها بنفسك.</span></label>
+                </div>
+            </div>
+
+            <!-- س 2: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-2">
+                <div class="question-text">2- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q2" value="internal"><span><strong>أ:</strong> الاضطرابات السياسية والحروب تحدث عادة في البلدان التي لا يشارك فيها الناس أو لا يؤكدون حقوقهم السياسية.</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="external"><span><strong>ب:</strong> بغض النظر عن مدى مشاركة الناس، ستظل الحروب والاضطرابات السياسية تحدث.</span></label>
+                </div>
+            </div>
+
+            <!-- س 3: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-3">
+                <div class="question-text">3- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q3" value="internal"><span><strong>أ:</strong> أنت "تحصد ما تزرع". في النهاية، ستكون مكافآتك مرتبطة ارتباطاً مباشراً بما تحققه.</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="external"><span><strong>ب:</strong> على الرغم من جهدك وعملك الجاد، فإن ما تحققه سيمر غالباً دون أن يلاحظه أحد.</span></label>
+                </div>
+            </div>
+
+            <!-- س 4: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-4">
+                <div class="question-text">4- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q4" value="internal"><span><strong>أ:</strong> يتعامل المعلمون بشكل عادل مع الطلاب ويقيمون أداءهم بموضوعية قدر الإمكان.</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="external"><span><strong>ب:</strong> الدرجات التي تحصل عليها في المدرسة ترتبط أكثر بعوامل مثل مدى إعجاب المعلم بك أو حالتك المزاجية يوم الاختبار.</span></label>
+                </div>
+            </div>
+
+            <!-- س 5: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-5">
+                <div class="question-text">5- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q5" value="external"><span><strong>أ:</strong> لكي تصبح قائداً، يجب أن تكون في المكان المناسب في الوقت المناسب.</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="internal"><span><strong>ب:</strong> أولئك القادرون على القيادة ولا يقودون، قد فشلوا في استغلال الفرص المتاحة لهم.</span></label>
+                </div>
+            </div>
+
+            <!-- س 6: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-6">
+                <div class="question-text">6- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q6" value="external"><span><strong>أ:</strong> هناك أشخاص في هذا العالم لن يحبوك، بغض النظر عما تفعله.</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="internal"><span><strong>ب:</strong> إذا كانت لديك مهارات اجتماعية جيدة وتعرف كيف تتعامل مع الآخرين، فإن كسب حب الناس ليس صعباً على الإطلاق.</span></label>
+                </div>
+            </div>
+
+            <!-- س 7: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-7">
+                <div class="question-text">7- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q7" value="external"><span><strong>أ:</strong> إذا كان مقدراً لشيء أن يحدث، فسوف يحدث؛ وهناك القليل الذي يمكنك القيام به لتغييره.</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="internal"><span><strong>ب:</strong> أنت من تقرر ما سيحدث لك. أنت لا تؤمن بالمصير الأعمى.</span></label>
+                </div>
+            </div>
+
+            <!-- س 8: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-8">
+                <div class="question-text">8- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q8" value="internal"><span><strong>أ:</strong> إذا استعددت جيداً للمقابلة الشخصية، فإنك تزيد من احتمال أداءك بشكل جيد.</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="external"><span><strong>ب:</strong> لا جدوى من الاستعداد للمقابلة لأن الأسئلة التي تطرح عشوائية تماماً ومحددّة بالهوى.</span></label>
+                </div>
+            </div>
+
+            <!-- س 9: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-9">
+                <div class="question-text">9- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q9" value="internal"><span><strong>أ:</strong> النجاح في حياتك المهنية يتطلب الكثير من العمل الجاد والتفاني، لأن الجهد هو ما يصنع الفارق.</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="external"><span><strong>ب:</strong> العبرة بمن تعرف وليس بما تعرف، هو ما يحدد جودة الوظيفة التي تحصل عليها.</span></label>
+                </div>
+            </div>
+
+            <!-- س 10: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-10">
+                <div class="question-text">10- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q10" value="internal"><span><strong>أ:</strong> يمكن لشخص واحد أن يكون له تأثير على السياسات والقرارات الحكومية.</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="external"><span><strong>ب:</strong> الناس العاديون لا يستطيعون فعل الكثير لتغيير العالم؛ فالنخبة والأقوياء يتخذون كل القرارات.</span></label>
+                </div>
+            </div>
+
+            <!-- س 11: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-11">
+                <div class="question-text">11- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q11" value="internal"><span><strong>أ:</strong> إذا وضعت هدفاً معقولاً، يمكنك تحقيقه بالعمل الجاد والتزام.</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="external"><span><strong>ب:</strong> لا جدوى من التخطيط للمستقبل أو وضع الأهداف لأن أموراً كثيرة قد تحدث ولا يمكنك التحكم فيها.</span></label>
+                </div>
+            </div>
+
+            <!-- س 12: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-12">
+                <div class="question-text">12- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q12" value="internal"><span><strong>أ:</strong> الحظ لا يلعب دوراً كبيراً في الحصول على ما تريده من الحياة.</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="external"><span><strong>ب:</strong> الحياة تشبه لعبة حظ. ما تحصل عليه وما يحدث لك هو في الغالب مسألة نصيب ومصير.</span></label>
+                </div>
+            </div>
+
+            <!-- س 13: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-13">
+                <div class="question-text">13- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q13" value="external"><span><strong>أ:</strong> المديرون والمشرفون وصلوا إلى تلك المناصب بوجودهم في المكان المناسب ومعرفتهم بالأشخاص المناسبين.</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="internal"><span><strong>ب:</strong> لكي تصبح مديراً أو مشرفاً، يجب أن تثبت أنك تعرف كيف تنجز الأمور من خلال ومع الناس.</span></label>
+                </div>
+            </div>
+
+            <!-- س 14: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-14">
+                <div class="question-text">14- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q14" value="external"><span><strong>أ:</strong> الحوادث وتقلبات القدر هي ما يحدد حقاً مسار حياة الشخص.</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="internal"><span><strong>ب:</strong> فكرة أن الحظ يحدد حياتك إلى حد كبير هي فكرة مغلوطة.</span></label>
+                </div>
+            </div>
+
+            <!-- س 15: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-15">
+                <div class="question-text">15- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q15" value="external"><span><strong>أ:</strong> لدى الناس دوافع خفية كثيرة؛ ومن المستحيل معرفة من يحبك حقاً ومن لا يحبك.</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="internal"><span><strong>ب:</strong> الطريقة التي تعامل بها الناس تحدد إلى حد كبير ما إذا كانوا يحبونك أم لا.</span></label>
+                </div>
+            </div>
+
+            <!-- س 16: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-16">
+                <div class="question-text">16- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q16" value="external"><span><strong>أ:</strong> إيجابيات وسلبيات الحياة هي في الأساس مناصفة (بالتساوي).</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="internal"><span><strong>ب:</strong> عندما يحدث شيء سلبي، فإنه يكون عادة نتيجة اللامبالاة، أو نقص المعرفة، أو العجز، أو مزيج من هذه الأمور.</span></label>
+                </div>
+            </div>
+
+            <!-- س 17: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-17">
+                <div class="question-text">17- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q17" value="internal"><span><strong>أ:</strong> يمكن القضاء على الفساد في السياسة إذا بذلنا جميعاً جهداً كافياً.</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="external"><span><strong>ب:</strong> بمجرد انتخاب السيبراني أو السياسي، لا يوجد الكثير مما يمكن لأي شخص فعله للسيطرة عليه.</span></label>
+                </div>
+            </div>
+
+            <!-- س 18: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-18">
+                <div class="question-text">18- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q18" value="external"><span><strong>أ:</strong> التقييمات التي أحصل عليها في العمل تخضع لأهواء مشرفي؛ ولا أستطيع فهمها طوال الوقت.</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="internal"><span><strong>ب:</strong> مدى جديتي في عملي ومقدار فخري بوظيفتي يحدد إلى حد كبير نتائج تقييم أداءي.</span></label>
+                </div>
+            </div>
+
+            <!-- س 19: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-19">
+                <div class="question-text">19- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q19" value="external"><span><strong>أ:</strong> أشعر غالباً أنني لا أملك سيطرة تذكر على حياتي وما يحدث لي.</span></label>
+                    <label class="option-label"><input type="radio" name="q19" value="internal"><span><strong>ب:</strong> لا أؤمن بأن الحظ أو الصدفة تلعب دوراً كبيراً في تحديد ما يحدث في حياتي.</span></label>
+                </div>
+            </div>
+
+            <!-- س 20: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-20">
+                <div class="question-text">20- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q20" value="internal"><span><strong>أ:</strong> إذا كنت تعاني من الوحدة، فذلك لأنك لا تبذل جهداً كافياً للتآلف مع الناس وأن تكون ودوداً.</span></label>
+                    <label class="option-label"><input type="radio" name="q20" value="external"><span><strong>ب:</strong> على الرغم من كونك ودوداً ولطيفاً، إذا كان شخص ما لا يحبك، فلا توجد طريقة لتغيير رأيه.</span></label>
+                </div>
+            </div>
+
+            <!-- س 21: (A داخلي = 1 ، B خارجي = 2) -->
+            <div class="question-item" id="q-box-21">
+                <div class="question-text">21- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q21" value="internal"><span><strong>أ:</strong> الأمور التي تحدث في حياتك هي من صنع يديك.</span></label>
+                    <label class="option-label"><input type="radio" name="q21" value="external"><span><strong>ب:</strong> ليس لديك سيطرة كبيرة على ما يحدث في الحياة أو على الاتجاه الذي تتخذه حياتك.</span></label>
+                </div>
+            </div>
+
+            <!-- س 22: (A خارجي = 2 ، B داخلي = 1) -->
+            <div class="question-item" id="q-box-22">
+                <div class="question-text">22- اختر العبارة الأدق:</div>
+                <div class="options-stack">
+                    <label class="option-label"><input type="radio" name="q22" value="external"><span><strong>أ:</strong> الأسباب وراء اتخاذ السياسيين لقراراتهم هي أمر يخمنه أي شخص!</span></label>
+                    <label class="option-label"><input type="radio" name="q22" value="internal"><span><strong>ب:</strong> الشعب مسؤول عن القرارات الحكومية بنفس قدر مسؤولية السياسيين أنفسهم.</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="calculateScore()">احسب إجمالي نقاطي</button>
+        </form>
+    </section>
+
+    <div id="conclusion-wrapper">
+        <section id="result-section" class="card orange-top">
+            <h2>تفسير النتائج (Score Interpretation)</h2>
+            <div id="score-banner" class="score-badge">
+                <div class="score-number" id="total-score-display">0 / 44</div>
+                <div class="score-title" id="score-category-title"></div>
+            </div>
+            <p id="score-interpretation-text" style="font-size: 1.1rem; font-weight: 600;"></p>
+        </section>
+
+        <section class="card">
+            <h2>تحليل مركز التحكم (Locus of Control)</h2>
+            <h3>1. مركز التحكم الداخلي القوي (22 - 25 نقطة)</h3>
+            <p>تشعر أنك تتحكم تماماً بأحداث حياتك، ولديك تحفيز ذاتي عالٍ وتركيز صارم على الأهداف، وتعتبر قائداً متميزاً. كن حذراً فقط من ألا تبدو متعجرفاً أو تحمل نفسك فوق طاقتها عند حدوث أمور خارجة عن الإرادة.</p>
+
+            <h3>2. مركز التحكم الداخلي المعتدل (26 - 33 نقطة)</h3>
+            <p>تدرك أن مستقبلك بيديك وتعمل بجد لتطوير مهاراتك، وفي نفس الوقت تقبل الأوضاع التي لا يمكنك التأثير عليها، مما يجعلك أكثر مرونة وقدرة على إدارة التحديات بفعالية.</p>
+
+            <h3>3. مركز التحكم الخارجي (34 - 44 نقطة)</h3>
+            <p>تميل إلى الاعتقاد بأن ما يحدث لك هو نتيجة الحظ أو القدر أو سيطرة أصحاب السلطة. لتجاوز ذلك، انتبه لحديثك الذاتي، وقم ببناء مهارات صنع القرار وحل المشكلات لتعزيز شعورك بالمسؤولية.</p>
+        </section>
+    </div>
+
+</div>
+
+<footer>
+    <p><strong>Welz Academy</strong> | Created By Waleed Alkhodary</p>
+</footer>
+
+<script>
+    function updateProgress() {
+        const totalQuestions = 22;
+        let answeredCount = 0;
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (selected) {
+                answeredCount++;
+                box.classList.remove("unanswered");
+            }
+        }
+        const percentage = (answeredCount / totalQuestions) * 100;
+        document.getElementById("progress-fill").style.width = percentage + "%";
+        document.getElementById("progress-text").innerText = `${answeredCount} / ${totalQuestions}`;
+    }
+
+    function calculateScore() {
+        const totalQuestions = 22;
+        let internalCount = 0;
+        let externalCount = 0;
+        let allAnswered = true;
+        let firstUnanswered = null;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const box = document.getElementById(`q-box-${i}`);
+            if (!selected) {
+                allAnswered = false;
+                box.classList.add("unanswered");
+                if (!firstUnanswered) firstUnanswered = box;
+            } else {
+                if (selected.value === "internal") {
+                    internalCount++;
+                } else {
+                    externalCount++;
+                }
+            }
+        }
+
+        if (!allAnswered) {
+            alert("يرجى الإجابة على جميع الأسئلة الـ 22 المحددة باللون الأحمر لحساب إجمالي نقاطك وإظهار التفسير.");
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        // في مقياس روتر: كل اختيار خارجي يحسب بنقطتين وداخل بنقطة، المجموع من 22 إلى 44
+        const totalScore = internalCount + (externalCount * 2);
+
+        const conclusionWrapper = document.getElementById("conclusion-wrapper");
+        const banner = document.getElementById("score-banner");
+        const titleElem = document.getElementById("score-category-title");
+        const textElem = document.getElementById("score-interpretation-text");
+
+        document.getElementById("total-score-display").innerText = `${totalScore} / 44`;
+
+        if (totalScore >= 22 && totalScore <= 25) {
+            banner.style.backgroundColor = "var(--success)";
+            titleElem.innerText = "مركز التحكم الداخلي (قوي - Strong Internal)";
+            textElem.innerText = "تشعر أنك في السيطرة الكاملة على أحداث حياتك. أنت متحفز ذاتياً ومركز على تحقيق الأهداف التي وضعتها لنفسك. غالباً ما تصنع قادة ممتازين، ولكن احرص على تجنب التعجرف وإدارة المخاطر بحكمة.";
+        } else if (totalScore >= 26 && totalScore <= 33) {
+            banner.style.backgroundColor = "var(--warning)";
+            titleElem.innerText = "مركز التحكم الداخلي (معتدل - Moderate Internal)";
+            textElem.innerText = "ترى غالباً أن مستقبلك بيديك؛ لذا تنخرط في أنشطة تحسن وضعك وتعمل بجد لتطوير مهاراتك. وجود تحكم داخلي معتدل يجعلك قادراً على قبول المواقف التي لا يمكنك التأثير عليها وإدارتها بمرونة.";
+        } else {
+            banner.style.backgroundColor = "var(--danger)";
+            titleElem.innerText = "مركز التحكم الخارجي (External Locus of Control)";
+            textElem.innerText = "تعتقد أن ما يحدث لك هو نتيجة الحظ أو القدر أو أصحاب السلطة. لتجاوز ذلك، انتبه لحديثك الذاتي، واعمل على تعزيز ثقتك بنفسك ومهارات اتخاذ القرار لتولي زمام الأمور بنجاح.";
+        }
+
+        conclusionWrapper.style.display = "block";
+        conclusionWrapper.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>
